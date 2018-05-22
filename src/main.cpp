@@ -1,7 +1,20 @@
-#include <iostream>
+/*
+** EPITECH PROJECT, 2021
+** bomberman
+** File description:
+** Main
+*/
 
-int main()
+#include <memory>
+#include <iostream>
+#include "../inc/Params.hpp"
+
+int main(int ac, char *av[])
 {
-	std::cout << "Hello, World!" << std::endl;
-	return 0;
+	std::unique_ptr<Params>	params(new Params(ac, av));
+
+	if (params->parse()) {
+		std::cout << "" << std::endl;
+	}
+	return (0);
 }

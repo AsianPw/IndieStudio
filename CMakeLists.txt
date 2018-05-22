@@ -1,12 +1,27 @@
 cmake_minimum_required(VERSION 3.10)
-project(cpp_indie_studio)
+project(bomberman)
 
 set(CMAKE_CXX_STANDARD 17)
 
-cmake_policy(SET CMP0037 OLD)
+cmake_policy(SET CMP0037 OLD)   #Bypass install target restriction
 
-set(LIB_IRRLITCH src/main.cpp)
+#set(LIB_IRRLITCH src/main.cpp)
 
 add_custom_target(install DEPENDS ${LIB_IRRLITCH})
 
-add_executable(cpp_indie_studio src/main.cpp)
+file(GLOB irr_inc
+        "inc/irr/*.h")
+
+file(GLOB bomberman_src
+        "src/*.cpp")
+
+file(GLOB bomberman_inc
+        "inc/*.hpp")
+
+include_directories(${IRRLICHT_PATH_INCLUDE})
+
+link_directories(${IRRLICHT_PATH_LIB})
+
+add_executable(bomberman ${bomberman_src} ${bomberman_inc})
+
+target_link_libraries(bomberman Irrlicht GL X11 Xxf86vm)
