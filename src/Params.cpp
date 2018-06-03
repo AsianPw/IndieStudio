@@ -9,7 +9,7 @@
 #include <iostream>
 #include "../inc/Params.hpp"
 
-Params::Params(int ac, char **av) : _verbose(false), _nbArgs(ac), _av(av)
+Params::Params(int ac, char **av) : _verbose(false), _nbArgs(ac), _av(av), _width(1080), _heigth(720)
 {
 }
 
@@ -40,4 +40,9 @@ bool	Params::parse()
 		return false;
 	}
 	return true;
+}
+
+std::pair<size_t, size_t>	Params::getResolution() const
+{
+	return std::make_pair(_width, _heigth);
 }
