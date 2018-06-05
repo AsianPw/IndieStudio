@@ -22,21 +22,19 @@ typedef struct	s_coord
 class	GenerateMap
 {
 	private:
-		int	width = 29;
-		int	height = 29;
+		int	width = 31;
+		int	height = 31;
 		int	nbr_wall = (width * height) / 2;
-		t_coord	player_place;
-		t_coord	ia_place;
 		std::vector<std::vector<char>> BombermanMap;
 
 	public:
 		~GenerateMap();
-		GenerateMap();
-		int	get_width();
-		int	get_height();
-		int	get_nbrwall();
-		t_coord	get_player_place();
-		t_coord	get_ia_place();
+		GenerateMap(size_t , size_t);
+		int	getWidth();
+		int	getHeight();
+		int	getNbrwall();
+		t_coord	getPlayerPlace();
+		t_coord	getIaPlace();
 		std::vector<std::vector<char>>	getMap();
 		void	InitMap();
 		void	print_map();
@@ -44,8 +42,8 @@ class	GenerateMap
 		void	place_unbrokable_wall_height();
 		void	place_taget_wall();
 		void	set_place_for_players();
-		void	place_player();
-		void	place_ia();
+		void	place_player(size_t);
+		void	place_ia(size_t);
 };
 
 #endif //BOMBERMAN_GENERATEMAP_HPP
