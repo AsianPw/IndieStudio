@@ -9,7 +9,7 @@
 #include <iostream>
 #include "../inc/Params.hpp"
 
-Params::Params(int ac, char **av) : _verbose(false), _nbArgs(ac), _av(av), _width(1080), _heigth(720)
+Params::Params(int ac, char **av) : _verbose(false), _nbArgs(ac), _av(av), _width(1080), _height(720)
 {
 }
 
@@ -39,10 +39,13 @@ bool	Params::parse()
 		displayHelp();
 		return false;
 	}
+	if (argsExist("-v") || argsExist("--verbose")) {
+		_verbose = true;
+	}
 	return true;
 }
 
 std::pair<size_t, size_t>	Params::getResolution() const
 {
-	return std::make_pair(_width, _heigth);
+	return std::make_pair(_width, _height);
 }

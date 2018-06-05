@@ -5,7 +5,7 @@
 ** Created by j-f,
 */
 
-#include "GenerateMap.hpp"
+#include "../inc/GenerateMap.hpp"
 
 int	GenerateMap::getWidth(void)
 {

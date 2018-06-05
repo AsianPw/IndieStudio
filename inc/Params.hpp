@@ -22,7 +22,7 @@ private:
 	char	**_av;
 	int	_nbArgs;
 	size_t	_width;
-	size_t	_heigth;
+	size_t	_height;
 };
 
 #endif //BOMBERMAN_PARAMS_HPP

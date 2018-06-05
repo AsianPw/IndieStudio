@@ -11,11 +11,13 @@
 #include "IDisplay.hpp"
 #include "ISound.hpp"
 #include "IScene.hpp"
+#include "Params.hpp"
 
 class Core {
 public:
-	Core();
+	explicit Core(std::unique_ptr<Params> &params);
 	~Core();
+	void	compute();
 	void	changeScene();
 private:
 	std::unique_ptr<IDisplay>	_display;
