@@ -8,13 +8,21 @@
 #include <memory>
 #include <iostream>
 #include "../inc/Params.hpp"
+#include "../inc/Core.hpp"
 
 int main(int ac, char *av[])
 {
 	std::unique_ptr<Params>	params(new Params(ac, av));
+	std::unique_ptr<Core>	core;
 
 	if (params->parse()) {
-		std::cout << "" << std::endl;
+		try {
+			core = std::make_unique<Core>(params);
+			core->compute();
+		} catch (const std::runtime_error &e) {
+			std::cerr << e.what() << std::endl;
+			return 84;
+		}
 	}
-	return (0);
+	return 0;
 }
