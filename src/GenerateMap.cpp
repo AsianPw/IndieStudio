@@ -7,17 +7,17 @@
 
 #include "../inc/GenerateMap.hpp"
 
-int	GenerateMap::get_width(void)
+int	GenerateMap::getWidth(void)
 {
 	return width;
 }
 
-int	GenerateMap::get_height(void)
+int	GenerateMap::getHeight(void)
 {
 	return height;
 }
 
-int	GenerateMap::get_nbrwall(void)
+int	GenerateMap::getNbrwall(void)
 {
 	return nbr_wall;
 }
@@ -30,16 +30,6 @@ std::vector<std::vector<char>>	GenerateMap::getMap(void)
 GenerateMap::~GenerateMap()
 {
 	std::cout<<"Map destroyed"<<std::endl;
-}
-
-t_coord	GenerateMap::get_ia_place()
-{
-	return ia_place;
-}
-
-t_coord	GenerateMap::get_player_place()
-{
-	return player_place;
 }
 
 void	GenerateMap::print_map(void)
@@ -116,34 +106,58 @@ void	GenerateMap::set_place_for_players(void)
 	BombermanMap[width - 3][height - 3] = ' ';
 }
 
-void	GenerateMap::place_player(void)
+void	GenerateMap::place_player(size_t nbrplayer)
 {
-	player_place.x = 1;
-	player_place.y = 1;
-	BombermanMap[player_place.x][player_place.y] = 'P';
+	t_coord	place;
+	size_t	index = 0;
+
+	while (index < nbrplayer) {
+		place.x = rand() % (width - 1);
+		place.y = rand() % (height - 1);
+		while (BombermanMap[place.x][place.y] == '*' ||
+			BombermanMap[place.x][place.y] == 'P' ||
+			BombermanMap[place.x][place.y] == 'A') {
+			place.x = rand() % (width - 1);
+			place.y = rand() % (height - 1);
+		}
+		BombermanMap[place.x][place.y] = 'P';
+		index = index + 1;
+	}
 }
 
-void	GenerateMap::place_ia(void)
+void	GenerateMap::place_ia(size_t nbria)
 {
-	ia_place.x = width - 2;
-	ia_place.y = height - 3;
-	BombermanMap[ia_place.x][ia_place.y] = 'I';
+	t_coord	place;
+	size_t	index = 0;
+
+	while (index < nbria) {
+		place.x = rand() % (width - 1);
+		place.y = rand() % (height - 1);
+		while (BombermanMap[place.x][place.y] == '*' ||
+			BombermanMap[place.x][place.y] == 'P' ||
+			BombermanMap[place.x][place.y] == 'A') {
+			place.x = rand() % (width - 1);
+			place.y = rand() % (height - 1);
+		}
+		BombermanMap[place.x][place.y] = 'A';
+		index = index + 1;
+	}
 }
 
-GenerateMap::GenerateMap(void)
+GenerateMap::GenerateMap(size_t nbrplayer, size_t nbria)
 {
 	InitMap();
 	place_unbrokable_wall_width();
 	place_unbrokable_wall_height();
 	place_taget_wall();
 	set_place_for_players();
-	place_player();
-	place_ia();
+	place_player(nbrplayer);
+	place_ia(nbria);
 }
 
 /*int	main(void)
 {
-	GenerateMap	map;
+	GenerateMap	map(3, 5);
 
 	map.print_map();
 }*/
