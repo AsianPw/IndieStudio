@@ -17,8 +17,10 @@ public:
 private:
 	void	displayHelp() const;
 	bool	argsExist(const char *arg) const;
+
 private:
 	bool	_verbose;
+	bool	_fullscreen = false;
 	char	**_av;
 	int	_nbArgs;
 	size_t	_width;

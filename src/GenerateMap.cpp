@@ -29,7 +29,6 @@ std::vector<std::vector<char>>	GenerateMap::getMap(void)
 
 GenerateMap::~GenerateMap()
 {
-	std::cout<<"Map destroyed"<<std::endl;
 }
 
 void	GenerateMap::print_map(void)
@@ -155,9 +154,3 @@ GenerateMap::GenerateMap(size_t nbrplayer, size_t nbria)
 	place_ia(nbria);
 }
 
-/*int	main(void)
-{
-	GenerateMap	map(3, 5);
-
-	map.print_map();
-}*/

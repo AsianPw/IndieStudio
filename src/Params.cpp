@@ -21,7 +21,12 @@ bool	Params::getVerbose() const
 void	Params::displayHelp() const
 {
 	std::cerr << "USAGE:" << std::endl;
-	std::cerr << "\t\t" << _av[0] << " [options]" << std::endl;
+	std::cerr << "\t\t" << _av[0] << " [options]" << std::endl << std::endl;
+	std::cerr << "Here is the list of diferents options : " <<std::endl;
+	std::cerr << std::endl;
+	std::cerr << "\t\t-s or --size [width] [height]\tSet window dimensions" << std::endl;
+	std::cerr << "\t\t-v or --verbose\t\t\tPrint all object's informations (position and others)" << std::endl;
+	std::cerr << "\t\t-f or --fullscreen\t\tUse the fullscreen option" << std::endl;
 }
 
 bool	Params::argsExist(const char *arg) const
@@ -36,12 +41,22 @@ bool	Params::argsExist(const char *arg) const
 
 bool	Params::parse()
 {
+	if (argsExist("-v") || argsExist("--verbose"))
+		_verbose = true;
+	if (argsExist("-f") || argsExist("--fullscreen"))
+		_fullscreen = true;
 	if (argsExist("-h") || argsExist("--help")) {
 		displayHelp();
 		return false;
 	}
-	if (argsExist("-v") || argsExist("--verbose")) {
-		_verbose = true;
+	if (argsExist("-s") || argsExist("--size")) {
+		_width = atoi(_av[2]);
+		_height = atoi(_av[3]);
+		if (_width  <= 0 || _height <= 0) {
+			std::cerr << "width and height , both of them must";
+			std::cout << " be positive integers" << std::endl;
+			return 84;
+		}
 	}
 	return true;
 }
