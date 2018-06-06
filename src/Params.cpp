@@ -15,6 +15,7 @@ Params::Params(int ac, char **av) : _verbose(false), _nbArgs(ac), _av(av), _widt
 
 bool	Params::getVerbose() const
 {
+	return _verbose;
 }
 
 void	Params::displayHelp() const
