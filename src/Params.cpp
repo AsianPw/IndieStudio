@@ -18,6 +18,29 @@ bool	Params::getVerbose() const
 	return _verbose;
 }
 
+bool	Params::getFullscreen() const
+{
+	return _fullscreen;
+}
+
+bool	Params::getVsync() const
+{
+	return _vsync;
+}
+
+int	Params::getIndex()
+{
+	int	i = 0;
+
+	while (_av[i] != NULL) {
+		if (strcmp(_av[i], "--size") == 0 || strcmp(_av[i], "-s") == 0) {
+			return (i);
+		}
+		i = i + 1;
+	}
+	return (0);
+}
+
 void	Params::displayHelp() const
 {
 	std::cerr << "USAGE:" << std::endl;
@@ -27,6 +50,7 @@ void	Params::displayHelp() const
 	std::cerr << "\t\t-s or --size [width] [height]\tSet window dimensions" << std::endl;
 	std::cerr << "\t\t-v or --verbose\t\t\tPrint all object's informations (position and others)" << std::endl;
 	std::cerr << "\t\t-f or --fullscreen\t\tUse the fullscreen option" << std::endl;
+	std::cerr << "\t\t-f or --vsync\t\t\tUse Sync the printing of scene" << std::endl;
 }
 
 bool	Params::argsExist(const char *arg) const
@@ -45,13 +69,15 @@ bool	Params::parse()
 		_verbose = true;
 	if (argsExist("-f") || argsExist("--fullscreen"))
 		_fullscreen = true;
+	if (argsExist("--vsync"))
+		_vsync = true;
 	if (argsExist("-h") || argsExist("--help")) {
 		displayHelp();
 		return false;
 	}
 	if (argsExist("-s") || argsExist("--size")) {
-		_width = atoi(_av[2]);
-		_height = atoi(_av[3]);
+		_width = atoi(_av[getIndex() + 1]);
+		_height = atoi(_av[getIndex() + 2]);
 		if (_width  <= 0 || _height <= 0) {
 			std::cerr << "width and height , both of them must";
 			std::cout << " be positive integers" << std::endl;

@@ -13,6 +13,9 @@ public:
 	~Params() = default;
 	bool	parse();
 	bool	getVerbose() const;
+	bool	getFullscreen() const;
+	bool	getVsync() const;
+	int	getIndex();
 	std::pair<size_t, size_t>	getResolution() const;
 private:
 	void	displayHelp() const;
@@ -20,7 +23,8 @@ private:
 
 private:
 	bool	_verbose;
-	bool	_fullscreen = false;
+	bool	_vsync;
+	bool	_fullscreen;
 	char	**_av;
 	int	_nbArgs;
 	size_t	_width;
