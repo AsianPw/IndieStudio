@@ -12,6 +12,11 @@
 #include <vector>
 #include <random>
 #include <stdlib.h>
+#include <irr/irrlicht.h>
+#include <irr/driverChoice.h>
+#include "../inc/EventReceiver.hpp"
+
+using namespace irr;
 
 typedef struct	s_coord
 {

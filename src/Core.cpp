@@ -24,6 +24,8 @@ Core::~Core()
 
 void	Core::compute()
 {
+
+
 	while (_display->isOpen()) {
 		_display->loadModels(_scene->getModels());
 		_display->display();

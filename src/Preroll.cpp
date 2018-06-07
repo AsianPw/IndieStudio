@@ -4,7 +4,9 @@
 ** File description:
 ** Created by asianpw,
 */
+
 #include "../inc/Preroll.hpp"
+#include "../inc/GenerateMap.hpp"
 
 Preroll::Preroll()
 {
