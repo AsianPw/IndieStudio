@@ -7,11 +7,17 @@
 
 #include <irr/irrlicht.h>
 #include <stdexcept>
+#include <iostream>
 #include "../inc/Irrlicht.hpp"
+#include "../inc/Data.hpp"
+#include "../inc/Tools.hpp"
 
-Irrlicht::Irrlicht(std::pair<size_t, size_t> res) : _resolution({res.first, res.second})
+Irrlicht::Irrlicht(std::unique_ptr<Params> &params) :
+	_resolution({(irr::u32)params->getResolution().first, (irr::u32)params->getResolution().second}),
+	_verbose(params->getVerbose()),
+	_deviceReceiver(params->getVerbose())
 {
-	_device = irr::createDevice(irr::video::EDT_OPENGL, irr::core::dimension2d(_resolution.first, _resolution.second), 32);
+	_device = irr::createDevice(irr::video::EDT_OPENGL, irr::core::dimension2d(_resolution.first, _resolution.second), 32, params->getFullscreen(), false, params->getVsync(), &_deviceReceiver);
 	if (_device == nullptr)
 		throw std::runtime_error("Couldn't find any device !");
 	_device->setWindowCaption(L"Bomberman");
@@ -20,18 +26,12 @@ Irrlicht::Irrlicht(std::pair<size_t, size_t> res) : _resolution({res.first, res.
 		throw std::runtime_error("Couldn't get any video driver !");
 	_sceneManager = _device->getSceneManager();
 	_gui = _device->getGUIEnvironment();
-	keys[0].Action = irr::EKA_MOVE_FORWARD;
-	keys[0].KeyCode = irr::KEY_KEY_Z;
-	keys[1].Action = irr::EKA_MOVE_BACKWARD;
-	keys[1].KeyCode = irr::KEY_KEY_S;
-	keys[2].Action = irr::EKA_STRAFE_LEFT;
-	keys[2].KeyCode = irr::KEY_KEY_Q;
-	keys[3].Action = irr::EKA_STRAFE_RIGHT;
-	keys[3].KeyCode = irr::KEY_KEY_D;
-	keys[4].Action = irr::EKA_JUMP_UP;
-	keys[4].KeyCode = irr::KEY_SPACE;
-	_sceneManager->addCameraSceneNodeFPS(nullptr, 100.0f, 0.1f, -1, keys, 5);
-	//_sceneManager->addCameraSceneNode(nullptr, irr::core::vector3df(100.0f, 80.0f, 100.0f), irr::core::vector3df(0.0f, 0.0f, 0.0f));
+	_font = _gui->getFont("texture/bigfont.png");
+	if (_font == nullptr)
+		throw std::runtime_error("Couldn't load font !");
+	_sceneManager->addCameraSceneNode(nullptr, irr::core::vector3df(100.0f, .0f, 20.0f), irr::core::vector3df(0.0f, 0.0f, 0.0f));
+	_gui->getSkin()->setFont(_font, irr::gui::EGDF_BUTTON);
+	_gui->getSkin()->setFont(_font, irr::gui::EGDF_DEFAULT);
 }
 
 Irrlicht::~Irrlicht()
@@ -39,10 +39,23 @@ Irrlicht::~Irrlicht()
 	_device->drop();
 }
 
-void	Irrlicht::display() const
+void	Irrlicht::clear()
 {
-	irr::video::SColor	color(255, 255, 255, 255);
+	_guiElement.clear();
+	_sceneElement.clear();
+	_sceneManager->clear();
+	_gui->clear();
+	_textElement.clear();
+	_sceneManager->addCameraSceneNode(nullptr, irr::core::vector3df(100.0f, .0f, 20.0f), irr::core::vector3df(0.0f, 0.0f, 0.0f));
+}
 
+void	Irrlicht::display()
+{
+	irr::video::SColor	color(255, 0, 0, 0);
+
+	if (_deviceReceiver.IsKeyDown(irr::KEY_ESCAPE)) {
+		_device->closeDevice();
+	}
 	_driver->beginScene(true, true, color);
 	_sceneManager->drawAll();
 	_gui->drawAll();
@@ -54,27 +67,83 @@ bool	Irrlicht::isOpen() const
 	return _device->run();
 }
 
-char	Irrlicht::getEvents() const
+void	Irrlicht::getEvents(std::pair<int, std::string> &keyCode)
 {
-	return 0;
+	std::string	btnName = "";
+
+	for (auto const &btn : _guiElement) {
+		if (btn.second->isPressed()) {
+			btnName = btn.first;
+		}
+	}
+	keyCode.first = _deviceReceiver.getKey();
+	keyCode.second = btnName;
 }
 
 bool	Irrlicht::isEvent() const
 {
-	return false;
+	for (auto const &btn : _guiElement) {
+		if (btn.second->isPressed()) {
+			return true;
+		}
+	}
+	return _deviceReceiver.isEvent();
 }
 
-void Irrlicht::loadModels(std::map<std::string, Position> &models)
+void Irrlicht::loadModels(std::map<std::string, Data> &models)
 {
-	// add check if not load
+	_sceneData = models;
 	for (auto const &model : models) {
-		_sceneElement.insert({model.first, _sceneManager->addAnimatedMeshSceneNode(_sceneManager->getMesh(model.first.c_str()))});
+		_sceneElement.insert({model.first, _sceneManager->addAnimatedMeshSceneNode(_sceneManager->getMesh(model.second.modelPath.c_str()))});
 		if (_sceneElement[model.first] == nullptr) {
 			continue;
 		}
-		_sceneElement[model.first]->setMD2Animation(irr::scene::EMAT_STAND);
-		_sceneElement[model.first]->setPosition(irr::core::vector3df(model.second.x, model.second.y, 0.0f));
+		_sceneElement[model.first]->setMD2Animation(model.second.animationType);
+		_sceneElement[model.first]->setPosition(irr::core::vector3df(model.second.pos.x, 0.0f, model.second.pos.y));
+		_sceneElement[model.first]->setRotation(irr::core::vector3df(model.second.rot.x, model.second.rot.y, .0f));
 		_sceneElement[model.first]->setMaterialFlag(irr::video::EMF_LIGHTING, false);
-		_sceneElement[model.first]->setMaterialTexture(0, _driver->getTexture("texture/assassin/textures/akai_diffuse.jpg"));
+		if (!model.second.texturePath.empty()) {
+			_sceneElement[model.first]->setMaterialTexture(0, _driver->getTexture(model.second.texturePath.c_str()));
+		}
+	}
+}
+
+void Irrlicht::updateModels(std::map<std::string, Data> &models)
+{
+	Data	tmpData;
+
+	for (auto const &currentModel : _sceneData) {
+		tmpData = models[currentModel.first];
+		if (tmpData.animationType != currentModel.second.animationType
+			|| !Tools::cmpPos(tmpData.pos, _sceneData[currentModel.first].pos) ) {
+			_sceneElement[currentModel.first]->setMD2Animation(tmpData.animationType);
+			_sceneElement[currentModel.first]->setPosition(Tools::posToVec(tmpData.pos));
+			//Tools::displayVebose(_verbose, "Update \"" + currentModel.first + "\" model.");
+			_sceneData[currentModel.first] = tmpData;
+		}
+	}
+}
+
+void Irrlicht::loadGuis(std::map<std::string, Data> &guis)
+{
+	std::wstring	tmpString;
+	irr::gui::IGUIStaticText	*tmpText;
+	irr::gui::IGUIButton		*tmpBtn;
+	irr::core::dimension2d<irr::u32>	textSize;
+	irr::core::rect<irr::s32>	rect;
+
+	for (auto const &gui : guis) {
+		Tools::displayVebose(_verbose, "Add GUI element: " + gui.first);
+		tmpString = std::wstring(gui.second.modelPath.begin(), gui.second.modelPath.end());
+		textSize = _font->getDimension(tmpString.c_str());
+		rect = irr::core::rect<irr::s32>(gui.second.pos.x, gui.second.pos.y, gui.second.pos.x + textSize.Width + 5, gui.second.pos.y + textSize.Height + 5);
+		if (gui.second.isBnt) {
+			tmpBtn = _gui->addButton(rect, nullptr, -1, tmpString.c_str());
+			_guiElement.insert({ gui.first, tmpBtn });
+		} else {
+			_textElement.insert({ gui.first, _gui->addStaticText(tmpString.c_str(), rect, _verbose, true, nullptr, -1, false) });
+			tmpText = (irr::gui::IGUIStaticText *)_textElement[gui.first];
+			tmpText->setOverrideColor(irr::video::SColor(255, 255, 255, 255));
+		}
 	}
 }

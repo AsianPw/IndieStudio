@@ -18,11 +18,13 @@ public:
 	explicit Core(std::unique_ptr<Params> &params);
 	~Core();
 	void	compute();
-	void	changeScene();
+	void	changeScene(IScene *);
 private:
 	std::unique_ptr<IDisplay>	_display;
 	std::unique_ptr<ISound>		_sound;
 	std::unique_ptr<IScene>		_scene;
+	bool	_verbose;
+	bool	_change;
 };
 
 #endif //BOMBERMAN_CORE_HPP

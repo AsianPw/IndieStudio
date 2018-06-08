@@ -11,27 +11,38 @@
 #include <irr/irrlicht.h>
 #include <vector>
 #include <map>
+#include <memory>
 #include "IDisplay.hpp"
 #include "Position.hpp"
+#include "Params.hpp"
+#include "DeviceReceiver.hpp"
 
 class Irrlicht : public IDisplay {
 public:
-	explicit Irrlicht(std::pair<size_t, size_t> res);
+	explicit Irrlicht(std::unique_ptr<Params> &params);
 	~Irrlicht() override;
-	void	display() const override;
+	void	display() override;
+	void	clear() override;
 	bool	isOpen() const override;
-	char	getEvents() const override;
+	void	getEvents(std::pair<int, std::string> &keyCode) override;
 	bool	isEvent() const override;
-	void loadModels(std::map<std::string, Position> &) override;
+	void loadModels(std::map<std::string, Data> &) override;
+	void updateModels(std::map<std::string, Data> &) override;
+	void loadGuis(std::map<std::string, Data> &map) override;
+
 private:
 	std::pair<irr::u32, irr::u32>	_resolution;
-	irr::SKeyMap			keys[5];
+	irr::gui::IGUIFont		*_font;
 	irr::IrrlichtDevice		*_device;
 	irr::video::IVideoDriver	*_driver;
 	irr::gui::IGUIEnvironment	*_gui;
-	std::vector<irr::gui::IGUIElement>	_guiElement;
+	std::map<std::string, irr::gui::IGUIButton *>	_guiElement;
+	std::map<std::string, irr::gui::IGUIElement *>	_textElement;
 	std::map<std::string, irr::scene::IAnimatedMeshSceneNode *>	_sceneElement;
+	std::map<std::string, Data>	_sceneData;
 	irr::scene::ISceneManager	*_sceneManager;
+	DeviceReceiver	_deviceReceiver;
+	bool	_verbose;
 };
 
 #endif //BOMBERMAN_IRRLICHT_HPP

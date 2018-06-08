@@ -7,11 +7,9 @@
 #ifndef POSITION_HPP
 #	define POSITION_HPP
 
-#	include <cstddef>
-
 struct Position {
-	size_t	x;
-	size_t	y;
+	int	x;
+	int	y;
 };
 
 #endif //BOMBERMAN_POSITION_HPP

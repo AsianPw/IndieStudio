@@ -7,8 +7,18 @@
 #ifndef DATA_HPP
 #	define DATA_HPP
 
-struct Data {
+#include <string>
+#include <irr/IAnimatedMeshMD2.h>
+#include "Position.hpp"
+#include "Rotation.hpp"
 
+struct Data {
+	Position	pos;
+	Rotation	rot;
+	std::string	texturePath;
+	std::string	modelPath;
+	irr::scene::EMD2_ANIMATION_TYPE	animationType;
+	bool		isBnt;
 };
 
 #endif //BOMBERMAN_DATA_HPP

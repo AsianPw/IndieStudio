@@ -8,15 +8,18 @@
 #define IDISPLAY_HPP
 
 #include <map>
-#include "Position.hpp"
+#include "Data.hpp"
 
 class IDisplay {
 public:
 	virtual ~IDisplay() = default;
-	virtual void	display() const = 0;
+	virtual void	display() = 0;
+	virtual void	clear() = 0;
 	virtual bool	isOpen() const = 0;
-	virtual void	loadModels(std::map<std::string, Position> &) = 0;
-	virtual char	getEvents() const = 0;
+	virtual void	loadModels(std::map<std::string, Data> &) = 0;
+	virtual void	updateModels(std::map<std::string, Data> &) = 0;
+	virtual void	loadGuis(std::map<std::string, Data> &) = 0;
+	virtual void getEvents(std::pair<int, std::string> &) = 0;
 	virtual bool	isEvent() const = 0;
 };
 
