@@ -40,6 +40,10 @@ private:
 	std::map<std::string, irr::gui::IGUIElement *>	_textElement;
 	std::map<std::string, irr::scene::IAnimatedMeshSceneNode *>	_sceneElement;
 	std::map<std::string, Data>	_sceneData;
+public:
+	void getMap(std::vector<std::vector<char>> &vector) override;
+
+private:
 	irr::scene::ISceneManager	*_sceneManager;
 	DeviceReceiver	_deviceReceiver;
 	bool	_verbose;

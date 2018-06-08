@@ -8,6 +8,7 @@
 #define IDISPLAY_HPP
 
 #include <map>
+#include <vector>
 #include "Data.hpp"
 
 class IDisplay {
@@ -19,7 +20,8 @@ public:
 	virtual void	loadModels(std::map<std::string, Data> &) = 0;
 	virtual void	updateModels(std::map<std::string, Data> &) = 0;
 	virtual void	loadGuis(std::map<std::string, Data> &) = 0;
-	virtual void getEvents(std::pair<int, std::string> &) = 0;
+	virtual void	getEvents(std::pair<int, std::string> &) = 0;
+	virtual void	getMap(std::vector<std::vector<char>> &) = 0;
 	virtual bool	isEvent() const = 0;
 };
 

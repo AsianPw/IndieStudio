@@ -46,6 +46,7 @@ void	Core::compute()
 			}
 			_scene->checkEvents(keyCode);
 		}
+		_display->getMap(_scene->getMap());
 		_scene->compute(keyCode);
 		_display->updateModels(_scene->getModels());
 		_display->display();

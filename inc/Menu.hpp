@@ -8,6 +8,7 @@
 #define BOMBERMAN_MENU_HPP
 
 #include "IScene.hpp"
+#include "GenerateMap.hpp"
 
 class Menu : public IScene{
 public:
@@ -24,7 +25,7 @@ public:
 private:
 	std::map<std::string, Data>	_models;
 	std::map<std::string, Data>	_guis;
-	std::vector<std::vector<char>>	_map;
+	GenerateMap	_map;
 	bool	_verbose;
 	bool	_change;
 	IScene	*_scene;

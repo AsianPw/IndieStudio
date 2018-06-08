@@ -17,6 +17,8 @@ Irrlicht::Irrlicht(std::unique_ptr<Params> &params) :
 	_verbose(params->getVerbose()),
 	_deviceReceiver(params->getVerbose())
 {
+	bool pixel_shader_support;
+	bool vertex_shader_support;
 	_device = irr::createDevice(irr::video::EDT_OPENGL, irr::core::dimension2d(_resolution.first, _resolution.second), 32, params->getFullscreen(), false, params->getVsync(), &_deviceReceiver);
 	if (_device == nullptr)
 		throw std::runtime_error("Couldn't find any device !");
@@ -24,6 +26,10 @@ Irrlicht::Irrlicht(std::unique_ptr<Params> &params) :
 	_driver = _device->getVideoDriver();
 	if (_driver == nullptr)
 		throw std::runtime_error("Couldn't get any video driver !");
+	pixel_shader_support = (_driver->queryFeature(irr::video::EVDF_PIXEL_SHADER_1_1) || _driver->queryFeature(irr::video::EVDF_ARB_FRAGMENT_PROGRAM_1));
+	vertex_shader_support = (_driver->queryFeature(irr::video::EVDF_VERTEX_SHADER_1_1) || _driver->queryFeature(irr::video::EVDF_ARB_VERTEX_PROGRAM_1));
+	if ( !pixel_shader_support || !vertex_shader_support )
+		throw std::runtime_error("Shaders 1.1 aren't support on this device !");
 	_sceneManager = _device->getSceneManager();
 	_gui = _device->getGUIEnvironment();
 	_font = _gui->getFont("texture/bigfont.png");
@@ -146,4 +152,17 @@ void Irrlicht::loadGuis(std::map<std::string, Data> &guis)
 			tmpText->setOverrideColor(irr::video::SColor(255, 255, 255, 255));
 		}
 	}
+}
+
+void Irrlicht::getMap(std::vector<std::vector<char>> &map)
+{
+	if (map.empty()) {
+		return;
+	}
+	for (auto const &line : map) {
+		for (auto const &element : line) {
+			std::cout << element;
+		}
+	}
+	std::cout << "\n\n\n\n\n\n";
 }
