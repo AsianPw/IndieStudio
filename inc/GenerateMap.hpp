@@ -30,7 +30,7 @@ class	GenerateMap
 		int	width = 31;
 		int	height = 31;
 		int	nbr_wall = (width * height) / 2;
-		std::vector<std::vector<char>> BombermanMap;
+		std::vector<std::vector<char>>	BombermanMap;
 
 	public:
 		~GenerateMap();
@@ -40,7 +40,7 @@ class	GenerateMap
 		int	getNbrwall();
 		t_coord	getPlayerPlace();
 		t_coord	getIaPlace();
-		std::vector<std::vector<char>>	getMap();
+		std::vector<std::vector<char>>	&getMap();
 		void	InitMap();
 		void	print_map();
 		void	place_unbrokable_wall_width();

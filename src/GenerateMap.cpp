@@ -22,7 +22,7 @@ int	GenerateMap::getNbrwall(void)
 	return nbr_wall;
 }
 
-std::vector<std::vector<char>>	GenerateMap::getMap(void)
+std::vector<std::vector<char>>	&GenerateMap::getMap(void)
 {
 	return BombermanMap;
 }
