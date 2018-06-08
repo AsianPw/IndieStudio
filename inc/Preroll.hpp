@@ -21,10 +21,12 @@ public:
 	IScene	*newScene() override;
 	void checkEvents(std::pair<int, std::string> &) override;
 	std::map<std::string, Data> &getGuis() override;
+	std::vector<std::vector<char>> &getMap() override;
 
 private:
 	std::map<std::string, Data>	_models;
 	std::map<std::string, Data>	_guis;
+	std::vector<std::vector<char>>	_map;
 	bool	_change;
 	bool	_verbose;
 };

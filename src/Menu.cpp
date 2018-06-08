@@ -52,3 +52,8 @@ std::map<std::string, Data> &Menu::getGuis()
 {
 	return _guis;
 }
+
+std::vector<std::vector<char>> &Menu::getMap()
+{
+	return _map;
+}

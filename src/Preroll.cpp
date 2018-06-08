@@ -25,6 +25,11 @@ void	Preroll::compute(std::pair<int, std::string> &keyCode)
 	}
 }
 
+std::vector<std::vector<char>>	&Preroll::getMap()
+{
+	return _map;
+}
+
 void	Preroll::checkEvents(std::pair<int, std::string> &keyCode)
 {
 }
