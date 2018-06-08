@@ -163,6 +163,7 @@ void Irrlicht::getMap(std::vector<std::vector<char>> &map)
 		for (auto const &element : line) {
 			std::cout << element;
 		}
+		std::cout << std::endl;
 	}
 	std::cout << "\n\n\n\n\n\n";
 }

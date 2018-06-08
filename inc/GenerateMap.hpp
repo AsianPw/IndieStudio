@@ -27,8 +27,8 @@ typedef struct	s_coord
 class	GenerateMap
 {
 	private:
-		int	width = 31;
-		int	height = 31;
+		int	width = 15;
+		int	height = 15;
 		int	nbr_wall = (width * height) / 2;
 		std::vector<std::vector<char>>	BombermanMap;
 
@@ -43,8 +43,8 @@ class	GenerateMap
 		std::vector<std::vector<char>>	&getMap();
 		void	InitMap();
 		void	print_map();
-		void	place_unbrokable_wall_width();
-		void	place_unbrokable_wall_height();
+		void	place_unbreakable_wall_width();
+		void	place_unbreakable_wall_height();
 		void	place_taget_wall();
 		void	set_place_for_players();
 		void	place_player(size_t);

@@ -20,3 +20,7 @@ link_directories(${IRRLICHT_PATH_LIB})
 add_executable(bomberman ${bomberman_src} ${bomberman_inc})
 
 target_link_libraries(bomberman Irrlicht GL X11 Xxf86vm)
+
+install (TARGETS bomberman DESTINATION .)
+
+include (CPack)

@@ -46,33 +46,33 @@ void	GenerateMap::InitMap(void)
 	for (int i = 0; i < width; i++) {
 		for (int j = 0; j < height; j++) {
 			BombermanMap[i][j] = '*';
-			if (j == width - 1)
-				BombermanMap[i][j] = '\n';
+			//if (j == width - 1)
+			//	BombermanMap[i][j] = '\n';
 		}
 	}
 }
 
-void	GenerateMap::place_unbrokable_wall_width(void)
+void	GenerateMap::place_unbreakable_wall_width(void)
 {
 	for (int i = 0; i < width; i++) {
 		if (i % 2 != 0) {
-			for (int j = 1; j < height - 2; j++) {
+			for (int j = 1; j < height - 1; j++) {
 				BombermanMap[i][j] = ' ';
-				if (j == width - 1)
-					BombermanMap[i][j] = '\n';
+			//	if (j == width - 1)
+			//		BombermanMap[i][j] = '\n';
 			}
 		}
 	}
 }
 
-void	GenerateMap::place_unbrokable_wall_height(void)
+void	GenerateMap::place_unbreakable_wall_height(void)
 {
 	for (int i = 1; i < width - 2 ; i++) {
-		for (int j = 0; j < height - 2; j++) {
+		for (int j = 0; j < height - 1; j++) {
 			if (j % 2 != 0 ) {
 				BombermanMap[i][j] = ' ';
 			}
-			BombermanMap[i][height - 3] = ' ';
+			//.BombermanMap[i][height - 3] = ' ';
 		}
 	}
 }
@@ -98,11 +98,11 @@ void	GenerateMap::set_place_for_players(void)
 	BombermanMap[1][1] = ' ';
 	BombermanMap[1][2] = ' ';
 	BombermanMap[2][1] = ' ';
-	BombermanMap[2][2] = ' ';
-	BombermanMap[width - 2][height - 3] = ' ';
-	BombermanMap[width - 2][height - 4] = ' ';
-	BombermanMap[height - 4][width - 3] = ' ';
-	BombermanMap[width - 3][height - 3] = ' ';
+	//BombermanMap[2][2] = ' ';
+	//BombermanMap[width - 2][height - 3] = ' ';
+	//BombermanMap[width - 2][height - 4] = ' ';
+	//BombermanMap[height - 4][width - 3] = ' ';
+	//BombermanMap[width - 3][height - 3] = ' ';
 }
 
 void	GenerateMap::place_player(size_t nbrplayer)
@@ -119,7 +119,7 @@ void	GenerateMap::place_player(size_t nbrplayer)
 			place.x = rand() % (width - 1);
 			place.y = rand() % (height - 1);
 		}
-		BombermanMap[place.x][place.y] = 'P';
+		BombermanMap[1][1] = 'P';
 		index = index + 1;
 	}
 }
@@ -146,8 +146,8 @@ void	GenerateMap::place_ia(size_t nbria)
 GenerateMap::GenerateMap(size_t nbrplayer, size_t nbria)
 {
 	InitMap();
-	place_unbrokable_wall_width();
-	place_unbrokable_wall_height();
+	place_unbreakable_wall_width();
+	place_unbreakable_wall_height();
 	place_taget_wall();
 	set_place_for_players();
 	place_player(nbrplayer);

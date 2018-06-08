@@ -46,6 +46,7 @@ gen### C++ template
 *.exe
 *.out
 *.app
+*.txt
 
 build/
 cmake-build-debug/
