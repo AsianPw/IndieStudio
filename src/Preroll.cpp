@@ -23,6 +23,7 @@ void	Preroll::compute(std::pair<int, std::string> &keyCode)
 	if (_models["player"].pos.y > 150) {
 		_change = true;
 	}
+	_cameraPos.y += 0.1f;
 }
 
 std::vector<std::vector<char>>	&Preroll::getMap()
