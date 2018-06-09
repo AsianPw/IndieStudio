@@ -33,8 +33,8 @@ GenerateMap::~GenerateMap()
 
 void	GenerateMap::print_map(void)
 {
-	for (int i = 0; i < width; i++) {
-		for (int j = 0; j < height; j++) {
+	for (int i = 0; i < height; i++) {
+		for (int j = 0; j < width; j++) {
 			std::cout<<BombermanMap[i][j];
 		}
 	}
@@ -43,28 +43,28 @@ void	GenerateMap::print_map(void)
 void	GenerateMap::InitMap(void)
 {
 	BombermanMap.resize(height, std::vector<char>(width));
-	for (int i = 0; i < width; i++) {
-		for (int j = 0; j < height; j++) {
+	for (int i = 0; i < height; i++) {
+		for (int j = 0; j < width; j++) {
 			BombermanMap[i][j] = '*';
-		}
-	}
-}
-
-void	GenerateMap::place_unbreakable_wall_width(void)
-{
-	for (int i = 0; i < width; i++) {
-		if (i % 2 != 0) {
-			for (int j = 1; j < height - 1; j++) {
-				BombermanMap[i][j] = ' ';
-			}
 		}
 	}
 }
 
 void	GenerateMap::place_unbreakable_wall_height(void)
 {
-	for (int i = 1; i < width - 2 ; i++) {
-		for (int j = 0; j < height - 1; j++) {
+	for (int i = 0; i < height; i++) {
+		if (i % 2 != 0) {
+			for (int j = 1; j < width - 1; j++) {
+				BombermanMap[i][j] = ' ';
+			}
+		}
+	}
+}
+
+void	GenerateMap::place_unbreakable_wall_width(void)
+{
+	for (int i = 1; i < height - 2 ; i++) {
+		for (int j = 0; j < width - 1; j++) {
 			if (j % 2 != 0 ) {
 				BombermanMap[i][j] = ' ';
 			}
@@ -78,11 +78,11 @@ void	GenerateMap::place_target_wall(void)
 
 	srand(time(NULL));
 	for (int z = 0; z <= nbr_wall; z++) {
-		i = rand() % (width - 1);
-		j = rand() % (height - 1);
+		i = rand() % (height - 1);
+		j = rand() % (width - 1);
 		while (BombermanMap[i][j] && BombermanMap[i][j] != ' ') {
-			i = rand() % (width - 1);
-			j = rand() % (height - 1);
+			i = rand() % (height - 1);
+			j = rand() % (width - 1);
 		}
 		BombermanMap[i][j] = '#';
 	}
