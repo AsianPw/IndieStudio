@@ -17,8 +17,6 @@ Irrlicht::Irrlicht(std::unique_ptr<Params> &params) :
 	_verbose(params->getVerbose()),
 	_deviceReceiver(params->getVerbose())
 {
-	bool pixel_shader_support;
-	bool vertex_shader_support;
 	_device = irr::createDevice(irr::video::EDT_OPENGL, irr::core::dimension2d(_resolution.first, _resolution.second), 32, params->getFullscreen(), false, params->getVsync(), &_deviceReceiver);
 	if (_device == nullptr)
 		throw std::runtime_error("Couldn't find any device !");
@@ -26,19 +24,13 @@ Irrlicht::Irrlicht(std::unique_ptr<Params> &params) :
 	_driver = _device->getVideoDriver();
 	if (_driver == nullptr)
 		throw std::runtime_error("Couldn't get any video driver !");
-	pixel_shader_support = (_driver->queryFeature(irr::video::EVDF_PIXEL_SHADER_1_1) || _driver->queryFeature(irr::video::EVDF_ARB_FRAGMENT_PROGRAM_1));
-	vertex_shader_support = (_driver->queryFeature(irr::video::EVDF_VERTEX_SHADER_1_1) || _driver->queryFeature(irr::video::EVDF_ARB_VERTEX_PROGRAM_1));
-	if ( !pixel_shader_support || !vertex_shader_support )
-		throw std::runtime_error("Shaders 1.1 aren't support on this device !");
-	_gpu = _driver->getGPUProgrammingServices();
-	if (!_gpu)
-		throw std::runtime_error("Unable to load GPU !");
 	_sceneManager = _device->getSceneManager();
 	_gui = _device->getGUIEnvironment();
 	_font = _gui->getFont("texture/bigfont.png");
 	if (_font == nullptr)
 		throw std::runtime_error("Couldn't load font !");
-	_sceneManager->addCameraSceneNode(nullptr, irr::core::vector3df(100.0f, .0f, 20.0f), irr::core::vector3df(0.0f, 0.0f, 0.0f));
+	_camera = _sceneManager->addCameraSceneNode(nullptr, irr::core::vector3df(100.0f, .0f, 20.0f), irr::core::vector3df(0.0f, 0.0f, 0.0f));
+	_sceneManager->setAmbientLight(irr::video::SColorf(1.0,1.0,1.0,0.0));
 	_gui->getSkin()->setFont(_font, irr::gui::EGDF_BUTTON);
 	_gui->getSkin()->setFont(_font, irr::gui::EGDF_DEFAULT);
 }
@@ -55,7 +47,9 @@ void	Irrlicht::clear()
 	_sceneManager->clear();
 	_gui->clear();
 	_textElement.clear();
-	_sceneManager->addCameraSceneNode(nullptr, irr::core::vector3df(100.0f, .0f, 20.0f), irr::core::vector3df(0.0f, 0.0f, 0.0f));
+	_sceneCube.clear();
+	_camera = _sceneManager->addCameraSceneNode(nullptr, irr::core::vector3df(100.0f, .0f, 20.0f), irr::core::vector3df(0.0f, 0.0f, 0.0f));
+	_sceneManager->setAmbientLight(irr::video::SColorf(1.0,1.0,1.0,0.0));
 }
 
 void	Irrlicht::display()
@@ -110,7 +104,6 @@ void Irrlicht::loadModels(std::map<std::string, Data> &models)
 		_sceneElement[model.first]->setMD2Animation(model.second.animationType);
 		_sceneElement[model.first]->setPosition(irr::core::vector3df(model.second.pos.x, 0.0f, model.second.pos.y));
 		_sceneElement[model.first]->setRotation(irr::core::vector3df(model.second.rot.x, model.second.rot.y, .0f));
-		_sceneElement[model.first]->setMaterialFlag(irr::video::EMF_LIGHTING, false);
 		if (!model.second.texturePath.empty()) {
 			_sceneElement[model.first]->setMaterialTexture(0, _driver->getTexture(model.second.texturePath.c_str()));
 		}
@@ -161,8 +154,8 @@ void Irrlicht::getMap(std::vector<std::vector<char>> &map)
 {
 	size_t	x = 0;
 	size_t	y = 0;
-	float	size = 10.0f;
 
+	generateGround();
 	if (map.empty()) {
 		return;
 	}
@@ -170,18 +163,49 @@ void Irrlicht::getMap(std::vector<std::vector<char>> &map)
 		x = 0;
 		for (auto const &element : line) {
 			Tools::displayVerbose(_verbose,std::string(1, element), false);
-			if (element != '*') {
+			if (element != '*' && element != '#') {
 				x++;
 				continue;
 			}
-			_sceneCube.push_back(_sceneManager->addCubeSceneNode(size));
-			_sceneCube.back()->setPosition(irr::core::vector3df(x * size, 0, y * size));
-			_sceneCube.back()->setMaterialTexture(0, _driver->getTexture("texture/breakable_wall.jpg"));
-			_sceneCube.back()->setMaterialFlag(irr::video::EMF_LIGHTING, false);
+			_sceneCube.push_back(_sceneManager->addCubeSceneNode(_cubeSize));
+			_sceneCube.back()->setPosition(irr::core::vector3df(x * _cubeSize, 0, y * _cubeSize));
+			if (element == '#')
+				_sceneCube.back()->setMaterialTexture(0, _driver->getTexture("texture/cobble.png"));
+			else
+				_sceneCube.back()->setMaterialTexture(0, _driver->getTexture("texture/wall.png"));
 			x++;
 		}
 		y++;
 		Tools::displayVerbose(_verbose, "");
 	}
-	Tools::displayVerbose(_verbose, "\n\n\n\n\n\n");
+	Tools::displayVerbose(_verbose, "\n");
+}
+
+void	Irrlicht::changeCameraPosition(Tools::vector3d &pos, Tools::vector3d &rot)
+{
+	auto cameraPos = _camera->getPosition();
+	auto cameraRot = _camera->getRotation();
+
+	if (cameraPos.X != pos.x || cameraPos.Y != pos.y || cameraPos.Z != pos.z) {
+		_camera->setPosition(irr::core::vector3df(pos.x, pos.y, pos.z));
+		//Tools::displayVerbose(_verbose, "Update Position of camera.");
+	}
+	if (cameraRot.X != rot.x || cameraRot.Y != rot.y || cameraRot.Z != rot.z) {
+		if (!_sceneCube.empty()) {
+			_camera->setTarget(irr::core::vector3df(rot.x, rot.y, rot.z));
+			//Tools::displayVerbose(_verbose, "Update Rotation of camera.");
+		}
+	}
+}
+
+void Irrlicht::generateGround()
+{
+	for (auto y = -70; y < 70; y++) {
+		for (auto x = -70; x < 40; x++) {
+			_sceneCube.push_back(_sceneManager->addCubeSceneNode(_cubeSize));
+			_sceneCube.back()->setPosition(irr::core::vector3df(x * _cubeSize, -_cubeSize, y * _cubeSize));
+			_sceneCube.back()->setMaterialTexture(0, _driver->getTexture("texture/téléchargement.jpeg"));
+		}
+	}
+	_sceneManager->addSkyDomeSceneNode(_driver->getTexture("texture/dom.jpg"));
 }

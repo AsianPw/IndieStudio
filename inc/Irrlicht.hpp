@@ -29,6 +29,11 @@ public:
 	void loadModels(std::map<std::string, Data> &) override;
 	void updateModels(std::map<std::string, Data> &) override;
 	void loadGuis(std::map<std::string, Data> &map) override;
+	void changeCameraPosition(Tools::vector3d &, Tools::vector3d &) override;
+	void getMap(std::vector<std::vector<char>> &vector) override;
+
+private:
+	void generateGround();
 
 private:
 	std::pair<irr::u32, irr::u32>	_resolution;
@@ -36,16 +41,13 @@ private:
 	irr::IrrlichtDevice		*_device;
 	irr::video::IVideoDriver	*_driver;
 	irr::gui::IGUIEnvironment	*_gui;
-	irr::video::IGPUProgrammingServices	*_gpu;
+	irr::scene::ICameraSceneNode	*_camera;
+	float	_cubeSize = 10.0f;
 	std::map<std::string, irr::gui::IGUIButton *>	_guiElement;
 	std::map<std::string, irr::gui::IGUIElement *>	_textElement;
 	std::map<std::string, irr::scene::IAnimatedMeshSceneNode *>	_sceneElement;
 	std::vector<irr::scene::IMeshSceneNode *>	_sceneCube;
 	std::map<std::string, Data>	_sceneData;
-public:
-	void getMap(std::vector<std::vector<char>> &vector) override;
-
-private:
 	irr::scene::ISceneManager	*_sceneManager;
 	DeviceReceiver	_deviceReceiver;
 	bool	_verbose;
