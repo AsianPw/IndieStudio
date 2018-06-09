@@ -63,8 +63,28 @@ bool	Params::argsExist(const char *arg) const
 	return false;
 }
 
+bool Params::checkParams(char **arg) const
+{
+	int	i = 1;
+
+	while (_av[i] != NULL) {
+		if (strcmp(_av[i], "-v") != 0 && strcmp(_av[i], "--verbose") != 0
+			&& strcmp(_av[i], "-h") != 0 && strcmp(_av[i], "--help") != 0
+			&& strcmp(_av[i], "-f") != 0 && strcmp(_av[i], "--fullscreen") != 0
+			&& strcmp(_av[i], "--vsync") != 0 && strcmp(_av[i], "--size") != 0
+			&& argsExist("--size") == false) {
+			std::cerr << "Bad input options. Try ./bomberman --help" << std::endl;
+			return false;
+		}
+		i++;
+	}
+	return true;
+}
+
 bool	Params::parse()
 {
+	if (checkParams(_av) == false)
+		return false;
 	if (argsExist("-v") || argsExist("--verbose"))
 		_verbose = true;
 	if (argsExist("-f") || argsExist("--fullscreen"))
@@ -76,6 +96,10 @@ bool	Params::parse()
 		return false;
 	}
 	if (argsExist("--size")) {
+		if (_av[getIndex() + 1] == NULL || _av[getIndex() + 2] == NULL) {
+			std::cerr << "width and height , both of them must be integers" << std::endl;
+			return false;
+		}
 		_width = atoi(_av[getIndex() + 1]);
 		_height = atoi(_av[getIndex() + 2]);
 		if (_width  <= 0 || _height <= 0) {

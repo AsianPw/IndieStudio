@@ -7,6 +7,21 @@
 
 #include "../inc/GenerateMap.hpp"
 
+GenerateMap::GenerateMap(size_t nbrplayer, size_t nbria)
+{
+	InitMap();
+	place_unbreakable_wall_width();
+	place_unbreakable_wall_height();
+	place_target_wall();
+	set_place_for_players();
+	setPlayeronMap(nbria);
+	setIaonMap(nbrplayer);
+}
+
+GenerateMap::~GenerateMap()
+{
+}
+
 int	GenerateMap::getWidth(void)
 {
 	return width;
@@ -27,14 +42,10 @@ std::vector<std::vector<char>>	&GenerateMap::getMap(void)
 	return BombermanMap;
 }
 
-GenerateMap::~GenerateMap()
-{
-}
-
 void	GenerateMap::print_map(void)
 {
-	for (int i = 0; i < width; i++) {
-		for (int j = 0; j < height; j++) {
+	for (int i = 0; i < height; i++) {
+		for (int j = 0; j < width; j++) {
 			std::cout<<BombermanMap[i][j];
 		}
 	}
@@ -43,51 +54,46 @@ void	GenerateMap::print_map(void)
 void	GenerateMap::InitMap(void)
 {
 	BombermanMap.resize(height, std::vector<char>(width));
-	for (int i = 0; i < width; i++) {
-		for (int j = 0; j < height; j++) {
+	for (int i = 0; i < height; i++) {
+		for (int j = 0; j < width; j++) {
 			BombermanMap[i][j] = '*';
-			if (j == width - 1)
-				BombermanMap[i][j] = '\n';
 		}
 	}
 }
 
-void	GenerateMap::place_unbrokable_wall_width(void)
+void	GenerateMap::place_unbreakable_wall_height(void)
 {
-	for (int i = 0; i < width; i++) {
+	for (int i = 0; i < height; i++) {
 		if (i % 2 != 0) {
-			for (int j = 1; j < height - 2; j++) {
+			for (int j = 1; j < width - 1; j++) {
 				BombermanMap[i][j] = ' ';
-				if (j == width - 1)
-					BombermanMap[i][j] = '\n';
 			}
 		}
 	}
 }
 
-void	GenerateMap::place_unbrokable_wall_height(void)
+void	GenerateMap::place_unbreakable_wall_width(void)
 {
-	for (int i = 1; i < width - 2 ; i++) {
-		for (int j = 0; j < height - 2; j++) {
+	for (int i = 1; i < height - 2 ; i++) {
+		for (int j = 0; j < width - 1; j++) {
 			if (j % 2 != 0 ) {
 				BombermanMap[i][j] = ' ';
 			}
-			BombermanMap[i][height - 3] = ' ';
 		}
 	}
 }
 
-void	GenerateMap::place_taget_wall(void)
+void	GenerateMap::place_target_wall(void)
 {
 	int	i, j;
 
 	srand(time(NULL));
 	for (int z = 0; z <= nbr_wall; z++) {
-		i = rand() % (width - 1);
-		j = rand() % (height - 1);
+		i = rand() % (height - 1);
+		j = rand() % (width - 1);
 		while (BombermanMap[i][j] && BombermanMap[i][j] != ' ') {
-			i = rand() % (width - 1);
-			j = rand() % (height - 1);
+			i = rand() % (height - 1);
+			j = rand() % (width - 1);
 		}
 		BombermanMap[i][j] = '#';
 	}
@@ -95,63 +101,51 @@ void	GenerateMap::place_taget_wall(void)
 
 void	GenerateMap::set_place_for_players(void)
 {
-	BombermanMap[1][1] = ' ';
-	BombermanMap[1][2] = ' ';
-	BombermanMap[2][1] = ' ';
-	BombermanMap[2][2] = ' ';
-	BombermanMap[width - 2][height - 3] = ' ';
-	BombermanMap[width - 2][height - 4] = ' ';
-	BombermanMap[height - 4][width - 3] = ' ';
-	BombermanMap[width - 3][height - 3] = ' ';
-}
+	int	x = 0;
+	int	y = 0;
 
-void	GenerateMap::place_player(size_t nbrplayer)
-{
-	t_coord	place;
-	size_t	index = 0;
-
-	while (index < nbrplayer) {
-		place.x = rand() % (width - 1);
-		place.y = rand() % (height - 1);
-		while (BombermanMap[place.x][place.y] == '*' ||
-			BombermanMap[place.x][place.y] == 'P' ||
-			BombermanMap[place.x][place.y] == 'A') {
-			place.x = rand() % (width - 1);
-			place.y = rand() % (height - 1);
+	while (x != height)
+	{
+		y = 0;
+		while (y != width)
+		{
+			if (BombermanMap[x][y] >= 65 && BombermanMap[x][y] <= 68)
+			{
+				if (BombermanMap[x - 1][y] != '*')
+					BombermanMap[x - 1][y] = ' ';
+				if (BombermanMap[x + 1][y] != '*')
+					BombermanMap[x + 1][y] = ' ';
+				if (BombermanMap[x][y - 1] != '*')
+					BombermanMap[x][y - 1] = ' ';
+				if (BombermanMap[x][y + 1] != '*')
+					BombermanMap[x][y + 1] = ' ';
+			}
+			y++;
 		}
-		BombermanMap[place.x][place.y] = 'P';
-		index = index + 1;
+		x++;
 	}
 }
 
-void	GenerateMap::place_ia(size_t nbria)
+void	GenerateMap::setPlayeronMap(int nbrPlayer)
 {
-	t_coord	place;
-	size_t	index = 0;
-
-	while (index < nbria) {
-		place.x = rand() % (width - 1);
-		place.y = rand() % (height - 1);
-		while (BombermanMap[place.x][place.y] == '*' ||
-			BombermanMap[place.x][place.y] == 'P' ||
-			BombermanMap[place.x][place.y] == 'A') {
-			place.x = rand() % (width - 1);
-			place.y = rand() % (height - 1);
-		}
-		BombermanMap[place.x][place.y] = 'A';
-		index = index + 1;
-	}
+	if (nbrPlayer >= 1)
+		BombermanMap[1][1] = 'A';
+	if (nbrPlayer >= 2)
+		BombermanMap[1][width - 2] = 'B';
+	if (nbrPlayer >= 3)
+		BombermanMap[height - 2][1] = 'C';
+	if (nbrPlayer >= 4)
+		BombermanMap[height - 2][width - 2] = 'D';
 }
 
-GenerateMap::GenerateMap(size_t nbrplayer, size_t nbria)
+void	GenerateMap::setIaonMap(int nbrIa)
 {
-	InitMap();
-	place_unbrokable_wall_width();
-	place_unbrokable_wall_height();
-	place_taget_wall();
-	set_place_for_players();
-	place_player(nbrplayer);
-	place_ia(nbria);
+	if (nbrIa >= 1)
+		BombermanMap[1][width - 2] = 'B';
+	if (nbrIa >= 2)
+		BombermanMap[height - 2][1] = 'C';
+	if (nbrIa == 3)
+		BombermanMap[height - 2][width - 2] = 'D';
 }
 
 /*int	main()
