@@ -7,6 +7,21 @@
 
 #include "../inc/GenerateMap.hpp"
 
+GenerateMap::GenerateMap(size_t nbrplayer, size_t nbria)
+{
+	InitMap();
+	place_unbreakable_wall_width();
+	place_unbreakable_wall_height();
+	place_target_wall();
+	set_place_for_players();
+	setPlayeronMap(BombermanMap, nbria);
+	setIaonMap(BombermanMap, nbrplayer);
+}
+
+GenerateMap::~GenerateMap()
+{
+}
+
 int	GenerateMap::getWidth(void)
 {
 	return width;
@@ -25,10 +40,6 @@ int	GenerateMap::getNbrwall(void)
 std::vector<std::vector<char>>	&GenerateMap::getMap(void)
 {
 	return BombermanMap;
-}
-
-GenerateMap::~GenerateMap()
-{
 }
 
 void	GenerateMap::print_map(void)
@@ -115,38 +126,48 @@ void	GenerateMap::set_place_for_players(void)
 	}
 }
 
-void	GenerateMap::place_player(size_t nbrplayer)
+void	GenerateMap::setPlayeronMap(std::vector<std::vector<char>> &map, int nbrPlayer)
 {
-	if (nbrplayer >= 1)
-		BombermanMap[1][1] = 'A';
-	if (nbrplayer >= 2)
+	if (nbrPlayer >= 1)
+		map[1][1] = 'A';
+	if (nbrPlayer >= 2)
+		map[1][width - 2] = 'B';
+	if (nbrPlayer >= 3)
+		map[height - 2][1] = 'C';
+	if (nbrPlayer >= 4)
+		map[height - 2][width - 2] = 'D';
+}
+
+void	GenerateMap::setIaonMap(std::vector<std::vector<char>> &map, int nbrIa)
+{
+	if (nbrIa >= 1)
 		BombermanMap[1][width - 2] = 'B';
-	if (nbrplayer >= 3)
+	if (nbrIa >= 2)
 		BombermanMap[height - 2][1] = 'C';
-	if (nbrplayer == 4)
+	if (nbrIa == 3)
 		BombermanMap[height - 2][width - 2] = 'D';
 }
 
-void	GenerateMap::place_ia(size_t nbria)
+void	GenerateMap::moveDown(std::vector<std::vector<char>> &map)
 {
-	if (nbria >= 1)
-		BombermanMap[1][width - 2] = 'B';
-	if (nbria >= 2)
-		BombermanMap[height - 2][1] = 'C';
-	if (nbria == 3)
-		BombermanMap[height - 2][width - 2] = 'D';
 }
 
-GenerateMap::GenerateMap(size_t nbrplayer, size_t nbria)
+void	GenerateMap::moveLeft(std::vector<std::vector<char>> &map)
 {
-	InitMap();
-	place_unbreakable_wall_width();
-	place_unbreakable_wall_height();
-	place_target_wall();
-	place_player(nbrplayer);
-	place_ia(nbria);
-	set_place_for_players();
 }
+
+void	GenerateMap::moveRight(std::vector<std::vector<char>> &map)
+{
+}
+
+void	GenerateMap::moveUp(std::vector<std::vector<char>> &map)
+{
+}
+
+void	GenerateMap::letBomb(std::vector<std::vector<char>> &map)
+{
+}
+
 
 /*int	main()
 {

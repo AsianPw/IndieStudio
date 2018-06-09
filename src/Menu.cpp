@@ -9,7 +9,8 @@
 #include "../inc/Tools.hpp"
 #include "../inc/keyCodes.hpp"
 
-Menu::Menu(bool verbose) : _change(false), _verbose(verbose), _scene(nullptr), _map(1, 3)
+Menu::Menu(bool verbose) 
+	: _change(false), _verbose(verbose), _scene(nullptr), _map(1, 3)
 {
 	_models.insert({"player", { {0, -150}, {0, 180}, "texture/characters/ziggs.png", "texture/characters/ziggs.md3", irr::scene::EMAT_STAND, false }});
 	_models.insert({"player2", { {0, -200}, {0, 180}, "texture/characters/ziggs_general.png", "texture/characters/ziggs_general.md3", irr::scene::EMAT_STAND, false }});

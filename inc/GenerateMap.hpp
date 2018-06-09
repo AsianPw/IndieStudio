@@ -15,6 +15,7 @@
 #include <irr/irrlicht.h>
 #include <irr/driverChoice.h>
 #include "../inc/EventReceiver.hpp"
+#include "../inc/IPlayer.hpp"
 
 using namespace irr;
 
@@ -24,7 +25,7 @@ typedef struct	s_coord
 	int	y;
 }		t_coord;
 
-class	GenerateMap
+class	GenerateMap : public IPlayer
 {
 	private:
 		int	width = 15;
@@ -33,8 +34,8 @@ class	GenerateMap
 		std::vector<std::vector<char>>	BombermanMap;
 
 	public:
+	GenerateMap(size_t , size_t );
 		~GenerateMap();
-		GenerateMap(size_t , size_t);
 		int	getWidth();
 		int	getHeight();
 		int	getNbrwall();
@@ -49,6 +50,13 @@ class	GenerateMap
 		void	set_place_for_players();
 		void	place_player(size_t);
 		void	place_ia(size_t);
+		void	setPlayeronMap(std::vector<std::vector<char>> &, int nbrPlayer);
+		void	setIaonMap(std::vector<std::vector<char>> &, int nbrIa);
+		void	moveLeft(std::vector<std::vector<char>> &);
+		void	moveRight(std::vector<std::vector<char>> &);
+		void	moveUp(std::vector<std::vector<char>> &);
+		void	moveDown(std::vector<std::vector<char>> &);
+		void	letBomb(std::vector<std::vector<char>> &);
 };
 
 #endif //BOMBERMAN_GENERATEMAP_HPP
