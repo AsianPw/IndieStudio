@@ -19,6 +19,7 @@ Core::Core(std::unique_ptr<Params> &params) : _verbose(params->getVerbose())
 		_scene = std::make_unique<Preroll>(params->getVerbose());
 		_display->loadModels(_scene->getModels());
 		_display->loadGuis(_scene->getGuis());
+		_display->getMap(_scene->getMap());
 	} catch (const std::runtime_error &e) {
 		throw;
 	}
@@ -46,7 +47,6 @@ void	Core::compute()
 			}
 			_scene->checkEvents(keyCode);
 		}
-		_display->getMap(_scene->getMap());
 		_scene->compute(keyCode);
 		_display->updateModels(_scene->getModels());
 		_display->display();
@@ -59,12 +59,14 @@ void	Core::compute()
 
 void	Core::changeScene(IScene *newScene)
 {
-	Tools::displayVebose(_verbose, "CHANGE SCENE:\n\tClear scene data...");
+	Tools::displayVerbose(_verbose, "CHANGE SCENE:\n\tClear scene data...");
 	_display->clear();
-	Tools::displayVebose(_verbose, "\tLoad new scene...");
+	Tools::displayVerbose(_verbose, "\tLoad new scene...");
 	_scene.reset(newScene);
-	Tools::displayVebose(_verbose, "\tLoad Model...");
+	Tools::displayVerbose(_verbose, "\tLoad Model...");
 	_display->loadModels(_scene->getModels());
-	Tools::displayVebose(_verbose, "\tLoad Gui...");
+	Tools::displayVerbose(_verbose, "\tLoad Gui...");
 	_display->loadGuis(_scene->getGuis());
+	Tools::displayVerbose(_verbose, "\tLoad Map...");
+	_display->getMap(_scene->getMap());
 }

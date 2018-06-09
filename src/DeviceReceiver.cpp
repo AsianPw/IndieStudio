@@ -22,7 +22,7 @@ bool	DeviceReceiver::OnEvent(const irr::SEvent &event)
 		} else {
 			_key = event.KeyInput.Key;
 		}
-		Tools::displayVebose(_verbose, "Key catch by DeviceReceiver.");
+		Tools::displayVerbose(_verbose, "Key catch by DeviceReceiver.");
 		return true;
 	}
 	return false;

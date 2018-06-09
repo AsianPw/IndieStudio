@@ -127,7 +127,7 @@ void Irrlicht::updateModels(std::map<std::string, Data> &models)
 			|| !Tools::cmpPos(tmpData.pos, _sceneData[currentModel.first].pos) ) {
 			_sceneElement[currentModel.first]->setMD2Animation(tmpData.animationType);
 			_sceneElement[currentModel.first]->setPosition(Tools::posToVec(tmpData.pos));
-			//Tools::displayVebose(_verbose, "Update \"" + currentModel.first + "\" model.");
+			//Tools::displayVerbose(_verbose, "Update \"" + currentModel.first + "\" model.");
 			_sceneData[currentModel.first] = tmpData;
 		}
 	}
@@ -142,7 +142,7 @@ void Irrlicht::loadGuis(std::map<std::string, Data> &guis)
 	irr::core::rect<irr::s32>	rect;
 
 	for (auto const &gui : guis) {
-		Tools::displayVebose(_verbose, "Add GUI element: " + gui.first);
+		Tools::displayVerbose(_verbose, "Add GUI element: " + gui.first);
 		tmpString = std::wstring(gui.second.modelPath.begin(), gui.second.modelPath.end());
 		textSize = _font->getDimension(tmpString.c_str());
 		rect = irr::core::rect<irr::s32>(gui.second.pos.x, gui.second.pos.y, gui.second.pos.x + textSize.Width + 5, gui.second.pos.y + textSize.Height + 5);
@@ -159,14 +159,29 @@ void Irrlicht::loadGuis(std::map<std::string, Data> &guis)
 
 void Irrlicht::getMap(std::vector<std::vector<char>> &map)
 {
+	size_t	x = 0;
+	size_t	y = 0;
+	float	size = 10.0f;
+
 	if (map.empty()) {
 		return;
 	}
 	for (auto const &line : map) {
+		x = 0;
 		for (auto const &element : line) {
-			std::cout << element;
+			Tools::displayVerbose(_verbose,std::string(1, element), false);
+			if (element != '*') {
+				x++;
+				continue;
+			}
+			_sceneCube.push_back(_sceneManager->addCubeSceneNode(size));
+			_sceneCube.back()->setPosition(irr::core::vector3df(x * size, 0, y * size));
+			_sceneCube.back()->setMaterialTexture(0, _driver->getTexture("texture/breakable_wall.jpg"));
+			_sceneCube.back()->setMaterialFlag(irr::video::EMF_LIGHTING, false);
+			x++;
 		}
-		std::cout << std::endl;
+		y++;
+		Tools::displayVerbose(_verbose, "");
 	}
-	std::cout << "\n\n\n\n\n\n";
+	Tools::displayVerbose(_verbose, "\n\n\n\n\n\n");
 }
