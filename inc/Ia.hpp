@@ -13,7 +13,6 @@
 
 class Ia : public IPlayer{
 public:
-	void	setIaonMap(std::vector<std::vector<char>> &, int nbrIa);
 	void	moveLeft(std::vector<std::vector<char>> &);
 	void	moveRight(std::vector<std::vector<char>> &);
 	void	moveUp(std::vector<std::vector<char>> &);

@@ -14,8 +14,8 @@ GenerateMap::GenerateMap(size_t nbrplayer, size_t nbria)
 	place_unbreakable_wall_height();
 	place_target_wall();
 	set_place_for_players();
-	setPlayeronMap(BombermanMap, nbria);
-	setIaonMap(BombermanMap, nbrplayer);
+	setPlayeronMap(nbria);
+	setIaonMap(nbrplayer);
 }
 
 GenerateMap::~GenerateMap()
@@ -126,19 +126,19 @@ void	GenerateMap::set_place_for_players(void)
 	}
 }
 
-void	GenerateMap::setPlayeronMap(std::vector<std::vector<char>> &map, int nbrPlayer)
+void	GenerateMap::setPlayeronMap(int nbrPlayer)
 {
 	if (nbrPlayer >= 1)
-		map[1][1] = 'A';
+		BombermanMap[1][1] = 'A';
 	if (nbrPlayer >= 2)
-		map[1][width - 2] = 'B';
+		BombermanMap[1][width - 2] = 'B';
 	if (nbrPlayer >= 3)
-		map[height - 2][1] = 'C';
+		BombermanMap[height - 2][1] = 'C';
 	if (nbrPlayer >= 4)
-		map[height - 2][width - 2] = 'D';
+		BombermanMap[height - 2][width - 2] = 'D';
 }
 
-void	GenerateMap::setIaonMap(std::vector<std::vector<char>> &map, int nbrIa)
+void	GenerateMap::setIaonMap(int nbrIa)
 {
 	if (nbrIa >= 1)
 		BombermanMap[1][width - 2] = 'B';
@@ -147,27 +147,6 @@ void	GenerateMap::setIaonMap(std::vector<std::vector<char>> &map, int nbrIa)
 	if (nbrIa == 3)
 		BombermanMap[height - 2][width - 2] = 'D';
 }
-
-void	GenerateMap::moveDown(std::vector<std::vector<char>> &map)
-{
-}
-
-void	GenerateMap::moveLeft(std::vector<std::vector<char>> &map)
-{
-}
-
-void	GenerateMap::moveRight(std::vector<std::vector<char>> &map)
-{
-}
-
-void	GenerateMap::moveUp(std::vector<std::vector<char>> &map)
-{
-}
-
-void	GenerateMap::letBomb(std::vector<std::vector<char>> &map)
-{
-}
-
 
 /*int	main()
 {

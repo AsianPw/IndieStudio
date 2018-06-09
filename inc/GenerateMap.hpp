@@ -25,7 +25,7 @@ typedef struct	s_coord
 	int	y;
 }		t_coord;
 
-class	GenerateMap : public IPlayer
+class	GenerateMap
 {
 	private:
 		int	width = 15;
@@ -34,7 +34,7 @@ class	GenerateMap : public IPlayer
 		std::vector<std::vector<char>>	BombermanMap;
 
 	public:
-	GenerateMap(size_t , size_t );
+		GenerateMap(size_t , size_t );
 		~GenerateMap();
 		int	getWidth();
 		int	getHeight();
@@ -50,13 +50,8 @@ class	GenerateMap : public IPlayer
 		void	set_place_for_players();
 		void	place_player(size_t);
 		void	place_ia(size_t);
-		void	setPlayeronMap(std::vector<std::vector<char>> &, int nbrPlayer);
-		void	setIaonMap(std::vector<std::vector<char>> &, int nbrIa);
-		void	moveLeft(std::vector<std::vector<char>> &);
-		void	moveRight(std::vector<std::vector<char>> &);
-		void	moveUp(std::vector<std::vector<char>> &);
-		void	moveDown(std::vector<std::vector<char>> &);
-		void	letBomb(std::vector<std::vector<char>> &);
+		void	setPlayeronMap(int);
+		void	setIaonMap(int);
 };
 
 #endif //BOMBERMAN_GENERATEMAP_HPP
