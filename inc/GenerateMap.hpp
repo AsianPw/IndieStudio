@@ -45,7 +45,7 @@ class	GenerateMap
 		void	print_map();
 		void	place_unbreakable_wall_width();
 		void	place_unbreakable_wall_height();
-		void	place_taget_wall();
+		void	place_target_wall();
 		void	set_place_for_players();
 		void	place_player(size_t);
 		void	place_ia(size_t);
