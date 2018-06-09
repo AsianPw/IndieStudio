@@ -7,22 +7,22 @@
 
 #include "../inc/Ia.hpp"
 
-void	Ia::moveLeft(std::vector<std::vector<char>> &map)
+void	Ia::moveLeft()
 {
 }
 
-void	Ia::moveRight(std::vector<std::vector<char>> &map)
+void	Ia::moveRight()
 {
 }
 
-void	Ia::moveUp(std::vector<std::vector<char>> &map)
+void	Ia::moveUp()
 {
 }
 
-void	Ia::moveDown(std::vector<std::vector<char>> &map)
+void	Ia::moveDown()
 {
 }
 
-void	Ia::letBomb(std::vector<std::vector<char>> &map)
+void	Ia::letBomb()
 {
 }
