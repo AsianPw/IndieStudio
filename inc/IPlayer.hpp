@@ -15,7 +15,7 @@ class IPlayer {
 	public:
 	virtual ~IPlayer() = default;
 	virtual void	IPlayer() = 0;
-	virtual void	setPlayeronMap(std::vector<std::vector<char>> &) = 0;
+	virtual void	setPlayerOnMap(std::vector<std::vector<char>> &) = 0;
 	virtual void	moveLeft(std::vector<std::vector<char>> &) = 0;
 	virtual void	moveRight(std::vector<std::vector<char>> &) = 0;
 	virtual void	moveUp(std::vector<std::vector<char>> &) = 0;

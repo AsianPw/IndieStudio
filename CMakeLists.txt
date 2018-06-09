@@ -17,7 +17,7 @@ include_directories(${IRRLICHT_PATH_INCLUDE})
 
 link_directories(${IRRLICHT_PATH_LIB})
 
-add_executable(bomberman ${bomberman_src} ${bomberman_inc})
+add_executable(bomberman ${bomberman_src} ${bomberman_inc} inc/Ia.hpp src/Ia.cpp inc/Ia.hpp src/Ia.cpp inc/Ia.hpp src/Ia.cpp inc/Ia.hpp)
 
 target_link_libraries(bomberman Irrlicht GL X11 Xxf86vm)
 
