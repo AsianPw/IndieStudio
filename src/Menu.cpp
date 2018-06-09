@@ -8,6 +8,7 @@
 #include "../inc/Menu.hpp"
 #include "../inc/Tools.hpp"
 #include "../inc/keyCodes.hpp"
+#include "../inc/PlayerMove.hpp"
 
 Menu::Menu(bool verbose) 
 	: _change(false), _verbose(verbose), _scene(nullptr), _map(1, 3)

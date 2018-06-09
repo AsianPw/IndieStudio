@@ -11,6 +11,7 @@
 #include "../inc/Irrlicht.hpp"
 #include "../inc/Data.hpp"
 #include "../inc/Tools.hpp"
+#include "../inc/PlayerMove.hpp"
 
 Irrlicht::Irrlicht(std::unique_ptr<Params> &params) :
 	_resolution({(irr::u32)params->getResolution().first, (irr::u32)params->getResolution().second}),
