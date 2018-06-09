@@ -36,6 +36,7 @@ private:
 	irr::IrrlichtDevice		*_device;
 	irr::video::IVideoDriver	*_driver;
 	irr::gui::IGUIEnvironment	*_gui;
+	irr::video::IGPUProgrammingServices	*_gpu;
 	std::map<std::string, irr::gui::IGUIButton *>	_guiElement;
 	std::map<std::string, irr::gui::IGUIElement *>	_textElement;
 	std::map<std::string, irr::scene::IAnimatedMeshSceneNode *>	_sceneElement;

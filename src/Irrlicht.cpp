@@ -30,6 +30,9 @@ Irrlicht::Irrlicht(std::unique_ptr<Params> &params) :
 	vertex_shader_support = (_driver->queryFeature(irr::video::EVDF_VERTEX_SHADER_1_1) || _driver->queryFeature(irr::video::EVDF_ARB_VERTEX_PROGRAM_1));
 	if ( !pixel_shader_support || !vertex_shader_support )
 		throw std::runtime_error("Shaders 1.1 aren't support on this device !");
+	_gpu = _driver->getGPUProgrammingServices();
+	if (!_gpu)
+		throw std::runtime_error("Unable to load GPU !");
 	_sceneManager = _device->getSceneManager();
 	_gui = _device->getGUIEnvironment();
 	_font = _gui->getFont("texture/bigfont.png");
