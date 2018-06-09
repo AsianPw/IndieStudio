@@ -20,6 +20,7 @@ public:
 private:
 	void	displayHelp() const;
 	bool	argsExist(const char *arg) const;
+	bool	checkParams(char **arg) const;
 
 private:
 	bool	_verbose;
