@@ -13,12 +13,12 @@
 
 class IPlayer {
 	public:
-	virtual ~IPlayer() = default;
-	virtual void	moveLeft(std::vector<std::vector<char>> &) = 0;
-	virtual void	moveRight(std::vector<std::vector<char>> &) = 0;
-	virtual void	moveUp(std::vector<std::vector<char>> &) = 0;
-	virtual void	moveDown(std::vector<std::vector<char>> &) = 0;
-	virtual void	letBomb(std::vector<std::vector<char>> &) = 0;
+		virtual ~IPlayer() = default;
+		virtual void	moveLeft() = 0;
+		virtual void	moveRight() = 0;
+		virtual void	moveUp() = 0;
+		virtual void	moveDown() = 0;
+		virtual void	letBomb() = 0;
 };
 
 #endif //CPP_INDIE_STUDIO_IPLAYER_HPP

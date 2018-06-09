@@ -13,11 +13,11 @@
 
 class Ia : public IPlayer{
 public:
-	void	moveLeft(std::vector<std::vector<char>> &);
-	void	moveRight(std::vector<std::vector<char>> &);
-	void	moveUp(std::vector<std::vector<char>> &);
-	void	moveDown(std::vector<std::vector<char>> &);
-	void	letBomb(std::vector<std::vector<char>> &);
+	void	moveLeft();
+	void	moveRight();
+	void	moveUp();
+	void	moveDown();
+	void	letBomb();
 
 private:
 	char	name;
