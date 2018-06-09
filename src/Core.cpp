@@ -11,6 +11,7 @@
 #include "../inc/Tools.hpp"
 #include "../inc/keyCodes.hpp"
 #include "../inc/Menu.hpp"
+#include "../inc/PlayerMove.hpp"
 
 Core::Core(std::unique_ptr<Params> &params) : _verbose(params->getVerbose())
 {
@@ -40,6 +41,27 @@ void	Core::compute()
 		keyCode.second = "";
 		if (_display->isEvent()) {
 			_display->getEvents(keyCode);
+
+			if (keyCode.first == 38) {
+				std::cout << "Up direction" << std::endl;
+				// TO DO MOVMNT PLAYER
+			}
+			if (keyCode.first == 39) {
+				std::cout << "Right Direction" << std::endl;
+				// TO DO MOVMNT PLAYER
+			}
+			if (keyCode.first == 40) {
+				std::cout << "Down direction" << std::endl;
+				// TO DO MOVMNT PLAYER
+			}
+			if (keyCode.first == 37) {
+				std::cout << "Left Direction" << std::endl;
+				// TO DO MOVMNT PLAYER OR
+			}
+			if (keyCode.first == 32) {
+				std::cout << "Use bomb option" << std::endl;
+				// TO DO USING OF BOMB
+			}
 			std::cerr << keyCode.first << " " << keyCode.second << std::endl;
 			if (keyCode.first == KeyCode::KEY_M) {
 				keyCode.first = -1;

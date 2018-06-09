@@ -6,6 +6,7 @@
 */
 
 #include "../inc/GenerateMap.hpp"
+#include "../inc/PlayerMove.hpp"
 
 GenerateMap::GenerateMap(size_t nbrplayer, size_t nbria)
 {
@@ -48,6 +49,7 @@ void	GenerateMap::print_map(void)
 		for (int j = 0; j < width; j++) {
 			std::cout<<BombermanMap[i][j];
 		}
+		std::cout<<std::endl;
 	}
 }
 
@@ -128,8 +130,13 @@ void	GenerateMap::set_place_for_players(void)
 
 void	GenerateMap::setPlayeronMap(int nbrPlayer)
 {
-	if (nbrPlayer >= 1)
+	if (nbrPlayer >= 1) {
 		BombermanMap[1][1] = 'A';
+		BombermanMap[1][2] = ' ';
+		BombermanMap[1][3] = ' ';
+		BombermanMap[2][1] = ' ';
+		BombermanMap[2][2] = ' ';
+	}
 	if (nbrPlayer >= 2)
 		BombermanMap[1][width - 2] = 'B';
 	if (nbrPlayer >= 3)

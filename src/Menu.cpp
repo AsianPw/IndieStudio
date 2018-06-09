@@ -9,6 +9,7 @@
 #include "../inc/Tools.hpp"
 #include "../inc/keyCodes.hpp"
 #include "../inc/vector3d.hpp"
+#include "../inc/PlayerMove.hpp"
 
 Menu::Menu(bool verbose)
 	: _change(false), _verbose(verbose), _scene(nullptr), _cameraPos({195.0f, 150.0f, 71.0f}), _cameraRot({ 50.0f, 0.0f, 75.0f}), _sens(false), _map(1, 3)

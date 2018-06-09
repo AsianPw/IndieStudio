@@ -19,16 +19,17 @@ class PlayerMove : public IPlayer {
 		int				life;
 		Position			pos;
 		bool				explosion_dir;
-		std::vector<std::vector<char>>	_map;
+		std::vector<std::vector<char>>	&_map;
 
 	public:
 		~PlayerMove();
 		PlayerMove(char name, std::vector<std::vector<char>>	&map);
-		void	moveLeft();
-		void	moveRight();
-		void	moveUp();
-		void	moveDown();
-		void	letBomb();
+		void		moveLeft();
+		void		moveRight();
+		void		moveUp();
+		void		moveDown();
+		void		letBomb();
+		Position	getPlayerPlace();
 };
 
 #endif //CPP_INDIE_STUDIO_PLAYERMOVE_HPP
