@@ -9,13 +9,12 @@
 #define CPP_INDIE_STUDIO_IPLAYER_HPP
 
 #include <iostream>
-#include "../inc/GenerateMap.hpp"
 
 class IPlayer {
 	public:
 	virtual ~IPlayer() = default;
-	virtual void	IPlayer() = 0;
-	virtual void	setPlayeronMap(std::vector<std::vector<char>> &) = 0;
+	virtual void	setPlayeronMap(std::vector<std::vector<char>> &, int ) = 0;
+	virtual void	setIaonMap(std::vector<std::vector<char>> &, int nbrIa) = 0;
 	virtual void	moveLeft(std::vector<std::vector<char>> &) = 0;
 	virtual void	moveRight(std::vector<std::vector<char>> &) = 0;
 	virtual void	moveUp(std::vector<std::vector<char>> &) = 0;
