@@ -173,6 +173,9 @@ void Irrlicht::getMap(std::vector<std::vector<char>> &map)
 		for (auto const &element : line) {
 			Tools::displayVerbose(_verbose,std::string(1, element), false);
 			if (element != '*' && element != '#') {
+				_sceneCube.push_back(_sceneManager->addCubeSceneNode(_cubeSize));
+				_sceneCube.back()->setPosition(irr::core::vector3df(x * _cubeSize, 0, y * _cubeSize));
+				_sceneCube.back()->setVisible(false);
 				x++;
 				continue;
 			}
@@ -262,6 +265,10 @@ void Irrlicht::updateMap(std::vector<std::vector<char>> &map)
 			z = tmpVec.Z / _cubeSize;
 			if (map[x][z] == ' ')
 				cube->setVisible(false);
+			else if (map[x][z] == '#') {
+				cube->setMaterialTexture(0, _driver->getTexture( "texture/cobble.png"));
+				cube->setVisible(true);
+			}
 		}
 	}
 	z = 0;
