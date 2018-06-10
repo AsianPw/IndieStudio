@@ -18,7 +18,12 @@ Bomberman::Bomberman(bool _verbose, size_t nbPlayer, size_t nbIa) : _verbose(_ve
 	player.y = 30;
 	playerrotate.x = 0;
 	playerrotate.y = 70;
+	ia.x = 30;
+	ia.y = 380;
 	_models.insert({"player", { {player.x, player.y}, {0, 70}, "texture/characters/ziggs.png", "texture/characters/ziggs.md3", irr::scene::EMAT_STAND, false, true }});
+	_models.insert({"player2", { {ia.x, ia.y}, {0, 70}, "texture/characters/ziggs_general.png", "texture/characters/ziggs.md3", irr::scene::EMAT_STAND, false, true }});
+	_models.insert({"player3", { {380, 380}, {0, 70}, "texture/characters/ziggs_general.png", "texture/characters/ziggs.md3", irr::scene::EMAT_STAND, false, true }});
+	_models.insert({"player4", { {380, 30}, {0, 70}, "texture/characters/ziggs_general.png", "texture/characters/ziggs.md3", irr::scene::EMAT_STAND, false, true }});
 }
 
 std::map<std::string, Data> &Bomberman::getModels()
@@ -151,7 +156,6 @@ void Bomberman::checkEvents(std::pair<int, std::string> &events)
 	if (events.first == KeyCode::KEY_SPACE) {
 		std::cerr << "Space button to use a bomb" << std::endl;
 		p.putBomb();
-		_map.print_map();
 	}
 	if (events.first == KeyCode::KEY_LEFT) {
 		std::cerr << "Left direction" << std::endl;
@@ -160,7 +164,6 @@ void Bomberman::checkEvents(std::pair<int, std::string> &events)
 		_models["player"].rot.y = 0;
 		if (p.getStatus() == false)
 			_models["player"].pos.y = _models["player"].pos.y - 30;
-		_map.print_map();
 	}
 	if (events.first == KeyCode::KEY_UP) {
 		std::cerr << "Up direction" << std::endl;
@@ -169,7 +172,6 @@ void Bomberman::checkEvents(std::pair<int, std::string> &events)
 		_models["player"].rot.y = 90;
 		if (p.getStatus() == false)
 			_models["player"].pos.x = _models["player"].pos.x - 30;
-		_map.print_map();
 	}
 	if (events.first == KeyCode::KEY_RIGHT) {
 		std::cerr << "Right direction" << std::endl;
@@ -178,7 +180,6 @@ void Bomberman::checkEvents(std::pair<int, std::string> &events)
 		_models["player"].rot.y = 180;
 		if (p.getStatus() == false)
 			_models["player"].pos.y = _models["player"].pos.y + 30;
-		_map.print_map();
 	}
 	if (events.first == KeyCode::KEY_DOWN) {
 		std::cerr << "Down direction" << std::endl;
@@ -187,6 +188,5 @@ void Bomberman::checkEvents(std::pair<int, std::string> &events)
 		_models["player"].rot.y = -90;
 		if (p.getStatus() == false)
 			_models["player"].pos.x = _models["player"].pos.x + 30;
-		_map.print_map();
 	}
 }
