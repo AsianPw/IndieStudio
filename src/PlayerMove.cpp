@@ -62,8 +62,10 @@ void	PlayerMove::moveRight(void)
 		ver_explosion = true;
 		bomb_dir = RIGHT;
 	}
-	else
+	else {
+		locked = true;
 		return;
+	}
 }
 
 void	PlayerMove::moveLeft(void)
@@ -76,8 +78,10 @@ void	PlayerMove::moveLeft(void)
 		ver_explosion = true;
 		bomb_dir = LEFT;
 	}
-	else
+	else {
+		locked = true;
 		return;
+	}
 }
 
 void	PlayerMove::moveUp(void)
@@ -89,6 +93,10 @@ void	PlayerMove::moveUp(void)
 		pos.y = pos.y - 1;
 		hor_explosion = true;
 		bomb_dir = UP;
+	}
+	else {
+		locked = true;
+		return;
 	}
 }
 
@@ -102,6 +110,13 @@ void	PlayerMove::moveDown(void)
 		hor_explosion = true;
 		bomb_dir = DOWN;
 	}
-	else
+	else {
+		locked = true;
 		return;
+	}
+}
+
+bool PlayerMove::getStatus()
+{
+	return locked;
 }
