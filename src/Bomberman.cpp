@@ -79,7 +79,7 @@ IScene *Bomberman::newScene()
 bool	Bomberman::checkPlayer()
 {
 	for (int i = 0; i < 15; i++) {
-		for (int j = 0; j < 5; j++) {
+		for (int j = 0; j < 15; j++) {
 			if (_map.getMap()[i][j] == 'A') {
 				return true;
 			}
