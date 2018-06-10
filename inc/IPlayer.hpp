@@ -9,6 +9,7 @@
 #define CPP_INDIE_STUDIO_IPLAYER_HPP
 
 #include <iostream>
+#include <vector>
 
 class IPlayer {
 public:
