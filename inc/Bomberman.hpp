@@ -34,7 +34,7 @@ private:
 	std::map<std::string, Data>	_guis;
 	GenerateMap	_map;
 	Position	player, playerrotate;
-	Position	ia;
+	Position	ia, iarotate;
 	long		currentTime;
 	int		bombDir;
 };

@@ -18,7 +18,12 @@ Bomberman::Bomberman(bool _verbose, size_t nbPlayer, size_t nbIa) : _verbose(_ve
 	player.y = 30;
 	playerrotate.x = 0;
 	playerrotate.y = 70;
+	ia.x = player.x;
+	ia.y = ia.x;
 	_models.insert({"player", { {player.x, player.y}, {0, 70}, "texture/characters/ziggs.png", "texture/characters/ziggs.md3", irr::scene::EMAT_STAND, false, true }});
+	_models.insert({"player2", { {ia.x, ia.y}, {0, 70}, "texture/characters/ziggs_general.png", "texture/characters/ziggs_general.md3", irr::scene::EMAT_STAND, false, true }});
+	_models.insert({"player2", { {ia.x, ia.y}, {0, 70}, "texture/characters/ziggs_general.png", "texture/characters/ziggs_general.md3", irr::scene::EMAT_STAND, false, true }});
+	_models.insert({"player2", { {ia.x, ia.y}, {0, 70}, "texture/characters/ziggs_general.png", "texture/characters/ziggs_general.md3", irr::scene::EMAT_STAND, false, true }});
 }
 
 std::map<std::string, Data> &Bomberman::getModels()
