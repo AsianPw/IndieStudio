@@ -7,12 +7,15 @@
 #ifndef BOMBERMAN_SETTINGS_HPP
 #define BOMBERMAN_SETTINGS_HPP
 
+#include <memory>
 #include "IScene.hpp"
 #include "GenerateMap.hpp"
+#include "Params.hpp"
+#include "GraphParams.hpp"
 
 class Settings : public IScene {
 public:
-	explicit Settings(IScene *);
+	explicit Settings(IScene *, GraphParams &);
 	std::map<std::string, Data> &getModels() override;
 	std::map<std::string, Data> &getGuis() override;
 	std::vector<std::vector<char>> &getMap() override;
@@ -27,6 +30,7 @@ private:
 	std::map<std::string, Data>	_models;
 	std::map<std::string, Data>	_guis;
 	std::vector<std::vector<char>>	_map;
+	GraphParams	&_params;
 	Tools::vector3d	_cameraPos;
 	Tools::vector3d	_cameraRot;
 	bool	_verbose;

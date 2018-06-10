@@ -8,10 +8,14 @@
 #include "../inc/keyCodes.hpp"
 #include "../inc/Tools.hpp"
 
-Settings::Settings(IScene *prevScene) : _prevScene(prevScene), _verbose(false), _cameraPos({195.0f, 150.0f, 71.0f}), _cameraRot({ 50.0f, 0.0f, 75.0f}), _backToPrev(false)
+Settings::Settings(IScene *prevScene, GraphParams &params)
+	: _prevScene(prevScene), _params(params), _verbose(false), _cameraPos({195.0f, 150.0f, 71.0f}), _cameraRot({ 50.0f, 0.0f, 75.0f}), _backToPrev(false)
 {
 	_guis.insert({"backToMenu", { {0, 0}, {0, 0}, "", "M: Back To Menu", irr::scene::EMAT_STAND, false }});
-	_guis.insert({"Quit", { {0, 80}, {0, 0}, "", "Echap: Quit Game", irr::scene::EMAT_STAND, false }});
+	_guis.insert({"Settings", { {0, 40}, {0, 0}, "", "Enter: Save Settings", irr::scene::EMAT_STAND, false }});
+	_guis.insert({"Quit", { {0, 80}, {0, 0}, "", "Escape: Quit Game", irr::scene::EMAT_STAND, false }});
+	_guis.insert({"VSync", { {300, 200}, {0, 180}, "", "VSync", irr::scene::EMAT_STAND, true }});
+	_guis.insert({"Fullscreen", { {500, 200}, {0, 180}, "", "Fullscreen", irr::scene::EMAT_STAND, true }});
 }
 
 std::map<std::string, Data> &Settings::getModels()
@@ -55,6 +59,13 @@ void Settings::checkEvents(std::pair<int, std::string> &keyCode)
 {
 	if (keyCode.first == KeyCode::KEY_ENTER) {
 		_backToPrev = true;
-		std::cerr << "Enter";
+	}
+	if (keyCode.second == "VSync") {
+		_params.vSync = !_params.vSync;
+		_params.change = true;
+	}
+	if (keyCode.second == "Fullscreen") {
+		_params.fullScreen = !_params.fullScreen;
+		_params.change = true;
 	}
 }
