@@ -15,9 +15,8 @@
 Menu::Menu(bool verbose)
 	: _change(false), _verbose(verbose), _scene(nullptr), _cameraPos({195.0f, 150.0f, 71.0f}), _cameraRot({ 50.0f, 0.0f, 75.0f}), _sens(false), _map(1, 3)
 {
-	_models.insert({"player", { {20, 20}, {0, 180}, "texture/characters/ziggs.png", "texture/characters/ziggs.md3", irr::scene::EMAT_STAND, false, true }});
-	_models.insert({"bomb", { {20, 20}, {0, 180}, "texture/miniBomb.png", "texture/miniBomb.md2", irr::scene::EMAT_STAND, false, true }});
-	_models.insert({"player2", { {20, 220}, {0, 0}, "texture/characters/ziggs_general.png", "texture/characters/ziggs_general.md3", irr::scene::EMAT_STAND, false, true }});
+	_models.insert({"player", { {32, 30}, {0, 180}, "texture/characters/ziggs.png", "texture/characters/ziggs.md3", irr::scene::EMAT_STAND, false, true }});
+	_models.insert({"player2", { {32, 390}, {0, 0}, "texture/characters/ziggs_general.png", "texture/characters/ziggs_general.md3", irr::scene::EMAT_STAND, false, true }});
 	_guis.insert({"singleplayer", { {420, 200}, {0, 180}, "", "SinglePlayer", irr::scene::EMAT_STAND, true, true }});
 	_guis.insert({"Versus", { {470, 400}, {0, 180}, "", "1 vs. 1", irr::scene::EMAT_STAND, true, true }});
 	_guis.insert({"backToMenu", { {0, 0}, {0, 0}, "", "M: Back To Menu", irr::scene::EMAT_STAND, false, true }});
