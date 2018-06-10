@@ -24,7 +24,7 @@ public:
 	IScene *newScene() override;
 	void checkEvents(std::pair<int, std::string> &pair) override;
 	void checkBomb();
-	void bombExplod(Position);
+	void bombExplode(Position);
 
 private:
 	bool	_verbose;
@@ -35,6 +35,7 @@ private:
 	GenerateMap	_map;
 	Position	player, playerrotate;
 	Position	ia;
+	long		currentTime;
 };
 
 #endif //BOMBERMAN_BOMBERMAN_HPP

@@ -9,9 +9,11 @@
 #include "../inc/keyCodes.hpp"
 #include "../inc/PlayerMove.hpp"
 #include "../inc/Ia.hpp"
+#include "../inc/Time.hpp"
 
 Bomberman::Bomberman(bool _verbose, size_t nbPlayer, size_t nbIa) : _verbose(_verbose), _cameraPos({320.0f, 175.0f, 150.0f}), _cameraRot({ 120.0f, 0.0f, 150.0f}), _map(nbPlayer, nbIa)
 {
+	currentTime = getCurrentTime();
 	player.x = 260;
 	player.y = 30;
 	playerrotate.x = 0;
@@ -46,13 +48,18 @@ Tools::vector3d &Bomberman::getCameraRot()
 
 void Bomberman::compute(std::pair<int, std::string> &events)
 {
-	Ia	B('B', _map.getMap());
-	Ia	C('C', _map.getMap());
-	Ia	D('D', _map.getMap());
-	B.start();
-	C.start();
-	D.start();
-	checkBomb();
+	long	now = getCurrentTime();
+
+	if (now - currentTime > 1000) {
+		Ia B('B', _map.getMap());
+		Ia C('C', _map.getMap());
+		Ia D('D', _map.getMap());
+		B.start();
+		C.start();
+		D.start();
+		checkBomb();
+		currentTime = now;
+	}
 }
 
 IScene *Bomberman::newScene()
@@ -60,7 +67,7 @@ IScene *Bomberman::newScene()
 	return nullptr;
 }
 
-void	Bomberman::bombExplod(Position p)
+void	Bomberman::bombExplode(Position p)
 {
 	int	x = 1;
 	std::vector<std::vector<char>> &map = getMap();
@@ -73,14 +80,34 @@ void	Bomberman::bombExplod(Position p)
 	map[p.x][p.y] = ' ';
 	while (x < 3)
 	{
-		if ((p.x + x) < 15 && map[p.x + x][p.y] != '*')
+		if ((p.x + x) < 15 && map[p.x + x][p.y] != '*' && !top)
+		{
+			if (map[p.x + x][p.y] >= 49 && map[p.x + x][p.y] <= 51)
+				bombExplode({p.x + x, p.y});
 			map[p.x + x][p.y] = ' ';
-		if ((p.x - x) > 0 && map[p.x - x][p.y] != '*')
+			top = true;
+		}
+		if ((p.x - x) > 0 && map[p.x - x][p.y] != '*' && !bot)
+		{
+			if (map[p.x - x][p.y] >= 49 && map[p.x - x][p.y] <= 51)
+				bombExplode({p.x - x, p.y});
 			map[p.x - x][p.y] = ' ';
-		if ((p.y + x) < 15 && map[p.x][p.y + x] != '*')
+			bot = true;
+		}
+		if ((p.y + x) < 15 && map[p.x][p.y + x] != '*' && !right)
+		{
+			if (map[p.x][p.y + x] >= 49 && map[p.x][p.y + x] <= 51)
+				bombExplode({p.x, p.y + x});
 			map[p.x][p.y + x] = ' ';
-		if ((p.y - x) > 0 && map[p.x][p.y - x] != '*')
+			right = true;
+		}
+		if ((p.y - x) > 0 && map[p.x][p.y - x] != '*' && !left)
+		{
+			if (map[p.x][p.y - x] >= 49 && map[p.x][p.y - x] <= 51)
+				bombExplode({p.x, p.y - x});
 			map[p.x][p.y - x] = ' ';
+			left = true;
+		}
 		x++;
 	}
 }
@@ -102,7 +129,7 @@ void Bomberman::checkBomb()
 			else if (map[x][y] == '2')
 				map[x][y] = '3';
 			else if (map[x][y] == '3')
-				bombExplod({x, y});
+				bombExplode({x, y});
 			y++;
 		}
 		x++;

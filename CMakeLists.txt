@@ -17,7 +17,7 @@ include_directories(${IRRLICHT_PATH_INCLUDE} libso/include)
 
 link_directories(${IRRLICHT_PATH_LIB} libso/)
 
-add_executable(bomberman ${bomberman_src} ${bomberman_inc} inc/Ia.hpp src/Ia.cpp inc/Ia.hpp src/Ia.cpp inc/Ia.hpp src/Ia.cpp inc/Ia.hpp inc/IPlayer.hpp inc/IPlayer.hpp)
+add_executable(bomberman ${bomberman_src} ${bomberman_inc} inc/Ia.hpp src/Ia.cpp inc/Ia.hpp src/Ia.cpp inc/Ia.hpp src/Ia.cpp inc/Ia.hpp inc/IPlayer.hpp inc/IPlayer.hpp inc/Time.hpp)
 
 target_link_libraries(bomberman Irrlicht GL X11 Xxf86vm IrrKlang)
 
