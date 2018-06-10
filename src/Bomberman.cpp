@@ -137,6 +137,9 @@ void Bomberman::checkEvents(std::pair<int, std::string> &events)
 	PlayerMove	p('A', _map.getMap());
 	Position	place;
 
+	if (bombDir < 0 || bombDir > 3)
+		bombDir = 1;
+	p.setBombDir(bombDir);
 	if (events.first == KeyCode::KEY_Z) {
 		_cameraPos.x += 1.f;
 		std::cerr << _cameraPos.z << std::endl;
@@ -148,6 +151,7 @@ void Bomberman::checkEvents(std::pair<int, std::string> &events)
 	}
 	if (events.first == KeyCode::KEY_LEFT) {
 		std::cerr << "Left direction" << std::endl;
+		bombDir = 3;
 		p.moveLeft();
 		_models["player"].rot.y = 0;
 		if (p.getStatus() == false)
@@ -156,6 +160,7 @@ void Bomberman::checkEvents(std::pair<int, std::string> &events)
 	}
 	if (events.first == KeyCode::KEY_UP) {
 		std::cerr << "Up direction" << std::endl;
+		bombDir = 0;
 		p.moveUp();
 		_models["player"].rot.y = -90;
 		if (p.getStatus() == false)
@@ -164,6 +169,7 @@ void Bomberman::checkEvents(std::pair<int, std::string> &events)
 	}
 	if (events.first == KeyCode::KEY_RIGHT) {
 		std::cerr << "Right direction" << std::endl;
+		bombDir = 1;
 		p.moveRight();
 		_models["player"].rot.y = 180;
 		if (p.getStatus() == false)
@@ -172,6 +178,7 @@ void Bomberman::checkEvents(std::pair<int, std::string> &events)
 	}
 	if (events.first == KeyCode::KEY_DOWN) {
 		std::cerr << "Down direction" << std::endl;
+		bombDir = 2;
 		p.moveDown();
 		_models["player"].rot.y = 90;
 		if (p.getStatus() == false)

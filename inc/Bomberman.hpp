@@ -36,6 +36,7 @@ private:
 	Position	player, playerrotate;
 	Position	ia;
 	long		currentTime;
+	int		bombDir;
 };
 
 #endif //BOMBERMAN_BOMBERMAN_HPP

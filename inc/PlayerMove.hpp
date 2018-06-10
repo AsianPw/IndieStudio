@@ -25,7 +25,7 @@ class PlayerMove : public IPlayer {
 		bool				ver_explosion = false;
 		bool				hor_explosion = false;
 		bool				locked = false;
-		dir_use_bomb			bomb_dir = RIGHT;
+		int				bomb_dir;
 		std::vector<std::vector<char>>	&_map;
 
 	public:
@@ -36,6 +36,8 @@ class PlayerMove : public IPlayer {
 		void		moveUp();
 		void		moveDown();
 		void		putBomb();
+		void		setBombDir(int);
+		int		getBombDir();
 		Position	getPlayerPlace();
 		bool		getStatus();
 };

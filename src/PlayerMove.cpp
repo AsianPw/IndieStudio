@@ -16,6 +16,16 @@ PlayerMove::~PlayerMove()
 {
 }
 
+void	PlayerMove::setBombDir(int x)
+{
+	bomb_dir = x;
+}
+
+int	PlayerMove::getBombDir()
+{
+	return (bomb_dir);
+}
+
 Position	PlayerMove::getPlayerPlace()
 {
 	int	i = 0;
@@ -39,23 +49,23 @@ void	PlayerMove::putBomb()
 {
 	pos = getPlayerPlace();
 	std::cout<<bomb_dir<<std::endl;
-	if (bomb_dir == RIGHT && _map[pos.x][pos.y + 1]  && _map[pos.x][pos.y + 1] == ' ') {
+	if (bomb_dir == 1 && _map[pos.x][pos.y + 1]  && _map[pos.x][pos.y + 1] == ' ') {
 		_map[pos.x][pos.y + 1] = '1';
 	}
-	if (bomb_dir == LEFT && _map[pos.x][pos.y - 1] && _map[pos.x][pos.y - 1] == ' ') {
+	else if (bomb_dir == 3 && _map[pos.x][pos.y - 1] && _map[pos.x][pos.y - 1] == ' ') {
 		_map[pos.x][pos.y - 1] = '1';
 	}
-	if (bomb_dir == UP && _map[pos.x - 1][pos.y] && _map[pos.x - 1][pos.y] == ' ') {
+	else if (bomb_dir == 0 && _map[pos.x - 1][pos.y] && _map[pos.x - 1][pos.y] == ' ') {
 		_map[pos.x - 1][pos.y] = '1';
 	}
-	if (bomb_dir == DOWN && _map[pos.x + 1][pos.y] && _map[pos.x + 1][pos.y] == ' ') {
+	else if (bomb_dir == 2 && _map[pos.x + 1][pos.y] && _map[pos.x + 1][pos.y] == ' ') {
 		_map[pos.x + 1][pos.y] = '1';
 	}
 }
 
 void	PlayerMove::moveRight(void)
 {
-	bomb_dir = RIGHT;
+	bomb_dir = 1;
 	pos = getPlayerPlace();
 	if (_map[pos.x][pos.y + 1]  && _map[pos.x][pos.y + 1] == ' ') {
 		_map[pos.x][pos.y + 1] = _name;
@@ -71,7 +81,7 @@ void	PlayerMove::moveRight(void)
 
 void	PlayerMove::moveLeft(void)
 {
-	bomb_dir = LEFT;
+	bomb_dir = 3;
 	pos = getPlayerPlace();
 	if (_map[pos.x][pos.y - 1] && _map[pos.x][pos.y - 1] == ' ') {
 		_map[pos.x][pos.y - 1] = _name;
@@ -87,7 +97,7 @@ void	PlayerMove::moveLeft(void)
 
 void	PlayerMove::moveUp(void)
 {
-	bomb_dir = UP;
+	bomb_dir = 0;
 	pos = getPlayerPlace();
 	if (_map[pos.x - 1][pos.y] && _map[pos.x - 1][pos.y] == ' ') {
 		_map[pos.x - 1][pos.y] = _name;
@@ -103,7 +113,7 @@ void	PlayerMove::moveUp(void)
 
 void	PlayerMove::moveDown(void)
 {
-	bomb_dir = DOWN;
+	bomb_dir = 2;
 	pos = getPlayerPlace();
 	if (_map[pos.x + 1][pos.y] && _map[pos.x + 1][pos.y] == ' ') {
 		_map[pos.x + 1][pos.y] = _name;
