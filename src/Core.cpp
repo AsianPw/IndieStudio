@@ -11,6 +11,7 @@
 #include "../inc/Tools.hpp"
 #include "../inc/keyCodes.hpp"
 #include "../inc/Menu.hpp"
+#include "../inc/PlayerMove.hpp"
 
 Core::Core(std::unique_ptr<Params> &params) : _verbose(params->getVerbose())
 {
@@ -19,6 +20,7 @@ Core::Core(std::unique_ptr<Params> &params) : _verbose(params->getVerbose())
 		_scene = std::make_unique<Preroll>(params->getVerbose());
 		_display->loadModels(_scene->getModels());
 		_display->loadGuis(_scene->getGuis());
+		_display->getMap(_scene->getMap());
 	} catch (const std::runtime_error &e) {
 		throw;
 	}
@@ -39,6 +41,27 @@ void	Core::compute()
 		keyCode.second = "";
 		if (_display->isEvent()) {
 			_display->getEvents(keyCode);
+
+			if (keyCode.first == 38) {
+				std::cout << "Up direction" << std::endl;
+				// TO DO MOVMNT PLAYER
+			}
+			if (keyCode.first == 39) {
+				std::cout << "Right Direction" << std::endl;
+				// TO DO MOVMNT PLAYER
+			}
+			if (keyCode.first == 40) {
+				std::cout << "Down direction" << std::endl;
+				// TO DO MOVMNT PLAYER
+			}
+			if (keyCode.first == 37) {
+				std::cout << "Left Direction" << std::endl;
+				// TO DO MOVMNT PLAYER OR
+			}
+			if (keyCode.first == 32) {
+				std::cout << "Use bomb option" << std::endl;
+				// TO DO USING OF BOMB
+			}
 			std::cerr << keyCode.first << " " << keyCode.second << std::endl;
 			if (keyCode.first == KeyCode::KEY_M) {
 				keyCode.first = -1;
@@ -46,7 +69,7 @@ void	Core::compute()
 			}
 			_scene->checkEvents(keyCode);
 		}
-		_display->getMap(_scene->getMap());
+		_display->changeCameraPosition(_scene->getCameraPos(), _scene->getCameraRot());
 		_scene->compute(keyCode);
 		_display->updateModels(_scene->getModels());
 		_display->display();
@@ -59,12 +82,14 @@ void	Core::compute()
 
 void	Core::changeScene(IScene *newScene)
 {
-	Tools::displayVebose(_verbose, "CHANGE SCENE:\n\tClear scene data...");
+	Tools::displayVerbose(_verbose, "CHANGE SCENE:\n\tClear scene data...");
 	_display->clear();
-	Tools::displayVebose(_verbose, "\tLoad new scene...");
+	Tools::displayVerbose(_verbose, "\tLoad new scene...");
 	_scene.reset(newScene);
-	Tools::displayVebose(_verbose, "\tLoad Model...");
+	Tools::displayVerbose(_verbose, "\tLoad Model...");
 	_display->loadModels(_scene->getModels());
-	Tools::displayVebose(_verbose, "\tLoad Gui...");
+	Tools::displayVerbose(_verbose, "\tLoad Gui...");
 	_display->loadGuis(_scene->getGuis());
+	Tools::displayVerbose(_verbose, "\tLoad Map...");
+	_display->getMap(_scene->getMap());
 }

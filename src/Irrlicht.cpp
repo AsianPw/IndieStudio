@@ -11,14 +11,13 @@
 #include "../inc/Irrlicht.hpp"
 #include "../inc/Data.hpp"
 #include "../inc/Tools.hpp"
+#include "../inc/PlayerMove.hpp"
 
 Irrlicht::Irrlicht(std::unique_ptr<Params> &params) :
 	_resolution({(irr::u32)params->getResolution().first, (irr::u32)params->getResolution().second}),
 	_verbose(params->getVerbose()),
 	_deviceReceiver(params->getVerbose())
 {
-	bool pixel_shader_support;
-	bool vertex_shader_support;
 	_device = irr::createDevice(irr::video::EDT_OPENGL, irr::core::dimension2d(_resolution.first, _resolution.second), 32, params->getFullscreen(), false, params->getVsync(), &_deviceReceiver);
 	if (_device == nullptr)
 		throw std::runtime_error("Couldn't find any device !");
@@ -26,16 +25,13 @@ Irrlicht::Irrlicht(std::unique_ptr<Params> &params) :
 	_driver = _device->getVideoDriver();
 	if (_driver == nullptr)
 		throw std::runtime_error("Couldn't get any video driver !");
-	pixel_shader_support = (_driver->queryFeature(irr::video::EVDF_PIXEL_SHADER_1_1) || _driver->queryFeature(irr::video::EVDF_ARB_FRAGMENT_PROGRAM_1));
-	vertex_shader_support = (_driver->queryFeature(irr::video::EVDF_VERTEX_SHADER_1_1) || _driver->queryFeature(irr::video::EVDF_ARB_VERTEX_PROGRAM_1));
-	if ( !pixel_shader_support || !vertex_shader_support )
-		throw std::runtime_error("Shaders 1.1 aren't support on this device !");
 	_sceneManager = _device->getSceneManager();
 	_gui = _device->getGUIEnvironment();
 	_font = _gui->getFont("texture/bigfont.png");
 	if (_font == nullptr)
 		throw std::runtime_error("Couldn't load font !");
-	_sceneManager->addCameraSceneNode(nullptr, irr::core::vector3df(100.0f, .0f, 20.0f), irr::core::vector3df(0.0f, 0.0f, 0.0f));
+	_camera = _sceneManager->addCameraSceneNode(nullptr, irr::core::vector3df(100.0f, .0f, 20.0f), irr::core::vector3df(0.0f, 0.0f, 0.0f));
+	_sceneManager->setAmbientLight(irr::video::SColorf(1.0,1.0,1.0,0.0));
 	_gui->getSkin()->setFont(_font, irr::gui::EGDF_BUTTON);
 	_gui->getSkin()->setFont(_font, irr::gui::EGDF_DEFAULT);
 }
@@ -52,7 +48,9 @@ void	Irrlicht::clear()
 	_sceneManager->clear();
 	_gui->clear();
 	_textElement.clear();
-	_sceneManager->addCameraSceneNode(nullptr, irr::core::vector3df(100.0f, .0f, 20.0f), irr::core::vector3df(0.0f, 0.0f, 0.0f));
+	_sceneCube.clear();
+	_camera = _sceneManager->addCameraSceneNode(nullptr, irr::core::vector3df(100.0f, .0f, 20.0f), irr::core::vector3df(0.0f, 0.0f, 0.0f));
+	_sceneManager->setAmbientLight(irr::video::SColorf(1.0,1.0,1.0,0.0));
 }
 
 void	Irrlicht::display()
@@ -107,7 +105,6 @@ void Irrlicht::loadModels(std::map<std::string, Data> &models)
 		_sceneElement[model.first]->setMD2Animation(model.second.animationType);
 		_sceneElement[model.first]->setPosition(irr::core::vector3df(model.second.pos.x, 0.0f, model.second.pos.y));
 		_sceneElement[model.first]->setRotation(irr::core::vector3df(model.second.rot.x, model.second.rot.y, .0f));
-		_sceneElement[model.first]->setMaterialFlag(irr::video::EMF_LIGHTING, false);
 		if (!model.second.texturePath.empty()) {
 			_sceneElement[model.first]->setMaterialTexture(0, _driver->getTexture(model.second.texturePath.c_str()));
 		}
@@ -124,7 +121,7 @@ void Irrlicht::updateModels(std::map<std::string, Data> &models)
 			|| !Tools::cmpPos(tmpData.pos, _sceneData[currentModel.first].pos) ) {
 			_sceneElement[currentModel.first]->setMD2Animation(tmpData.animationType);
 			_sceneElement[currentModel.first]->setPosition(Tools::posToVec(tmpData.pos));
-			//Tools::displayVebose(_verbose, "Update \"" + currentModel.first + "\" model.");
+			//Tools::displayVerbose(_verbose, "Update \"" + currentModel.first + "\" model.");
 			_sceneData[currentModel.first] = tmpData;
 		}
 	}
@@ -139,7 +136,7 @@ void Irrlicht::loadGuis(std::map<std::string, Data> &guis)
 	irr::core::rect<irr::s32>	rect;
 
 	for (auto const &gui : guis) {
-		Tools::displayVebose(_verbose, "Add GUI element: " + gui.first);
+		Tools::displayVerbose(_verbose, "Add GUI element: " + gui.first);
 		tmpString = std::wstring(gui.second.modelPath.begin(), gui.second.modelPath.end());
 		textSize = _font->getDimension(tmpString.c_str());
 		rect = irr::core::rect<irr::s32>(gui.second.pos.x, gui.second.pos.y, gui.second.pos.x + textSize.Width + 5, gui.second.pos.y + textSize.Height + 5);
@@ -156,14 +153,60 @@ void Irrlicht::loadGuis(std::map<std::string, Data> &guis)
 
 void Irrlicht::getMap(std::vector<std::vector<char>> &map)
 {
+	size_t	x = 0;
+	size_t	y = 0;
+
+	generateGround();
 	if (map.empty()) {
 		return;
 	}
 	for (auto const &line : map) {
+		x = 0;
 		for (auto const &element : line) {
-			std::cout << element;
+			Tools::displayVerbose(_verbose,std::string(1, element), false);
+			if (element != '*' && element != '#') {
+				x++;
+				continue;
+			}
+			_sceneCube.push_back(_sceneManager->addCubeSceneNode(_cubeSize));
+			_sceneCube.back()->setPosition(irr::core::vector3df(x * _cubeSize, 0, y * _cubeSize));
+			if (element == '#')
+				_sceneCube.back()->setMaterialTexture(0, _driver->getTexture("texture/cobble.png"));
+			else
+				_sceneCube.back()->setMaterialTexture(0, _driver->getTexture("texture/wall.png"));
+			x++;
 		}
-		std::cout << std::endl;
+		y++;
+		Tools::displayVerbose(_verbose, "");
 	}
-	std::cout << "\n\n\n\n\n\n";
+	Tools::displayVerbose(_verbose, "\n");
+}
+
+void	Irrlicht::changeCameraPosition(Tools::vector3d &pos, Tools::vector3d &rot)
+{
+	auto cameraPos = _camera->getPosition();
+	auto cameraRot = _camera->getRotation();
+
+	if (cameraPos.X != pos.x || cameraPos.Y != pos.y || cameraPos.Z != pos.z) {
+		_camera->setPosition(irr::core::vector3df(pos.x, pos.y, pos.z));
+		//Tools::displayVerbose(_verbose, "Update Position of camera.");
+	}
+	if (cameraRot.X != rot.x || cameraRot.Y != rot.y || cameraRot.Z != rot.z) {
+		if (!_sceneCube.empty()) {
+			_camera->setTarget(irr::core::vector3df(rot.x, rot.y, rot.z));
+			//Tools::displayVerbose(_verbose, "Update Rotation of camera.");
+		}
+	}
+}
+
+void Irrlicht::generateGround()
+{
+	for (auto y = -70; y < 70; y++) {
+		for (auto x = -70; x < 40; x++) {
+			_sceneCube.push_back(_sceneManager->addCubeSceneNode(_cubeSize));
+			_sceneCube.back()->setPosition(irr::core::vector3df(x * _cubeSize, -_cubeSize, y * _cubeSize));
+			_sceneCube.back()->setMaterialTexture(0, _driver->getTexture("texture/téléchargement.jpeg"));
+		}
+	}
+	_sceneManager->addSkyDomeSceneNode(_driver->getTexture("texture/dom.jpg"));
 }

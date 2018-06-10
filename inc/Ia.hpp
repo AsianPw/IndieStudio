@@ -7,8 +7,17 @@
 #ifndef BOMBERMAN_IA_HPP
 #define BOMBERMAN_IA_HPP
 
+#include "../inc/IPlayer.hpp"
+#include <iostream>
+#include <vector>
+
 class Ia : public IPlayer{
 public:
+	void	moveLeft();
+	void	moveRight();
+	void	moveUp();
+	void	moveDown();
+	void	letBomb();
 
 private:
 	char	name;

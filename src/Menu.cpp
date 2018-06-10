@@ -8,9 +8,11 @@
 #include "../inc/Menu.hpp"
 #include "../inc/Tools.hpp"
 #include "../inc/keyCodes.hpp"
+#include "../inc/vector3d.hpp"
+#include "../inc/PlayerMove.hpp"
 
-Menu::Menu(bool verbose) 
-	: _change(false), _verbose(verbose), _scene(nullptr), _map(1, 3)
+Menu::Menu(bool verbose)
+	: _change(false), _verbose(verbose), _scene(nullptr), _cameraPos({195.0f, 150.0f, 71.0f}), _cameraRot({ 50.0f, 0.0f, 75.0f}), _sens(false), _map(1, 3)
 {
 	_models.insert({"player", { {0, -150}, {0, 180}, "texture/characters/ziggs.png", "texture/characters/ziggs.md3", irr::scene::EMAT_STAND, false }});
 	_models.insert({"player2", { {0, -200}, {0, 180}, "texture/characters/ziggs_general.png", "texture/characters/ziggs_general.md3", irr::scene::EMAT_STAND, false }});
@@ -23,6 +25,7 @@ std::map<std::string, Data> &Menu::getModels()
 	return _models;
 }
 
+//y => hauteur
 void Menu::compute(std::pair<int, std::string> &keyCode)
 {
 	_models["player"].pos.y++;
@@ -32,6 +35,14 @@ void Menu::compute(std::pair<int, std::string> &keyCode)
 	}
 	if (_models["player2"].pos.y > 150) {
 		_models["player2"].pos.y = -200;
+	}
+	if (_sens) {
+		_cameraPos.z += 1;
+	} else {
+		_cameraPos.z -= 1;
+	}
+	if (_cameraPos.z >= 150 || _cameraPos.z <= -150) {
+		_sens = !_sens;
 	}
 }
 
@@ -57,4 +68,14 @@ std::map<std::string, Data> &Menu::getGuis()
 std::vector<std::vector<char>> &Menu::getMap()
 {
 	return _map.getMap();
+}
+
+Tools::vector3d	&Menu::getCameraPos()
+{
+	return _cameraPos;
+}
+
+Tools::vector3d	&Menu::getCameraRot()
+{
+	return _cameraRot;
 }

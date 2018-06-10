@@ -9,6 +9,7 @@
 
 #include "IScene.hpp"
 #include "GenerateMap.hpp"
+#include "vector3d.hpp"
 
 class Menu : public IScene{
 public:
@@ -26,8 +27,17 @@ private:
 	std::map<std::string, Data>	_models;
 	std::map<std::string, Data>	_guis;
 	GenerateMap	_map;
+public:
+	Tools::vector3d &getCameraPos() override;
+
+	Tools::vector3d &getCameraRot() override;
+
+private:
 	bool	_verbose;
 	bool	_change;
+	bool	_sens;
+	Tools::vector3d	_cameraPos;
+	Tools::vector3d	_cameraRot;
 	IScene	*_scene;
 };
 

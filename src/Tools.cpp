@@ -18,9 +18,12 @@ bool Tools::cmpPos(Position &p1, Position &p2)
 	return p1.x == p2.x && p1.y == p2.y;
 }
 
-void Tools::displayVebose(bool verbose, std::string const &message)
+void Tools::displayVerbose(bool verbose, std::string const &message, bool endl)
 {
 	if (!verbose)
 		return;
-	std::cerr << message << std::endl;
+	std::cerr << message;
+	if (endl) {
+		std::cerr << std::endl;
+	}
 }
