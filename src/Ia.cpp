@@ -31,14 +31,30 @@ void	Ia::checkDir()
 		dir = 5;
 };
 
+void	Ia::move(int x)
+{
+	if (x == 0)
+		moveUp();
+	else if (x == 1)
+		moveRight();
+	else if (x == 2)
+		moveDown();
+	else
+		moveLeft();
+	dir = x;
+}
+
 void	Ia::start()
 {
 	int	x;
+	int	z = 0;
 
-	while(life >= 0)
-	{
-		x = rand() % 4;
-	}
+	srand(time(NULL));
+			checkDir();
+			x = rand() % 4;
+			while (x == dir)
+				x = rand() % 4;
+			move(x);
 }
 
 Position	Ia::getPlayerPlace()

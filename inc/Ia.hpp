@@ -24,6 +24,7 @@ public:
 	void		start();
 	Position	getPlayerPlace();
 	void		checkDir();
+	void		move(int);
 
 private:
 	char				_name;
