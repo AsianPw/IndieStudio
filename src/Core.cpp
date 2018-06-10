@@ -24,7 +24,7 @@ Core::Core(std::unique_ptr<Params> &params) : _verbose(params->getVerbose()), _p
 	_params.verbose = params->getVerbose();
 	try {
 		_display = std::make_unique<Irrlicht>(_params);
-		changeScene(new Preroll(params->getVerbose()), true);
+		changeScene(new Preroll(params->getVerbose()));
 		_sound = std::make_unique<IrrKlang>();
 		_sound->play("media/menu_sound.ogg");
 	} catch (const std::runtime_error &e) {
@@ -49,7 +49,7 @@ void	Core::compute()
 			std::cerr << keyCode.first << std::endl;
 			if (keyCode.first == KeyCode::KEY_M) {
 				keyCode.first = -1;
-				changeScene(new Menu(_verbose), true);
+				changeScene(new Menu(_verbose));
 			}
 			if (keyCode.first == KeyCode::KEY_P && !_prevScene) {
 				keyCode.first = -1;
@@ -64,12 +64,12 @@ void	Core::compute()
 		_display->display();
 		scene = _scene->newScene();
 		if (scene != nullptr) {
-			changeScene(scene, true);
+			changeScene(scene);
 		}
 	}
 }
 
-void	Core::changeScene(IScene *newScene, bool settings)
+void	Core::changeScene(IScene *newScene)
 {
 	if (_params.change) {
 		Tools::displayVerbose(_verbose, "CHANGE DEVICE PARAMS.");
@@ -94,5 +94,5 @@ void	Core::goSetting()
 {
 	Tools::displayVerbose(_verbose, "GO SETTINGS");
 	_prevScene = _scene.release();
-	changeScene(new Settings(_prevScene, _params), false);
+	changeScene(new Settings(_prevScene, _params));
 }

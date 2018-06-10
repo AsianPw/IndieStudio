@@ -46,7 +46,7 @@ private:
 	irr::video::IVideoDriver	*_driver;
 	irr::gui::IGUIEnvironment	*_gui;
 	irr::scene::ICameraSceneNode	*_camera;
-	float	_cubeSize = 20.0f;
+	float	_cubeSize = 30.0f;
 	std::map<std::string, irr::gui::IGUIButton *>	_guiElement;
 	std::map<std::string, irr::gui::IGUIElement *>	_textElement;
 	std::map<std::string, irr::scene::IAnimatedMeshSceneNode *>	_sceneElement;
