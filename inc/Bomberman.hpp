@@ -33,7 +33,7 @@ private:
 	std::map<std::string, Data>	_models;
 	std::map<std::string, Data>	_guis;
 	GenerateMap	_map;
-	Position	player;
+	Position	player, playerrotate;
 	Position	ia;
 };
 
