@@ -137,7 +137,6 @@ void Bomberman::checkEvents(std::pair<int, std::string> &events)
 	PlayerMove	p('A', _map.getMap());
 	Position	place;
 
-<<<<<<< HEAD
 	if (bombDir < 0 || bombDir > 3)
 		bombDir = 1;
 	p.setBombDir(bombDir);
@@ -145,8 +144,6 @@ void Bomberman::checkEvents(std::pair<int, std::string> &events)
 		_cameraPos.x += 1.f;
 		std::cerr << _cameraPos.z << std::endl;
 	}
-=======
->>>>>>> 9a7511ed436181ac23e0f34e7eb1d2b2c46a7897
 	if (events.first == KeyCode::KEY_SPACE) {
 		std::cerr << "Space button to use a bomb" << std::endl;
 		p.putBomb();
