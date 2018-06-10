@@ -20,6 +20,7 @@ struct Data {
 	irr::scene::EMD2_ANIMATION_TYPE	animationType;
 	bool		isBnt;
 	bool		isVisible;
+	char		charToPerso;
 };
 
 #endif //BOMBERMAN_DATA_HPP

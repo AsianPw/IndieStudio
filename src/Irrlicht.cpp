@@ -130,7 +130,6 @@ void Irrlicht::updateModels(std::map<std::string, Data> &models)
 			_sceneElement[currentModel.first]->setPosition(Tools::posToVec(tmpData.pos));
 			_sceneElement[currentModel.first]->setRotation(irr::core::vector3df(tmpData.rot.x, tmpData.rot.y, .0f));
 			_sceneElement[currentModel.first]->setVisible(tmpData.isVisible);
-			//Tools::displayVerbose(_verbose, "Update \"" + currentModel.first + "\" model.");
 			_sceneData[currentModel.first] = tmpData;
 		}
 	}
@@ -273,9 +272,27 @@ void Irrlicht::updateMap(std::vector<std::vector<char>> &map)
 		}
 	}
 	z = 0;
+	if (map.empty()) {
+		return;
+	}
 	for (auto &line : map) {
 		x = 0;
 		for (auto &elem : line) {
+			if (elem == 'B') {
+				if (_sceneElement.find("player2") == _sceneElement.end())
+					continue;
+				_sceneElement["player2"]->setPosition(irr::core::vector3df(z * _cubeSize, 0, x * _cubeSize));
+			}
+			if (elem == 'C') {
+				if (_sceneElement.find("player3") == _sceneElement.end())
+					continue;
+				_sceneElement["player3"]->setPosition(irr::core::vector3df(z * _cubeSize, 0, x * _cubeSize));
+			}
+			if (elem == 'D') {
+				if (_sceneElement.find("player4") == _sceneElement.end())
+					continue;
+				_sceneElement["player4"]->setPosition(irr::core::vector3df(z * _cubeSize, 0, x * _cubeSize));
+			}
 			if (elem == '1') {
 				_sceneBomb.insert({std::string(z + x + ""), _sceneManager->addAnimatedMeshSceneNode(_sceneManager->getMesh("texture/miniBomb.md2"))});
 				_sceneBomb["" + z + x ]->setPosition(irr::core::vector3df(z * _cubeSize, 0, x * _cubeSize));
