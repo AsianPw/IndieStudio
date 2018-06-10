@@ -35,6 +35,7 @@ private:
 	GenerateMap	_map;
 	Position	player, playerrotate;
 	Position	ia;
+	long		currentTime;
 };
 
 #endif //BOMBERMAN_BOMBERMAN_HPP
