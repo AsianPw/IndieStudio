@@ -57,6 +57,7 @@ void	Core::compute()
 			_scene->checkEvents(keyCode);
 		}
 		_display->displayMap(_scene->getMap());
+		_display->updateMap(_scene->getMap());
 		_display->changeCameraPosition(_scene->getCameraPos(), _scene->getCameraRot());
 		_scene->compute(keyCode);
 		_display->updateModels(_scene->getModels());

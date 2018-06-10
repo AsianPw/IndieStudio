@@ -254,3 +254,9 @@ void	Irrlicht::displayMap(std::vector<std::vector<char>> &map)
 	}
 	std::cerr << std::endl;
 }
+
+void Irrlicht::updateMap(std::vector<std::vector<char>> &map)
+{
+	for (auto &line : _sceneCube) {
+	}
+}
