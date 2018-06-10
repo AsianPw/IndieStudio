@@ -10,6 +10,7 @@
 #include "../inc/keyCodes.hpp"
 #include "../inc/vector3d.hpp"
 #include "../inc/PlayerMove.hpp"
+#include "../inc/Bomberman.hpp"
 
 Menu::Menu(bool verbose)
 	: _change(false), _verbose(verbose), _scene(nullptr), _cameraPos({195.0f, 150.0f, 71.0f}), _cameraRot({ 50.0f, 0.0f, 75.0f}), _sens(false), _map(1, 3)
@@ -54,9 +55,9 @@ IScene *Menu::newScene()
 void Menu::checkEvents(std::pair<int, std::string> &keyCode)
 {
 	if (keyCode.second == "singleplayer") {
-		_scene = new Menu(_verbose); // change with the correct class
+		_scene = new Bomberman(_verbose, 1, 3);
 	} else if (keyCode.second == "Versus") {
-		_scene = new Menu(_verbose); // change with the correct class
+		_scene = new Bomberman(_verbose, 2, 0);
 	}
 }
 

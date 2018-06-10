@@ -8,6 +8,7 @@
 #include <irr/irrlicht.h>
 #include <stdexcept>
 #include <iostream>
+#include <irr/driverChoice.h>
 #include "../inc/Irrlicht.hpp"
 #include "../inc/Data.hpp"
 #include "../inc/Tools.hpp"
