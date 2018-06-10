@@ -16,7 +16,9 @@ Bomberman::Bomberman(bool _verbose, size_t nbPlayer, size_t nbIa) : _verbose(_ve
 	currentTime = getCurrentTime();
 	player.x = 390;
 	player.y = 30;
-	_models.insert({"player", { {player.x, player.y}, {0, 70}, "texture/characters/ziggs.png", "texture/characters/ziggs.md3", irr::scene::EMAT_STAND, false }});
+	playerrotate.x = 0;
+	playerrotate.y = 70;
+	_models.insert({"player", { {player.x, player.y}, {0, 70}, "texture/characters/ziggs.png", "texture/characters/ziggs.md3", irr::scene::EMAT_STAND, false, true }});
 }
 
 std::map<std::string, Data> &Bomberman::getModels()
