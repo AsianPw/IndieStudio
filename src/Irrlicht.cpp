@@ -207,7 +207,7 @@ void Irrlicht::generateGround()
 			_sceneCube.back()->setMaterialTexture(0, _driver->getTexture("texture/grass.jpeg"));
 		}
 	}
-	_sceneManager->addSkyDomeSceneNode(_driver->getTexture("texture/dom.jpg"));
+	_sceneManager->addSkyDomeSceneNode(_driver->getTexture("texture/dome.jpg"));
 	generateTrees(50);
 }
 
