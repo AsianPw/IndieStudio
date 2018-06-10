@@ -69,20 +69,21 @@ void	Ia::start()
 {
 	int	x;
 
-	if (dir < 0 || dir > 3)
-		dir = (rand() * _name) % 4;
-	srand(time(NULL));
-	checkDir();
-	x = (rand() * _name) % 4;
-	if (opp != 5) {
-		while (x == opp)
-			x = (rand() * _name) % 4;
-		move(x);
-	}
-	else
-	{
-		canMove();
-		move(dir);
+	pos = getPlayerPlace();
+	if (pos.x != 0 && pos.y != 0) {
+		if (dir < 0 || dir > 3)
+			dir = (rand() * _name) % 4;
+		srand(time(NULL));
+		checkDir();
+		x = (rand() * _name) % 4;
+		if (opp != 5) {
+			while (x == opp)
+				x = (rand() * _name) % 4;
+			move(x);
+		} else {
+			canMove();
+			move(dir);
+		}
 	}
 }
 
@@ -103,6 +104,9 @@ Position	Ia::getPlayerPlace()
 		}
 		i++;
 	}
+	pos.x = 0;
+	pos.y = 0;
+	return (pos);
 }
 
 void	Ia::moveLeft()
