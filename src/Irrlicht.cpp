@@ -257,6 +257,17 @@ void	Irrlicht::displayMap(std::vector<std::vector<char>> &map)
 
 void Irrlicht::updateMap(std::vector<std::vector<char>> &map)
 {
-	for (auto &line : _sceneCube) {
+	irr::core::vector3df	tmpVec;
+	int	x;
+	int	z;
+
+	for (auto &cube : _sceneCube) {
+		tmpVec = cube->getPosition();
+		if (tmpVec.Y == 0.0f && tmpVec.X >= 0 && tmpVec.Z >= 0 && tmpVec.X / _cubeSize <= 15 && tmpVec.Z / _cubeSize <= 15 ) {
+			x = tmpVec.X / _cubeSize;
+			z = tmpVec.Z / _cubeSize;
+			if (map[x][z] == ' ')
+				cube->setVisible(false);
+		}
 	}
 }
