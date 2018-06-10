@@ -19,6 +19,7 @@ struct Data {
 	std::string	modelPath;
 	irr::scene::EMD2_ANIMATION_TYPE	animationType;
 	bool		isBnt;
+	bool		isVisible;
 };
 
 #endif //BOMBERMAN_DATA_HPP
