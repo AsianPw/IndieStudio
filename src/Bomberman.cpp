@@ -11,10 +11,10 @@
 #include "../inc/Ia.hpp"
 #include "../inc/Time.hpp"
 
-Bomberman::Bomberman(bool _verbose, size_t nbPlayer, size_t nbIa) : _verbose(_verbose), _cameraPos({500.0f, 300.0f, 225.0f}), _cameraRot({ 120.0f, 0.0f, 225.0f}), _map(nbPlayer, nbIa)
+Bomberman::Bomberman(bool _verbose, size_t nbPlayer, size_t nbIa) : _verbose(_verbose), _cameraPos({500.0f, 400.0f, 225.0f}), _cameraRot({ 120.0f, 0.0f, 225.0f}), _map(nbPlayer, nbIa)
 {
 	currentTime = getCurrentTime();
-	player.x = 390;
+	player.x = 30;
 	player.y = 30;
 	playerrotate.x = 0;
 	playerrotate.y = 70;
@@ -166,9 +166,9 @@ void Bomberman::checkEvents(std::pair<int, std::string> &events)
 		std::cerr << "Up direction" << std::endl;
 		bombDir = 0;
 		p.moveUp();
-		_models["player"].rot.y = -90;
+		_models["player"].rot.y = 90;
 		if (p.getStatus() == false)
-			_models["player"].pos.x = _models["player"].pos.x + 30;
+			_models["player"].pos.x = _models["player"].pos.x - 30;
 		_map.print_map();
 	}
 	if (events.first == KeyCode::KEY_RIGHT) {
@@ -184,9 +184,9 @@ void Bomberman::checkEvents(std::pair<int, std::string> &events)
 		std::cerr << "Down direction" << std::endl;
 		bombDir = 2;
 		p.moveDown();
-		_models["player"].rot.y = 90;
+		_models["player"].rot.y = -90;
 		if (p.getStatus() == false)
-		_models["player"].pos.x = _models["player"].pos.x - 30;
+			_models["player"].pos.x = _models["player"].pos.x + 30;
 		_map.print_map();
 	}
 }
