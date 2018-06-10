@@ -20,15 +20,15 @@ void	Ia::checkDir()
 {
 	pos = getPlayerPlace();
 	if (pos.x + 1 >= 49 && pos.x + 1 <= 51)
-		dir = 2;
+		opp = 2;
 	else if (pos.x - 1 >= 49 && pos.x - 1 <= 51)
-		dir = 0;
+		opp = 0;
 	else if (pos.y + 1 >= 49 && pos.y + 1 <= 51)
-		dir = 1;
+		opp = 1;
 	else if (pos.y - 1 >= 49 && pos.y - 1 <= 51)
-		dir = 3;
+		opp = 3;
 	else
-		dir = 5;
+		opp = 5;
 };
 
 void	Ia::move(int x)
@@ -44,17 +44,46 @@ void	Ia::move(int x)
 	dir = x;
 }
 
+void	Ia::canMove()
+{
+	pos = getPlayerPlace();
+	if (dir == 0) {
+		if (_map[pos.x + 1][pos.y] != ' ')
+			dir = (rand() * _name) % 4;
+	}
+	else if (dir == 1) {
+		if (_map[pos.x][pos.y + 1] != ' ')
+			dir = (rand() * _name) % 4;
+	}
+	else if (dir == 2) {
+		if (_map[pos.x - 1][pos.y] != ' ')
+			dir = (rand() * _name) % 4;
+	}
+	else if (dir == 3) {
+		if (_map[pos.x][pos.y - 1] != ' ')
+			dir = (rand() * _name) % 4;
+	}
+}
+
 void	Ia::start()
 {
 	int	x;
-	int	z = 0;
 
+	if (dir < 0 || dir > 3)
+		dir = (rand() * _name) % 4;
 	srand(time(NULL));
-			checkDir();
-			x = rand() % 4;
-			while (x == dir)
-				x = rand() % 4;
-			move(x);
+	checkDir();
+	x = (rand() * _name) % 4;
+	if (opp != 5) {
+		while (x == opp)
+			x = (rand() * _name) % 4;
+		move(x);
+	}
+	else
+	{
+		canMove();
+		move(dir);
+	}
 }
 
 Position	Ia::getPlayerPlace()
@@ -118,5 +147,17 @@ void	Ia::moveDown()
 
 void	Ia::putBomb()
 {
-	_map[pos.x][pos.y] = '1';
+	pos = getPlayerPlace();
+	if ((dir == 1) && _map[pos.x][pos.y + 1]  && _map[pos.x][pos.y + 1] == ' ') {
+		_map[pos.x][pos.y + 1] = '1';
+	}
+	else if (dir == 3 && _map[pos.x][pos.y - 1] && _map[pos.x][pos.y - 1] == ' ') {
+		_map[pos.x][pos.y - 1] = '1';
+	}
+	else if ((dir == 0) && _map[pos.x - 1][pos.y] && _map[pos.x - 1][pos.y] == ' ') {
+		_map[pos.x - 1][pos.y] = '1';
+	}
+	else if ((dir == 2) && _map[pos.x + 1][pos.y] && _map[pos.x + 1][pos.y] == ' ') {
+		_map[pos.x + 1][pos.y] = '1';
+	}
 }
