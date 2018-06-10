@@ -19,7 +19,6 @@ Menu::Menu(bool verbose)
 	_models.insert({"player2", { {20, 220}, {0, 0}, "texture/characters/ziggs_general.png", "texture/characters/ziggs_general.md3", irr::scene::EMAT_STAND, false }});
 	_guis.insert({"singleplayer", { {420, 200}, {0, 180}, "", "SinglePlayer", irr::scene::EMAT_STAND, true }});
 	_guis.insert({"Versus", { {470, 400}, {0, 180}, "", "1 vs. 1", irr::scene::EMAT_STAND, true }});
-	_guis.insert({"Settings", { {460, 600}, {0, 180}, "", "Settings", irr::scene::EMAT_STAND, true }});
 	_guis.insert({"backToMenu", { {0, 0}, {0, 0}, "", "M: Back To Menu", irr::scene::EMAT_STAND, false }});
 	_guis.insert({"GoSettings", { {0, 40}, {0, 0}, "", "P: Go To Settings", irr::scene::EMAT_STAND, false }});
 	_guis.insert({"Quit", { {0, 80}, {0, 0}, "", "Echap: Quit Game", irr::scene::EMAT_STAND, false }});
