@@ -48,11 +48,12 @@ IScene *Bomberman::newScene()
 
 void Bomberman::checkEvents(std::pair<int, std::string> &events)
 {
+	PlayerMove	p('A', _map.getMap());
+
 	if (events.first == KeyCode::KEY_Z) {
 		_cameraPos.z += 0.20f;
 		std::cerr << _cameraPos.z << std::endl;
 	}
-	PlayerMove	p('A', _map.getMap());
 	if (events.first == 32) {
 		std::cerr << "Space button to use a bomb" << std::endl;
 	}

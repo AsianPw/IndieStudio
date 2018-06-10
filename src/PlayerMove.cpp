@@ -37,6 +37,7 @@ Position	PlayerMove::getPlayerPlace()
 
 void	PlayerMove::putBomb(void)
 {
+	pos = getPlayerPlace();
 	_map[pos.x][pos.y] = '1';
 }
 
@@ -47,7 +48,7 @@ void	PlayerMove::moveRight(void)
 		_map[pos.x][pos.y + 1] = _name;
 		_map[pos.x][pos.y] = ' ';
 		pos.x = pos.x + 1;
-		explosion_dir = true;
+		ver_explosion = true;
 	}
 	else
 		return;
@@ -60,7 +61,7 @@ void	PlayerMove::moveLeft(void)
 		_map[pos.x][pos.y - 1] = _name;
 		_map[pos.x][pos.y] = ' ';
 		pos.x = pos.x - 1;
-		explosion_dir = true;
+		ver_explosion = true;
 	}
 	else
 		return;
@@ -73,7 +74,7 @@ void	PlayerMove::moveUp(void)
 		_map[pos.x - 1][pos.y] = _name;
 		_map[pos.x][pos.y] = ' ';
 		pos.y = pos.y - 1;
-		explosion_dir = false;
+		hor_explosion = true;
 	}
 }
 
@@ -84,7 +85,7 @@ void	PlayerMove::moveDown(void)
 		_map[pos.x + 1][pos.y] = _name;
 		_map[pos.x][pos.y] = ' ';
 		pos.y = pos.y + 1;
-		explosion_dir = true;
+		hor_explosion = true;
 	}
 	else
 		return;

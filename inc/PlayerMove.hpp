@@ -18,7 +18,8 @@ class PlayerMove : public IPlayer {
 		char				_name;
 		int				life;
 		Position			pos;
-		bool				explosion_dir;
+		bool				ver_explosion = false;
+		bool				hor_explosion = false;
 		std::vector<std::vector<char>>	&_map;
 
 	public:
