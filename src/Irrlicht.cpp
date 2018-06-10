@@ -160,6 +160,7 @@ void Irrlicht::loadGuis(std::map<std::string, Data> &guis)
 
 void Irrlicht::getMap(std::vector<std::vector<char>> &map)
 {
+	std::string	bombName = "";
 	size_t	x = 0;
 	size_t	y = 0;
 
@@ -172,6 +173,12 @@ void Irrlicht::getMap(std::vector<std::vector<char>> &map)
 		for (auto const &element : line) {
 			Tools::displayVerbose(_verbose,std::string(1, element), false);
 			if (element != '*' && element != '#') {
+				if (element == '3') {
+					bombName = "bomb" + x + y;
+					_sceneElement.insert({bombName, _sceneManager->addAnimatedMeshSceneNode(_sceneManager->getMesh("texture/miniBomb.md2"))});
+					_sceneElement[bombName]->setPosition(irr::core::vector3df(x * _cubeSize, 0.0f, y * _cubeSize));
+					_sceneElement[bombName]->setMaterialTexture(0, _driver->getTexture("texture/miniBomb.png"));
+				}
 				x++;
 				continue;
 			}
