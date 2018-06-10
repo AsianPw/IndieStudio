@@ -30,6 +30,7 @@ private:
 	std::unique_ptr<IScene>		_scene;
 	GraphParams			_params;
 	IScene				*_prevScene;
+	long				_prevTime;
 	bool	_verbose;
 };
 
