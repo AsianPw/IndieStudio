@@ -6,6 +6,7 @@
 */
 #include "../inc/Bomberman.hpp"
 #include "../inc/keyCodes.hpp"
+#include "../inc/PlayerMove.hpp"
 
 Bomberman::Bomberman(bool _verbose, size_t nbPlayer, size_t nbIa) : _verbose(_verbose), _cameraPos({195.0f, 150.0f, 75.8f}), _cameraRot({ 50.0f, 0.0f, 75.0f}), _map(nbPlayer, nbIa)
 {
@@ -50,5 +51,29 @@ void Bomberman::checkEvents(std::pair<int, std::string> &events)
 	if (events.first == KeyCode::KEY_Z) {
 		_cameraPos.z += 0.20f;
 		std::cerr << _cameraPos.z << std::endl;
+	}
+	PlayerMove	p('A', _map.getMap());
+	if (events.first == 32) {
+		std::cerr << "Space button to use a bomb" << std::endl;
+	}
+	if (events.first == 37) {
+		std::cerr << "Left direction" << std::endl;
+		p.moveLeft();
+		_map.print_map();
+	}
+	if (events.first == 38) {
+		std::cerr << "Up direction" << std::endl;
+		p.moveUp();
+		_map.print_map();
+	}
+	if (events.first == 39) {
+		std::cerr << "Right direction" << std::endl;
+		p.moveRight();
+		_map.print_map();
+	}
+	if (events.first == 40) {
+		std::cerr << "Down direction" << std::endl;
+		p.moveDown();
+		_map.print_map();
 	}
 }
