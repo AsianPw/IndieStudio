@@ -32,6 +32,7 @@ public:
 	void changeCameraPosition(Tools::vector3d &, Tools::vector3d &) override;
 	void getMap(std::vector<std::vector<char>> &vector) override;
 	void displayMap(std::vector<std::vector<char>> &vector) override;
+	void updateMap(std::vector<std::vector<char>> &vector) override;
 
 private:
 	void generateGround();
