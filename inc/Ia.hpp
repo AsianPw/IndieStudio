@@ -25,10 +25,12 @@ public:
 	Position	getPlayerPlace();
 	void		checkDir();
 	void		move(int);
+	void		canMove();
 
 private:
 	char				_name;
 	int				dir;
+	int				opp;
 	int				life;
 	Position			pos;
 	std::vector<std::vector<char>>	&_map;

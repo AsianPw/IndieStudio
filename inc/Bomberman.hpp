@@ -10,6 +10,7 @@
 #include "IScene.hpp"
 #include "GenerateMap.hpp"
 #include "Position.hpp"
+#include "PlayerMove.hpp"
 
 class Bomberman : public IScene {
 public:
