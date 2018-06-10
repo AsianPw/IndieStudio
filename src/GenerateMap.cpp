@@ -105,22 +105,33 @@ void	GenerateMap::set_place_for_players(void)
 {
 	int	x = 0;
 	int	y = 0;
+	int	index;
 
 	while (x != height)
 	{
 		y = 0;
 		while (y != width)
 		{
-			if (BombermanMap[x][y] >= 65 && BombermanMap[x][y] <= 68)
-			{
-				if (BombermanMap[x - 1][y] != '*')
-					BombermanMap[x - 1][y] = ' ';
-				if (BombermanMap[x + 1][y] != '*')
-					BombermanMap[x + 1][y] = ' ';
-				if (BombermanMap[x][y - 1] != '*')
-					BombermanMap[x][y - 1] = ' ';
-				if (BombermanMap[x][y + 1] != '*')
-					BombermanMap[x][y + 1] = ' ';
+			if (BombermanMap[x][y] >= 65 && BombermanMap[x][y] <= 68) {
+				index = 1;
+				while (index < 3)
+				{
+					if ((x - index) >= 0 &&
+						BombermanMap[x - index][y] !=
+							'*')
+						BombermanMap[x -
+							index][y] = ' ';
+					if ((x + index) < height &&
+					BombermanMap[x + index][y] != '*')
+					BombermanMap[x + index][y] = ' ';
+					if ((y - index) >= 0 &&
+					BombermanMap[x][y - index] != '*')
+					BombermanMap[x][y - index] = ' ';
+					if ((y + index) < width &&
+					BombermanMap[x][y + index] != '*')
+					BombermanMap[x][y + index] = ' ';
+				index++;
+				}
 			}
 			std::cout << BombermanMap[x][y];
 			y++;
