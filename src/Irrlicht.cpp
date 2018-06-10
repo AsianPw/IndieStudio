@@ -108,6 +108,7 @@ void Irrlicht::loadModels(std::map<std::string, Data> &models)
 		_sceneElement[model.first]->setMD2Animation(model.second.animationType);
 		_sceneElement[model.first]->setPosition(irr::core::vector3df(model.second.pos.x, 0.0f, model.second.pos.y));
 		_sceneElement[model.first]->setRotation(irr::core::vector3df(model.second.rot.x, model.second.rot.y, .0f));
+		_sceneElement[model.first]->setVisible(model.second.isVisible);
 		if (!model.second.texturePath.empty()) {
 			_sceneElement[model.first]->setMaterialTexture(0, _driver->getTexture(model.second.texturePath.c_str()));
 		}
@@ -126,6 +127,7 @@ void Irrlicht::updateModels(std::map<std::string, Data> &models)
 			_sceneElement[currentModel.first]->setMD2Animation(tmpData.animationType);
 			_sceneElement[currentModel.first]->setPosition(Tools::posToVec(tmpData.pos));
 			_sceneElement[currentModel.first]->setRotation(irr::core::vector3df(tmpData.rot.x, tmpData.rot.y, .0f));
+			_sceneElement[currentModel.first]->setVisible(tmpData.isVisible);
 			//Tools::displayVerbose(_verbose, "Update \"" + currentModel.first + "\" model.");
 			_sceneData[currentModel.first] = tmpData;
 		}
@@ -244,11 +246,4 @@ void	Irrlicht::displayMap(std::vector<std::vector<char>> &map)
 		std::cerr << std::endl;
 	}
 	std::cerr << std::endl;
-}
-
-void	Irrlicht::changeParams(GraphParams &params)
-{
-	if (params.change) {
-
-	}
 }

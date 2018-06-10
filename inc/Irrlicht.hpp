@@ -33,8 +33,6 @@ public:
 	void getMap(std::vector<std::vector<char>> &vector) override;
 	void displayMap(std::vector<std::vector<char>> &vector) override;
 
-	void changeParams(GraphParams &params) override;
-
 private:
 	void generateGround();
 	void generateTrees(int);
