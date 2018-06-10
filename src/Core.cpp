@@ -46,7 +46,6 @@ void	Core::compute()
 		keyCode.second = "";
 		if (_display->isEvent()) {
 			_display->getEvents(keyCode);
-			std::cerr << keyCode.first << std::endl;
 			if (keyCode.first == KeyCode::KEY_M) {
 				keyCode.first = -1;
 				changeScene(new Menu(_verbose));

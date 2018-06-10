@@ -14,7 +14,7 @@
 Bomberman::Bomberman(bool _verbose, size_t nbPlayer, size_t nbIa) : _verbose(_verbose), _cameraPos({500.0f, 300.0f, 225.0f}), _cameraRot({ 120.0f, 0.0f, 225.0f}), _map(nbPlayer, nbIa)
 {
 	currentTime = getCurrentTime();
-	player.x = 260;
+	player.x = 390;
 	player.y = 30;
 	playerrotate.x = 0;
 	playerrotate.y = 70;
@@ -137,6 +137,7 @@ void Bomberman::checkEvents(std::pair<int, std::string> &events)
 	PlayerMove	p('A', _map.getMap());
 	Position	place;
 
+<<<<<<< HEAD
 	if (bombDir < 0 || bombDir > 3)
 		bombDir = 1;
 	p.setBombDir(bombDir);
@@ -144,6 +145,8 @@ void Bomberman::checkEvents(std::pair<int, std::string> &events)
 		_cameraPos.x += 1.f;
 		std::cerr << _cameraPos.z << std::endl;
 	}
+=======
+>>>>>>> 9a7511ed436181ac23e0f34e7eb1d2b2c46a7897
 	if (events.first == KeyCode::KEY_SPACE) {
 		std::cerr << "Space button to use a bomb" << std::endl;
 		p.putBomb();
@@ -155,7 +158,7 @@ void Bomberman::checkEvents(std::pair<int, std::string> &events)
 		p.moveLeft();
 		_models["player"].rot.y = 0;
 		if (p.getStatus() == false)
-			_models["player"].pos.y = _models["player"].pos.y - 15;
+			_models["player"].pos.y = _models["player"].pos.y - 30;
 		_map.print_map();
 	}
 	if (events.first == KeyCode::KEY_UP) {
@@ -164,7 +167,7 @@ void Bomberman::checkEvents(std::pair<int, std::string> &events)
 		p.moveUp();
 		_models["player"].rot.y = -90;
 		if (p.getStatus() == false)
-			_models["player"].pos.x = _models["player"].pos.x + 15;
+			_models["player"].pos.x = _models["player"].pos.x + 30;
 		_map.print_map();
 	}
 	if (events.first == KeyCode::KEY_RIGHT) {
@@ -173,7 +176,7 @@ void Bomberman::checkEvents(std::pair<int, std::string> &events)
 		p.moveRight();
 		_models["player"].rot.y = 180;
 		if (p.getStatus() == false)
-			_models["player"].pos.y = _models["player"].pos.y + 15;
+			_models["player"].pos.y = _models["player"].pos.y + 30;
 		_map.print_map();
 	}
 	if (events.first == KeyCode::KEY_DOWN) {
@@ -182,7 +185,7 @@ void Bomberman::checkEvents(std::pair<int, std::string> &events)
 		p.moveDown();
 		_models["player"].rot.y = 90;
 		if (p.getStatus() == false)
-		_models["player"].pos.x = _models["player"].pos.x - 15;
+		_models["player"].pos.x = _models["player"].pos.x - 30;
 		_map.print_map();
 	}
 }

@@ -12,8 +12,8 @@
 
 Preroll::Preroll(bool verbose) : _change(false), _verbose(verbose), _cameraPos({100.0f, 0.0f, 20.0f}), _cameraRot({ 0, 0, 0})
 {
-	_models.insert({"player", { {-200, 30}, {0, -90}, "texture/characters/ziggs.png", "texture/characters/ziggs.md3", irr::scene::EMAT_STAND, false }});
-	_guis.insert({"pass", { {370, 500}, {0, 180}, "", "Press M to pass", irr::scene::EMAT_STAND, false }});
+	_models.insert({"player", { {-200, 30}, {0, -90}, "texture/characters/ziggs.png", "texture/characters/ziggs.md3", irr::scene::EMAT_STAND, false, true }});
+	_guis.insert({"pass", { {370, 500}, {0, 180}, "", "Press M to pass", irr::scene::EMAT_STAND, false, true }});
 }
 
 void	Preroll::compute(std::pair<int, std::string> &keyCode)

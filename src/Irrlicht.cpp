@@ -108,6 +108,7 @@ void Irrlicht::loadModels(std::map<std::string, Data> &models)
 		_sceneElement[model.first]->setMD2Animation(model.second.animationType);
 		_sceneElement[model.first]->setPosition(irr::core::vector3df(model.second.pos.x, 0.0f, model.second.pos.y));
 		_sceneElement[model.first]->setRotation(irr::core::vector3df(model.second.rot.x, model.second.rot.y, .0f));
+		_sceneElement[model.first]->setVisible(model.second.isVisible);
 		if (!model.second.texturePath.empty()) {
 			_sceneElement[model.first]->setMaterialTexture(0, _driver->getTexture(model.second.texturePath.c_str()));
 		}
@@ -126,6 +127,7 @@ void Irrlicht::updateModels(std::map<std::string, Data> &models)
 			_sceneElement[currentModel.first]->setMD2Animation(tmpData.animationType);
 			_sceneElement[currentModel.first]->setPosition(Tools::posToVec(tmpData.pos));
 			_sceneElement[currentModel.first]->setRotation(irr::core::vector3df(tmpData.rot.x, tmpData.rot.y, .0f));
+			_sceneElement[currentModel.first]->setVisible(tmpData.isVisible);
 			//Tools::displayVerbose(_verbose, "Update \"" + currentModel.first + "\" model.");
 			_sceneData[currentModel.first] = tmpData;
 		}
@@ -158,6 +160,7 @@ void Irrlicht::loadGuis(std::map<std::string, Data> &guis)
 
 void Irrlicht::getMap(std::vector<std::vector<char>> &map)
 {
+	std::string	bombName = "";
 	size_t	x = 0;
 	size_t	y = 0;
 
@@ -170,6 +173,12 @@ void Irrlicht::getMap(std::vector<std::vector<char>> &map)
 		for (auto const &element : line) {
 			Tools::displayVerbose(_verbose,std::string(1, element), false);
 			if (element != '*' && element != '#') {
+				if (element == '3') {
+					bombName = "bomb" + x + y;
+					_sceneElement.insert({bombName, _sceneManager->addAnimatedMeshSceneNode(_sceneManager->getMesh("texture/miniBomb.md2"))});
+					_sceneElement[bombName]->setPosition(irr::core::vector3df(x * _cubeSize, 0.0f, y * _cubeSize));
+					_sceneElement[bombName]->setMaterialTexture(0, _driver->getTexture("texture/miniBomb.png"));
+				}
 				x++;
 				continue;
 			}
@@ -244,11 +253,4 @@ void	Irrlicht::displayMap(std::vector<std::vector<char>> &map)
 		std::cerr << std::endl;
 	}
 	std::cerr << std::endl;
-}
-
-void	Irrlicht::changeParams(GraphParams &params)
-{
-	if (params.change) {
-
-	}
 }
