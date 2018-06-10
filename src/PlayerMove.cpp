@@ -35,7 +35,7 @@ Position	PlayerMove::getPlayerPlace()
 	}
 }
 
-void	PlayerMove::letBomb(void)
+void	PlayerMove::putBomb(void)
 {
 	_map[pos.x][pos.y] = 'o';
 }

@@ -32,6 +32,6 @@ void	Ia::moveDown()
 {
 }
 
-void	Ia::letBomb()
+void	Ia::putBomb()
 {
 }

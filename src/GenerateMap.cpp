@@ -14,9 +14,9 @@ GenerateMap::GenerateMap(size_t nbrplayer, size_t nbria)
 	place_unbreakable_wall_width();
 	place_unbreakable_wall_height();
 	place_target_wall();
+	setPlayeronMap(nbrplayer);
+	setIaonMap(nbria);
 	set_place_for_players();
-	setPlayeronMap(nbria);
-	setIaonMap(nbrplayer);
 }
 
 GenerateMap::~GenerateMap()
@@ -122,21 +122,18 @@ void	GenerateMap::set_place_for_players(void)
 				if (BombermanMap[x][y + 1] != '*')
 					BombermanMap[x][y + 1] = ' ';
 			}
+			std::cout << BombermanMap[x][y];
 			y++;
 		}
+		std::cout << std::endl;
 		x++;
 	}
 }
 
 void	GenerateMap::setPlayeronMap(int nbrPlayer)
 {
-	if (nbrPlayer >= 1) {
+	if (nbrPlayer >= 1)
 		BombermanMap[1][1] = 'A';
-		BombermanMap[1][2] = ' ';
-		BombermanMap[1][3] = ' ';
-		BombermanMap[2][1] = ' ';
-		BombermanMap[2][2] = ' ';
-	}
 	if (nbrPlayer >= 2)
 		BombermanMap[1][width - 2] = 'B';
 	if (nbrPlayer >= 3)

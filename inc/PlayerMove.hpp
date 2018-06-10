@@ -28,7 +28,7 @@ class PlayerMove : public IPlayer {
 		void		moveRight();
 		void		moveUp();
 		void		moveDown();
-		void		letBomb();
+		void		putBomb();
 		Position	getPlayerPlace();
 };
 

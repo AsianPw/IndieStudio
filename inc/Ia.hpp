@@ -20,7 +20,7 @@ public:
 	void	moveRight();
 	void	moveUp();
 	void	moveDown();
-	void	letBomb();
+	void	putBomb();
 
 private:
 	char				_name;
