@@ -4,9 +4,11 @@
 ** File description:
 ** Created by asianpw,
 */
+
 #include "../inc/Bomberman.hpp"
 #include "../inc/keyCodes.hpp"
 #include "../inc/PlayerMove.hpp"
+#include "../inc/Ia.hpp"
 
 Bomberman::Bomberman(bool _verbose, size_t nbPlayer, size_t nbIa) : _verbose(_verbose), _cameraPos({195.0f, 150.0f, 75.8f}), _cameraRot({ 50.0f, 0.0f, 75.0f}), _map(nbPlayer, nbIa)
 {
@@ -39,6 +41,12 @@ Tools::vector3d &Bomberman::getCameraRot()
 
 void Bomberman::compute(std::pair<int, std::string> &events)
 {
+	Ia	B('B', _map.getMap());
+	Ia	C('C', _map.getMap());
+	Ia	D('D', _map.getMap());
+	B.start();
+	C.start();
+	D.start();
 }
 
 IScene *Bomberman::newScene()
