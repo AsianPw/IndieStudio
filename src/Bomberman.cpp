@@ -20,10 +20,14 @@ Bomberman::Bomberman(bool _verbose, size_t nbPlayer, size_t nbIa) : _verbose(_ve
 	playerrotate.y = 70;
 	ia.x = 30;
 	ia.y = 380;
+	ia1.x = 380;
+	ia1.y = 380;
+	ia2.x = 380;
+	ia2.y = 30;
 	_models.insert({"player", { {player.x, player.y}, {0, 70}, "texture/characters/ziggs.png", "texture/characters/ziggs.md3", irr::scene::EMAT_STAND, false, true }});
 	_models.insert({"player2", { {ia.x, ia.y}, {0, 70}, "texture/characters/ziggs_general.png", "texture/characters/ziggs.md3", irr::scene::EMAT_STAND, false, true }});
-	_models.insert({"player3", { {380, 380}, {0, 70}, "texture/characters/ziggs_general.png", "texture/characters/ziggs.md3", irr::scene::EMAT_STAND, false, true }});
-	_models.insert({"player4", { {380, 30}, {0, 70}, "texture/characters/ziggs_general.png", "texture/characters/ziggs.md3", irr::scene::EMAT_STAND, false, true }});
+	_models.insert({"player3", { {ia1.x, ia1.y}, {0, 70}, "texture/characters/ziggs_general.png", "texture/characters/ziggs.md3", irr::scene::EMAT_STAND, false, true }});
+	_models.insert({"player4", { {ia2.x, ia2.y}, {0, 70}, "texture/characters/ziggs_general.png", "texture/characters/ziggs.md3", irr::scene::EMAT_STAND, false, true }});
 }
 
 std::map<std::string, Data> &Bomberman::getModels()

@@ -20,11 +20,11 @@ public:
 	std::vector<std::vector<char>> &getMap() override;
 	Tools::vector3d &getCameraPos() override;
 	Tools::vector3d &getCameraRot() override;
-	void compute(std::pair<int, std::string> &pair) override;
-	IScene *newScene() override;
-	void checkEvents(std::pair<int, std::string> &pair) override;
-	void checkBomb();
-	void bombExplode(Position);
+	void	compute(std::pair<int, std::string> &pair) override;
+	IScene	*newScene() override;
+	void	checkEvents(std::pair<int, std::string> &pair) override;
+	void	checkBomb();
+	void	bombExplode(Position);
 
 private:
 	bool	_verbose;
@@ -34,7 +34,7 @@ private:
 	std::map<std::string, Data>	_guis;
 	GenerateMap	_map;
 	Position	player, playerrotate;
-	Position	ia, iarotate;
+	Position	ia, ia1, ia2;
 	long		currentTime;
 	int		bombDir;
 };

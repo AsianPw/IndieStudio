@@ -165,3 +165,8 @@ void	Ia::putBomb()
 		_map[pos.x + 1][pos.y] = '1';
 	}
 }
+
+void	Ia::setWay(int _way)
+{
+	way = _way;
+}

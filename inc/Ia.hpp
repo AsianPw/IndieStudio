@@ -26,12 +26,14 @@ public:
 	void		checkDir();
 	void		move(int);
 	void		canMove();
+	void		setWay(int _way);
 
 private:
 	char				_name;
 	int				dir;
 	int				opp;
 	int				life;
+	int				way;
 	Position			pos;
 	std::vector<std::vector<char>>	&_map;
 };
