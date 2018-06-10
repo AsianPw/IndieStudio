@@ -13,7 +13,7 @@
 #include "../inc/Bomberman.hpp"
 
 Menu::Menu(bool verbose)
-	: _change(false), _verbose(verbose), _scene(nullptr), _cameraPos({195.0f, 150.0f, 71.0f}), _cameraRot({ 50.0f, 0.0f, 75.0f}), _sens(false), _map(1, 3)
+	: _change(false), _verbose(verbose), _scene(nullptr), _cameraPos({500.0f, 400.0f, 225.0f}), _cameraRot({ 120.0f, 0.0f, 225.0f}), _sens(false), _map(1, 3)
 {
 	_models.insert({"player", { {32, 30}, {0, 180}, "texture/characters/ziggs.png", "texture/characters/ziggs.md3", irr::scene::EMAT_STAND, false, true }});
 	_models.insert({"player2", { {32, 390}, {0, 0}, "texture/characters/ziggs_general.png", "texture/characters/ziggs_general.md3", irr::scene::EMAT_STAND, false, true }});
@@ -37,7 +37,7 @@ void Menu::compute(std::pair<int, std::string> &keyCode)
 	} else {
 		_cameraPos.z -= 1;
 	}
-	if (_cameraPos.z >= 150 || _cameraPos.z <= -150) {
+	if (_cameraPos.z >= 300 || _cameraPos.z <= -300) {
 		_sens = !_sens;
 	}
 }
