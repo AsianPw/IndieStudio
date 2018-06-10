@@ -24,6 +24,7 @@ Irrlicht::Irrlicht(GraphParams &params) :
 		throw std::runtime_error("Couldn't find any device !");
 	Tools::displayVerbose(_verbose, "Device created !");
 	_device->setWindowCaption(L"Bomberman");
+	_device->setResizable(false);
 	_driver = _device->getVideoDriver();
 	if (_driver == nullptr)
 		throw std::runtime_error("Couldn't get any video driver !");
