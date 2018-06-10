@@ -14,6 +14,8 @@ namespace KeyCode {
 	static const int KEY_Z = irr::KEY_KEY_Z;
 	static const int KEY_Q = irr::KEY_KEY_Q;
 	static const int KEY_S = irr::KEY_KEY_S;
+	static const int KEY_P = irr::KEY_KEY_P;
+	static const int KEY_ENTER = irr::KEY_RETURN;
 	static const int KEY_D = irr::KEY_KEY_D;
 	static const int KEY_SPACE = irr::KEY_SPACE;
 	static const int KEY_UP = irr::KEY_UP;
