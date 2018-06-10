@@ -95,6 +95,7 @@ void Bomberman::checkEvents(std::pair<int, std::string> &events)
 {
 	PlayerMove	p('A', _map.getMap());
 	Position	place;
+	dir_use_bomb	bomb_dir;
 
 	if (events.first == KeyCode::KEY_Z) {
 		_cameraPos.x += 1.f;
