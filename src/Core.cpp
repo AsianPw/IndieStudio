@@ -13,17 +13,15 @@
 #include "../inc/Menu.hpp"
 #include "../inc/PlayerMove.hpp"
 #include "../inc/IrrKlang.hpp"
+#include "../inc/Settings.hpp"
 
-Core::Core(std::unique_ptr<Params> &params) : _verbose(params->getVerbose())
+Core::Core(std::unique_ptr<Params> &params) : _verbose(params->getVerbose()), _prevScene(nullptr)
 {
 	try {
 		_display = std::make_unique<Irrlicht>(params);
-		_scene = std::make_unique<Preroll>(params->getVerbose());
+		changeScene(new Preroll(params->getVerbose()));
 		_sound = std::make_unique<IrrKlang>();
 		_sound->play("media/menu_sound.ogg");
-		_display->loadModels(_scene->getModels());
-		_display->loadGuis(_scene->getGuis());
-		_display->getMap(_scene->getMap());
 	} catch (const std::runtime_error &e) {
 		throw;
 	}
@@ -44,10 +42,18 @@ void	Core::compute()
 		keyCode.second = "";
 		if (_display->isEvent()) {
 			_display->getEvents(keyCode);
-			std::cerr << keyCode.first << " " << keyCode.second << std::endl;
+			std::cerr << keyCode.first << std::endl;
 			if (keyCode.first == KeyCode::KEY_M) {
 				keyCode.first = -1;
 				changeScene(new Menu(_verbose));
+			}
+			if (keyCode.first == KeyCode::KEY_P && !_prevScene) {
+				keyCode.first = -1;
+				goSetting();
+			}
+			if (keyCode.first == KeyCode::KEY_ENTER && _prevScene) {
+				keyCode.first = -1;
+				changeScene(_prevScene);
 			}
 			_scene->checkEvents(keyCode);
 		}
@@ -65,7 +71,7 @@ void	Core::compute()
 
 void	Core::changeScene(IScene *newScene)
 {
-	Tools::displayVerbose(_verbose, "CHANGE SCENE:\n\tClear scene data...");
+	Tools::displayVerbose(_verbose, "LOAD NEW SCENE:\n\tClear scene data...");
 	_display->clear();
 	Tools::displayVerbose(_verbose, "\tLoad new scene...");
 	_scene.reset(newScene);
@@ -75,4 +81,12 @@ void	Core::changeScene(IScene *newScene)
 	_display->loadGuis(_scene->getGuis());
 	Tools::displayVerbose(_verbose, "\tLoad Map...");
 	_display->getMap(_scene->getMap());
+	_prevScene = nullptr;
+}
+
+void	Core::goSetting()
+{
+	Tools::displayVerbose(_verbose, "GO SETTINGS");
+	_prevScene = _scene.release();
+	changeScene(new Settings(_prevScene));
 }

@@ -12,12 +12,9 @@
 
 Bomberman::Bomberman(bool _verbose, size_t nbPlayer, size_t nbIa) : _verbose(_verbose), _cameraPos({320.0f, 175.0f, 150.0f}), _cameraRot({ 120.0f, 0.0f, 150.0f}), _map(nbPlayer, nbIa)
 {
-	player.x = 130;
-	player.y = 10;
-	ia.x = 130;
-	ia.y = 130;
+	player.x = 260;
+	player.y = 30;
 	_models.insert({"player", { {player.x, player.y}, {0, 0}, "texture/characters/ziggs.png", "texture/characters/ziggs.md3", irr::scene::EMAT_STAND, false }});
-	_models.insert({"player2", { {ia.x, ia.y}, {0, 0}, "texture/characters/ziggs_general.png", "texture/characters/ziggs_general.md3", irr::scene::EMAT_STAND, false }});
 }
 
 std::map<std::string, Data> &Bomberman::getModels()
@@ -83,8 +80,8 @@ void Bomberman::checkBomb()
 
 void Bomberman::checkEvents(std::pair<int, std::string> &events)
 {
-
 	PlayerMove	p('A', _map.getMap());
+	Position	place;
 
 	if (events.first == KeyCode::KEY_Z) {
 		_cameraPos.x += 1.f;
@@ -98,23 +95,29 @@ void Bomberman::checkEvents(std::pair<int, std::string> &events)
 	if (events.first == KeyCode::KEY_LEFT) {
 		std::cerr << "Left direction" << std::endl;
 		p.moveLeft();
-		_models["player"].pos.y = _models["player"].pos.y - 10;
+		if (p.getStatus() == false)
+			_models["player"].pos.y = _models["player"].pos.y - 15;
 		_map.print_map();
 	}
 	if (events.first == KeyCode::KEY_UP) {
 		std::cerr << "Up direction" << std::endl;
 		p.moveUp();
+		if (p.getStatus() == false)
+			_models["player"].pos.x = _models["player"].pos.x + 15;
 		_map.print_map();
 	}
 	if (events.first == KeyCode::KEY_RIGHT) {
 		std::cerr << "Right direction" << std::endl;
 		p.moveRight();
-		_models["player"].pos.y = _models["player"].pos.y + 10;
+		if (p.getStatus() == false)
+			_models["player"].pos.y = _models["player"].pos.y + 15;
 		_map.print_map();
 	}
 	if (events.first == KeyCode::KEY_DOWN) {
 		std::cerr << "Down direction" << std::endl;
 		p.moveDown();
+		if (p.getStatus() == false)
+		_models["player"].pos.x = _models["player"].pos.x - 15;
 		_map.print_map();
 	}
 }

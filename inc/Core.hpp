@@ -18,11 +18,16 @@ public:
 	explicit Core(std::unique_ptr<Params> &params);
 	~Core();
 	void	compute();
+
+private:
 	void	changeScene(IScene *);
+	void	goSetting();
+
 private:
 	std::unique_ptr<IDisplay>	_display;
 	std::unique_ptr<ISound>		_sound;
 	std::unique_ptr<IScene>		_scene;
+	IScene				*_prevScene;
 	bool	_verbose;
 	bool	_change;
 };

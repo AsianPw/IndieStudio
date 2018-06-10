@@ -4,17 +4,15 @@
 ** File description:
 ** Created by asianpw,
 */
-#ifndef BOMBERMAN_BOMBERMAN_HPP
-#define BOMBERMAN_BOMBERMAN_HPP
+#ifndef BOMBERMAN_SETTINGS_HPP
+#define BOMBERMAN_SETTINGS_HPP
 
 #include "IScene.hpp"
 #include "GenerateMap.hpp"
-#include "Position.hpp"
-#include "PlayerMove.hpp"
 
-class Bomberman : public IScene {
+class Settings : public IScene {
 public:
-	Bomberman(bool, size_t, size_t);
+	explicit Settings(IScene *);
 	std::map<std::string, Data> &getModels() override;
 	std::map<std::string, Data> &getGuis() override;
 	std::vector<std::vector<char>> &getMap() override;
@@ -23,18 +21,16 @@ public:
 	void compute(std::pair<int, std::string> &pair) override;
 	IScene *newScene() override;
 	void checkEvents(std::pair<int, std::string> &pair) override;
-	void checkBomb();
-	void bombExplod(Position);
 
 private:
-	bool	_verbose;
-	Tools::vector3d	_cameraPos;
-	Tools::vector3d	_cameraRot;
+	IScene	*_prevScene;
 	std::map<std::string, Data>	_models;
 	std::map<std::string, Data>	_guis;
-	GenerateMap	_map;
-	Position	player;
-	Position	ia;
+	std::vector<std::vector<char>>	_map;
+	Tools::vector3d	_cameraPos;
+	Tools::vector3d	_cameraRot;
+	bool	_verbose;
+	bool	_backToPrev;
 };
 
-#endif //BOMBERMAN_BOMBERMAN_HPP
+#endif //BOMBERMAN_SETTINGS_HPP

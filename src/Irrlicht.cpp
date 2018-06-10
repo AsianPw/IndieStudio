@@ -119,9 +119,11 @@ void Irrlicht::updateModels(std::map<std::string, Data> &models)
 	for (auto const &currentModel : _sceneData) {
 		tmpData = models[currentModel.first];
 		if (tmpData.animationType != currentModel.second.animationType
-			|| !Tools::cmpPos(tmpData.pos, _sceneData[currentModel.first].pos) ) {
+			|| !Tools::cmpPos(tmpData.pos, _sceneData[currentModel.first].pos)
+			|| !Tools::cmpRot(tmpData.rot, _sceneData[currentModel.first].rot)) {
 			_sceneElement[currentModel.first]->setMD2Animation(tmpData.animationType);
 			_sceneElement[currentModel.first]->setPosition(Tools::posToVec(tmpData.pos));
+			_sceneElement[currentModel.first]->setRotation(irr::core::vector3df(tmpData.rot.x, tmpData.rot.y, .0f));
 			//Tools::displayVerbose(_verbose, "Update \"" + currentModel.first + "\" model.");
 			_sceneData[currentModel.first] = tmpData;
 		}
