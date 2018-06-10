@@ -35,32 +35,33 @@ Position	PlayerMove::getPlayerPlace()
 	}
 }
 
-void	PlayerMove::putBomb(void)
+void	PlayerMove::putBomb()
 {
 	pos = getPlayerPlace();
-	if ((bomb_dir == RIGHT || bomb_dir == NONE) && _map[pos.x][pos.y + 1]  && _map[pos.x][pos.y + 1] == ' ') {
+	std::cout<<bomb_dir<<std::endl;
+	if (bomb_dir == RIGHT && _map[pos.x][pos.y + 1]  && _map[pos.x][pos.y + 1] == ' ') {
 		_map[pos.x][pos.y + 1] = '1';
 	}
-	else if (bomb_dir == LEFT && _map[pos.x][pos.y - 1] && _map[pos.x][pos.y - 1] == ' ') {
+	if (bomb_dir == LEFT && _map[pos.x][pos.y - 1] && _map[pos.x][pos.y - 1] == ' ') {
 		_map[pos.x][pos.y - 1] = '1';
 	}
-	else if (bomb_dir == UP && _map[pos.x - 1][pos.y] && _map[pos.x - 1][pos.y] == ' ') {
+	if (bomb_dir == UP && _map[pos.x - 1][pos.y] && _map[pos.x - 1][pos.y] == ' ') {
 		_map[pos.x - 1][pos.y] = '1';
 	}
-	else if (bomb_dir == DOWN && _map[pos.x + 1][pos.y] && _map[pos.x + 1][pos.y] == ' ') {
+	if (bomb_dir == DOWN && _map[pos.x + 1][pos.y] && _map[pos.x + 1][pos.y] == ' ') {
 		_map[pos.x + 1][pos.y] = '1';
 	}
 }
 
 void	PlayerMove::moveRight(void)
 {
+	bomb_dir = RIGHT;
 	pos = getPlayerPlace();
 	if (_map[pos.x][pos.y + 1]  && _map[pos.x][pos.y + 1] == ' ') {
 		_map[pos.x][pos.y + 1] = _name;
 		_map[pos.x][pos.y] = ' ';
 		pos.x = pos.x + 1;
 		ver_explosion = true;
-		bomb_dir = RIGHT;
 	}
 	else {
 		locked = true;
@@ -70,13 +71,13 @@ void	PlayerMove::moveRight(void)
 
 void	PlayerMove::moveLeft(void)
 {
+	bomb_dir = LEFT;
 	pos = getPlayerPlace();
 	if (_map[pos.x][pos.y - 1] && _map[pos.x][pos.y - 1] == ' ') {
 		_map[pos.x][pos.y - 1] = _name;
 		_map[pos.x][pos.y] = ' ';
 		pos.x = pos.x - 1;
 		ver_explosion = true;
-		bomb_dir = LEFT;
 	}
 	else {
 		locked = true;
@@ -86,13 +87,13 @@ void	PlayerMove::moveLeft(void)
 
 void	PlayerMove::moveUp(void)
 {
+	bomb_dir = UP;
 	pos = getPlayerPlace();
 	if (_map[pos.x - 1][pos.y] && _map[pos.x - 1][pos.y] == ' ') {
 		_map[pos.x - 1][pos.y] = _name;
 		_map[pos.x][pos.y] = ' ';
 		pos.y = pos.y - 1;
 		hor_explosion = true;
-		bomb_dir = UP;
 	}
 	else {
 		locked = true;
@@ -102,13 +103,13 @@ void	PlayerMove::moveUp(void)
 
 void	PlayerMove::moveDown(void)
 {
+	bomb_dir = DOWN;
 	pos = getPlayerPlace();
 	if (_map[pos.x + 1][pos.y] && _map[pos.x + 1][pos.y] == ' ') {
 		_map[pos.x + 1][pos.y] = _name;
 		_map[pos.x][pos.y] = ' ';
 		pos.y = pos.y + 1;
 		hor_explosion = true;
-		bomb_dir = DOWN;
 	}
 	else {
 		locked = true;

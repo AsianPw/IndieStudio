@@ -17,9 +17,14 @@
 
 Core::Core(std::unique_ptr<Params> &params) : _verbose(params->getVerbose()), _prevScene(nullptr)
 {
+	_params.fullScreen = params->getFullscreen();
+	_params.vSync = params->getVsync();
+	_params.resolution.first = params->getResolution().first;
+	_params.resolution.second = params->getResolution().second;
+	_params.verbose = params->getVerbose();
 	try {
-		_display = std::make_unique<Irrlicht>(params);
-		changeScene(new Preroll(params->getVerbose()));
+		_display = std::make_unique<Irrlicht>(_params);
+		changeScene(new Preroll(params->getVerbose()), true);
 		_sound = std::make_unique<IrrKlang>();
 		_sound->play("media/menu_sound.ogg");
 	} catch (const std::runtime_error &e) {
@@ -37,7 +42,6 @@ void	Core::compute()
 	std::pair<int, std::string>	keyCode;
 
 	while (_display->isOpen()) {
-		_change = false;
 		keyCode.first = -1;
 		keyCode.second = "";
 		if (_display->isEvent()) {
@@ -45,32 +49,34 @@ void	Core::compute()
 			std::cerr << keyCode.first << std::endl;
 			if (keyCode.first == KeyCode::KEY_M) {
 				keyCode.first = -1;
-				changeScene(new Menu(_verbose));
+				changeScene(new Menu(_verbose), true);
 			}
 			if (keyCode.first == KeyCode::KEY_P && !_prevScene) {
 				keyCode.first = -1;
 				goSetting();
 			}
-			if (keyCode.first == KeyCode::KEY_ENTER && _prevScene) {
-				keyCode.first = -1;
-				changeScene(_prevScene);
-			}
 			_scene->checkEvents(keyCode);
 		}
-		_display->displayMap(_scene->getMap());
+		//_display->displayMap(_scene->getMap());
 		_display->changeCameraPosition(_scene->getCameraPos(), _scene->getCameraRot());
 		_scene->compute(keyCode);
 		_display->updateModels(_scene->getModels());
 		_display->display();
 		scene = _scene->newScene();
 		if (scene != nullptr) {
-			changeScene(scene);
+			changeScene(scene, true);
 		}
 	}
 }
 
-void	Core::changeScene(IScene *newScene)
+void	Core::changeScene(IScene *newScene, bool settings)
 {
+	if (_params.change) {
+		Tools::displayVerbose(_verbose, "CHANGE DEVICE PARAMS.");
+		_display.reset();
+		_display = std::make_unique<Irrlicht>(_params);
+		_params.change = false;
+	}
 	Tools::displayVerbose(_verbose, "LOAD NEW SCENE:\n\tClear scene data...");
 	_display->clear();
 	Tools::displayVerbose(_verbose, "\tLoad new scene...");
@@ -88,5 +94,5 @@ void	Core::goSetting()
 {
 	Tools::displayVerbose(_verbose, "GO SETTINGS");
 	_prevScene = _scene.release();
-	changeScene(new Settings(_prevScene));
+	changeScene(new Settings(_prevScene, _params), false);
 }

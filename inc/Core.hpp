@@ -12,6 +12,7 @@
 #include "ISound.hpp"
 #include "IScene.hpp"
 #include "Params.hpp"
+#include "GraphParams.hpp"
 
 class Core {
 public:
@@ -20,16 +21,16 @@ public:
 	void	compute();
 
 private:
-	void	changeScene(IScene *);
+	void	changeScene(IScene *, bool);
 	void	goSetting();
 
 private:
 	std::unique_ptr<IDisplay>	_display;
 	std::unique_ptr<ISound>		_sound;
 	std::unique_ptr<IScene>		_scene;
+	GraphParams			_params;
 	IScene				*_prevScene;
 	bool	_verbose;
-	bool	_change;
 };
 
 #endif //BOMBERMAN_CORE_HPP

@@ -14,14 +14,15 @@
 #include "../inc/Tools.hpp"
 #include "../inc/PlayerMove.hpp"
 
-Irrlicht::Irrlicht(std::unique_ptr<Params> &params) :
-	_resolution({(irr::u32)params->getResolution().first, (irr::u32)params->getResolution().second}),
-	_verbose(params->getVerbose()),
-	_deviceReceiver(params->getVerbose())
+Irrlicht::Irrlicht(GraphParams &params) :
+	_resolution({(irr::u32)params.resolution.first, (irr::u32)params.resolution.second}),
+	_verbose(params.verbose),
+	_deviceReceiver(params.verbose)
 {
-	_device = irr::createDevice(irr::video::EDT_OPENGL, irr::core::dimension2d(_resolution.first, _resolution.second), 32, params->getFullscreen(), false, params->getVsync(), &_deviceReceiver);
+	_device = irr::createDevice(irr::video::EDT_OPENGL, irr::core::dimension2d(_resolution.first, _resolution.second), 32, params.fullScreen, false, params.vSync, &_deviceReceiver);
 	if (_device == nullptr)
 		throw std::runtime_error("Couldn't find any device !");
+	Tools::displayVerbose(_verbose, "Device created !");
 	_device->setWindowCaption(L"Bomberman");
 	_driver = _device->getVideoDriver();
 	if (_driver == nullptr)
@@ -39,6 +40,7 @@ Irrlicht::Irrlicht(std::unique_ptr<Params> &params) :
 
 Irrlicht::~Irrlicht()
 {
+	_device->closeDevice();
 	_device->drop();
 }
 
@@ -173,10 +175,7 @@ void Irrlicht::getMap(std::vector<std::vector<char>> &map)
 			}
 			_sceneCube.push_back(_sceneManager->addCubeSceneNode(_cubeSize));
 			_sceneCube.back()->setPosition(irr::core::vector3df(x * _cubeSize, 0, y * _cubeSize));
-			if (element == '#')
-				_sceneCube.back()->setMaterialTexture(0, _driver->getTexture("texture/cobble.png"));
-			else
-				_sceneCube.back()->setMaterialTexture(0, _driver->getTexture("texture/wall.png"));
+			_sceneCube.back()->setMaterialTexture(0, _driver->getTexture( element == '#' ? "texture/cobble.png" : "texture/wall.png"));
 			x++;
 		}
 		y++;
@@ -195,8 +194,8 @@ void	Irrlicht::changeCameraPosition(Tools::vector3d &pos, Tools::vector3d &rot)
 		//Tools::displayVerbose(_verbose, "Update Position of camera.");
 	}
 	if (cameraRot.X != rot.x || cameraRot.Y != rot.y || cameraRot.Z != rot.z) {
-			_camera->setTarget(irr::core::vector3df(rot.x, rot.y, rot.z));
-			//Tools::displayVerbose(_verbose, "Update Rotation of camera.");
+		_camera->setTarget(irr::core::vector3df(rot.x, rot.y, rot.z));
+		//Tools::displayVerbose(_verbose, "Update Rotation of camera.");
 	}
 }
 
@@ -245,4 +244,11 @@ void	Irrlicht::displayMap(std::vector<std::vector<char>> &map)
 		std::cerr << std::endl;
 	}
 	std::cerr << std::endl;
+}
+
+void	Irrlicht::changeParams(GraphParams &params)
+{
+	if (params.change) {
+
+	}
 }

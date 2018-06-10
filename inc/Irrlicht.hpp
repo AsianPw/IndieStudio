@@ -19,7 +19,7 @@
 
 class Irrlicht : public IDisplay {
 public:
-	explicit Irrlicht(std::unique_ptr<Params> &params);
+	explicit Irrlicht(GraphParams &params);
 	~Irrlicht() override;
 	void	display() override;
 	void	clear() override;
@@ -32,6 +32,8 @@ public:
 	void changeCameraPosition(Tools::vector3d &, Tools::vector3d &) override;
 	void getMap(std::vector<std::vector<char>> &vector) override;
 	void displayMap(std::vector<std::vector<char>> &vector) override;
+
+	void changeParams(GraphParams &params) override;
 
 private:
 	void generateGround();
