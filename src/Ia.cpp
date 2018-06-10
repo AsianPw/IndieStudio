@@ -7,6 +7,15 @@
 
 #include "../inc/Ia.hpp"
 
+Ia::Ia(char name, std::vector<std::vector<char>> &map)
+	: _name(name), _map(map)
+{
+}
+
+Ia::~Ia()
+{
+}
+
 void	Ia::moveLeft()
 {
 }
@@ -23,6 +32,6 @@ void	Ia::moveDown()
 {
 }
 
-void	Ia::letBomb()
+void	Ia::putBomb()
 {
 }

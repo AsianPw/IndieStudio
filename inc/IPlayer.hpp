@@ -18,7 +18,7 @@ class IPlayer {
 		virtual void	moveRight() = 0;
 		virtual void	moveUp() = 0;
 		virtual void	moveDown() = 0;
-		virtual void	letBomb() = 0;
+		virtual void	putBomb() = 0;
 };
 
 #endif //CPP_INDIE_STUDIO_IPLAYER_HPP

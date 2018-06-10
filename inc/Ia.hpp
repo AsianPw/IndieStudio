@@ -7,22 +7,26 @@
 #ifndef BOMBERMAN_IA_HPP
 #define BOMBERMAN_IA_HPP
 
-#include "../inc/IPlayer.hpp"
 #include <iostream>
 #include <vector>
+#include "IPlayer.hpp"
+#include "Position.hpp"
 
 class Ia : public IPlayer{
 public:
+	~Ia();
+	Ia(char name, std::vector<std::vector<char>>	&map);
 	void	moveLeft();
 	void	moveRight();
 	void	moveUp();
 	void	moveDown();
-	void	letBomb();
+	void	putBomb();
 
 private:
-	char	name;
-	int	life;
-	std::vector<std::vector<char>>	map;
+	char				_name;
+	int				life;
+	Position			pos;
+	std::vector<std::vector<char>>	&_map;
 };
 
 #endif //BOMBERMAN_IA_HPP
