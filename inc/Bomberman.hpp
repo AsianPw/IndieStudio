@@ -22,6 +22,8 @@ public:
 	void compute(std::pair<int, std::string> &pair) override;
 	IScene *newScene() override;
 	void checkEvents(std::pair<int, std::string> &pair) override;
+	void checkBomb();
+	void bombExplod(Position);
 
 private:
 	bool	_verbose;

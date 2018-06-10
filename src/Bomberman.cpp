@@ -53,11 +53,32 @@ void Bomberman::compute(std::pair<int, std::string> &events)
 	B.start();
 	C.start();
 	D.start();
+	checkBomb();
 }
 
 IScene *Bomberman::newScene()
 {
 	return nullptr;
+}
+
+void Bomberman::checkBomb()
+{
+	int	x = 0;
+	int	y;
+	std::vector<std::vector<char>> &map = getMap();
+
+	map = _map.getMap();
+	while (x < 15)
+	{
+		y = 0;
+		while (y < 15)
+		{
+			if (map[x][y] == '1')
+				map[x][y] == 'Y'
+			y++;
+		}
+		x++;
+	}
 }
 
 void Bomberman::checkEvents(std::pair<int, std::string> &events)
