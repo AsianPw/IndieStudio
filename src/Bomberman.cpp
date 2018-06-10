@@ -10,6 +10,8 @@
 
 Bomberman::Bomberman(bool _verbose, size_t nbPlayer, size_t nbIa) : _verbose(_verbose), _cameraPos({195.0f, 150.0f, 75.8f}), _cameraRot({ 50.0f, 0.0f, 75.0f}), _map(nbPlayer, nbIa)
 {
+	_models.insert({"player", { {130, 10}, {0, 0}, "texture/characters/ziggs.png", "texture/characters/ziggs.md3", irr::scene::EMAT_STAND, false }});
+	_models.insert({"player2", { {130, 130}, {0, 0}, "texture/characters/ziggs_general.png", "texture/characters/ziggs_general.md3", irr::scene::EMAT_STAND, false }});
 }
 
 std::map<std::string, Data> &Bomberman::getModels()
@@ -48,6 +50,7 @@ IScene *Bomberman::newScene()
 
 void Bomberman::checkEvents(std::pair<int, std::string> &events)
 {
+
 	PlayerMove	p('A', _map.getMap());
 
 	if (events.first == KeyCode::KEY_Z) {
