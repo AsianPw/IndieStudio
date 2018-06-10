@@ -84,24 +84,32 @@ void	Bomberman::bombExplode(Position p)
 		{
 			if (map[p.x + x][p.y] >= 49 && map[p.x + x][p.y] <= 51)
 				bombExplode({p.x + x, p.y});
+			if (map[p.x + x][p.y] != ' ')
+				top = true;
 			map[p.x + x][p.y] = ' ';
 		}
 		if ((p.x - x) > 0 && map[p.x - x][p.y] != '*' && !bot)
 		{
 			if (map[p.x - x][p.y] >= 49 && map[p.x - x][p.y] <= 51)
 				bombExplode({p.x - x, p.y});
+			if (map[p.x - x][p.y] != ' ')
+				bot = true;
 			map[p.x - x][p.y] = ' ';
 		}
 		if ((p.y + x) < 15 && map[p.x][p.y + x] != '*' && !right)
 		{
 			if (map[p.x][p.y + x] >= 49 && map[p.x][p.y + x] <= 51)
 				bombExplode({p.x, p.y + x});
+			if (map[p.x][p.y + x] != ' ')
+				right = true;
 			map[p.x][p.y + x] = ' ';
 		}
 		if ((p.y - x) > 0 && map[p.x][p.y - x] != '*' && !left)
 		{
 			if (map[p.x][p.y - x] >= 49 && map[p.x][p.y - x] <= 51)
 				bombExplode({p.x, p.y - x});
+			if (map[p.x][p.y - x] != ' ')
+				left = true;
 			map[p.x][p.y - x] = ' ';
 		}
 		x++;
