@@ -56,6 +56,8 @@ void Bomberman::checkEvents(std::pair<int, std::string> &events)
 	}
 	if (events.first == KeyCode::KEY_SPACE) {
 		std::cerr << "Space button to use a bomb" << std::endl;
+		p.putBomb();
+		_map.print_map();
 	}
 	if (events.first == KeyCode::KEY_LEFT) {
 		std::cerr << "Left direction" << std::endl;

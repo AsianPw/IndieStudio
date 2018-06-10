@@ -38,7 +38,18 @@ Position	PlayerMove::getPlayerPlace()
 void	PlayerMove::putBomb(void)
 {
 	pos = getPlayerPlace();
-	_map[pos.x][pos.y] = '1';
+	if ((bomb_dir == RIGHT || bomb_dir == NONE) && _map[pos.x][pos.y + 1]  && _map[pos.x][pos.y + 1] == ' ') {
+		_map[pos.x][pos.y + 1] = '1';
+	}
+	else if (bomb_dir == LEFT && _map[pos.x][pos.y - 1] && _map[pos.x][pos.y - 1] == ' ') {
+		_map[pos.x][pos.y - 1] = '1';
+	}
+	else if (bomb_dir == UP && _map[pos.x - 1][pos.y] && _map[pos.x - 1][pos.y] == ' ') {
+		_map[pos.x - 1][pos.y] = '1';
+	}
+	else if (bomb_dir == DOWN && _map[pos.x + 1][pos.y] && _map[pos.x + 1][pos.y] == ' ') {
+		_map[pos.x + 1][pos.y] = '1';
+	}
 }
 
 void	PlayerMove::moveRight(void)
@@ -49,6 +60,7 @@ void	PlayerMove::moveRight(void)
 		_map[pos.x][pos.y] = ' ';
 		pos.x = pos.x + 1;
 		ver_explosion = true;
+		bomb_dir = RIGHT;
 	}
 	else
 		return;
@@ -62,6 +74,7 @@ void	PlayerMove::moveLeft(void)
 		_map[pos.x][pos.y] = ' ';
 		pos.x = pos.x - 1;
 		ver_explosion = true;
+		bomb_dir = LEFT;
 	}
 	else
 		return;
@@ -75,6 +88,7 @@ void	PlayerMove::moveUp(void)
 		_map[pos.x][pos.y] = ' ';
 		pos.y = pos.y - 1;
 		hor_explosion = true;
+		bomb_dir = UP;
 	}
 }
 
@@ -86,6 +100,7 @@ void	PlayerMove::moveDown(void)
 		_map[pos.x][pos.y] = ' ';
 		pos.y = pos.y + 1;
 		hor_explosion = true;
+		bomb_dir = DOWN;
 	}
 	else
 		return;
