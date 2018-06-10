@@ -148,10 +148,6 @@ void Bomberman::checkEvents(std::pair<int, std::string> &events)
 	if (bombDir < 0 || bombDir > 3)
 		bombDir = 1;
 	p.setBombDir(bombDir);
-	if (events.first == KeyCode::KEY_Z) {
-		_cameraPos.x += 1.f;
-		std::cerr << _cameraPos.z << std::endl;
-	}
 	if (events.first == KeyCode::KEY_SPACE) {
 		std::cerr << "Space button to use a bomb" << std::endl;
 		p.putBomb();
