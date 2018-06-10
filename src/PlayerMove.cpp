@@ -37,7 +37,7 @@ Position	PlayerMove::getPlayerPlace()
 
 void	PlayerMove::putBomb(void)
 {
-	_map[pos.x][pos.y] = 'o';
+	_map[pos.x][pos.y] = '1';
 }
 
 void	PlayerMove::moveRight(void)
