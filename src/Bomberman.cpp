@@ -58,6 +58,13 @@ IScene *Bomberman::newScene()
 	return nullptr;
 }
 
+void	Bomberman::bombExplod(Position p)
+{
+	std::vector<std::vector<char>> &map = getMap();
+
+	
+}
+
 void Bomberman::checkBomb()
 {
 	int	x = 0;
@@ -71,7 +78,11 @@ void Bomberman::checkBomb()
 		while (y < 15)
 		{
 			if (map[x][y] == '1')
-				map[x][y] == 'Y'
+				map[x][y] = '2';
+			else if (map[x][y] == '2')
+				map[x][y] = '3';
+			else if (map[x][y] == '3')
+				bombExplod({x, y});
 			y++;
 		}
 		x++;
