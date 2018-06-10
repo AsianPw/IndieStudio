@@ -24,7 +24,7 @@ public:
 	IScene *newScene() override;
 	void checkEvents(std::pair<int, std::string> &pair) override;
 	void checkBomb();
-	void bombExplod(Position);
+	void bombExplode(Position);
 
 private:
 	bool	_verbose;

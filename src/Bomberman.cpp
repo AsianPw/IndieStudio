@@ -67,7 +67,7 @@ IScene *Bomberman::newScene()
 	return nullptr;
 }
 
-void	Bomberman::bombExplod(Position p)
+void	Bomberman::bombExplode(Position p)
 {
 	int	x = 1;
 	std::vector<std::vector<char>> &map = getMap();
@@ -80,14 +80,34 @@ void	Bomberman::bombExplod(Position p)
 	map[p.x][p.y] = ' ';
 	while (x < 3)
 	{
-		if ((p.x + x) < 15 && map[p.x + x][p.y] != '*')
+		if ((p.x + x) < 15 && map[p.x + x][p.y] != '*' && !top)
+		{
+			if (map[p.x + x][p.y] >= 49 && map[p.x + x][p.y] <= 51)
+				bombExplode({p.x + x, p.y});
 			map[p.x + x][p.y] = ' ';
-		if ((p.x - x) > 0 && map[p.x - x][p.y] != '*')
+			top = true;
+		}
+		if ((p.x - x) > 0 && map[p.x - x][p.y] != '*' && !bot)
+		{
+			if (map[p.x - x][p.y] >= 49 && map[p.x - x][p.y] <= 51)
+				bombExplode({p.x - x, p.y});
 			map[p.x - x][p.y] = ' ';
-		if ((p.y + x) < 15 && map[p.x][p.y + x] != '*')
+			bot = true;
+		}
+		if ((p.y + x) < 15 && map[p.x][p.y + x] != '*' && !right)
+		{
+			if (map[p.x][p.y + x] >= 49 && map[p.x][p.y + x] <= 51)
+				bombExplode({p.x, p.y + x});
 			map[p.x][p.y + x] = ' ';
-		if ((p.y - x) > 0 && map[p.x][p.y - x] != '*')
+			right = true;
+		}
+		if ((p.y - x) > 0 && map[p.x][p.y - x] != '*' && !left)
+		{
+			if (map[p.x][p.y - x] >= 49 && map[p.x][p.y - x] <= 51)
+				bombExplode({p.x, p.y - x});
 			map[p.x][p.y - x] = ' ';
+			left = true;
+		}
 		x++;
 	}
 }
@@ -109,7 +129,7 @@ void Bomberman::checkBomb()
 			else if (map[x][y] == '2')
 				map[x][y] = '3';
 			else if (map[x][y] == '3')
-				bombExplod({x, y});
+				bombExplode({x, y});
 			y++;
 		}
 		x++;
