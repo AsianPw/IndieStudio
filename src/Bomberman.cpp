@@ -10,7 +10,7 @@
 #include "../inc/PlayerMove.hpp"
 #include "../inc/Ia.hpp"
 
-Bomberman::Bomberman(bool _verbose, size_t nbPlayer, size_t nbIa) : _verbose(_verbose), _cameraPos({195.0f, 150.0f, 75.8f}), _cameraRot({ 50.0f, 0.0f, 75.0f}), _map(nbPlayer, nbIa)
+Bomberman::Bomberman(bool _verbose, size_t nbPlayer, size_t nbIa) : _verbose(_verbose), _cameraPos({320.0f, 175.0f, 150.0f}), _cameraRot({ 120.0f, 0.0f, 150.0f}), _map(nbPlayer, nbIa)
 {
 	player.x = 130;
 	player.y = 10;
@@ -66,7 +66,7 @@ void Bomberman::checkEvents(std::pair<int, std::string> &events)
 	PlayerMove	p('A', _map.getMap());
 
 	if (events.first == KeyCode::KEY_Z) {
-		_cameraPos.z += 0.20f;
+		_cameraPos.x += 1.f;
 		std::cerr << _cameraPos.z << std::endl;
 	}
 	if (events.first == KeyCode::KEY_SPACE) {
