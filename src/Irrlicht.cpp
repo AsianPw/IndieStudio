@@ -230,3 +230,17 @@ void	Irrlicht::generateTrees(int nbTree)
 		_sceneCube.back()->setMaterialTexture(0, _driver->getTexture("texture/leaf.png"));
 	}
 }
+
+void	Irrlicht::displayMap(std::vector<std::vector<char>> &map)
+{
+	if (!_verbose || map.empty()) {
+		return;
+	}
+	for (auto const &line : map) {
+		for (auto const &elem : line) {
+			std::cerr << elem;
+		}
+		std::cerr << std::endl;
+	}
+	std::cerr << std::endl;
+}

@@ -23,6 +23,7 @@ public:
 	virtual void	loadGuis(std::map<std::string, Data> &) = 0;
 	virtual void	getEvents(std::pair<int, std::string> &) = 0;
 	virtual void	getMap(std::vector<std::vector<char>> &) = 0;
+	virtual void	displayMap(std::vector<std::vector<char>> &) = 0;
 	virtual void	changeCameraPosition(Tools::vector3d &, Tools::vector3d &) = 0;
 	virtual bool	isEvent() const = 0;
 };
