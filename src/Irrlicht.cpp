@@ -268,6 +268,8 @@ void Irrlicht::updateMap(std::vector<std::vector<char>> &map)
 			z = tmpVec.Z / _cubeSize;
 			if (map[x][z] == ' ')
 				cube->setVisible(false);
+			else if (map[x][z] == '#')
+				cube->setVisible(true);
 		}
 	}
 }
