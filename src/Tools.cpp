@@ -27,3 +27,25 @@ void Tools::displayVerbose(bool verbose, std::string const &message, bool endl)
 		std::cerr << std::endl;
 	}
 }
+
+float	Tools::randPos(std::pair<float, float> noManLand)
+{
+	static bool	neg = true;
+	static float	pos = 0.0f;
+	int	change;
+
+	if (pos  == 0.0f) {
+		srand(time(nullptr));
+	}
+	if (neg)
+		pos = -(rand() % (500) + 1);
+	else {
+		do {
+			pos = rand() % (500) + 1;
+		} while (pos >= noManLand.first && pos <= noManLand.second);
+	}
+	change = rand() % (2) + 1;
+	if (change == 1)
+		neg = !neg;
+	return pos;
+}

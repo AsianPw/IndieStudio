@@ -193,10 +193,8 @@ void	Irrlicht::changeCameraPosition(Tools::vector3d &pos, Tools::vector3d &rot)
 		//Tools::displayVerbose(_verbose, "Update Position of camera.");
 	}
 	if (cameraRot.X != rot.x || cameraRot.Y != rot.y || cameraRot.Z != rot.z) {
-		if (!_sceneCube.empty()) {
 			_camera->setTarget(irr::core::vector3df(rot.x, rot.y, rot.z));
 			//Tools::displayVerbose(_verbose, "Update Rotation of camera.");
-		}
 	}
 }
 
@@ -206,8 +204,29 @@ void Irrlicht::generateGround()
 		for (auto x = -70; x < 40; x++) {
 			_sceneCube.push_back(_sceneManager->addCubeSceneNode(_cubeSize));
 			_sceneCube.back()->setPosition(irr::core::vector3df(x * _cubeSize, -_cubeSize, y * _cubeSize));
-			_sceneCube.back()->setMaterialTexture(0, _driver->getTexture("texture/téléchargement.jpeg"));
+			_sceneCube.back()->setMaterialTexture(0, _driver->getTexture("texture/grass.jpeg"));
 		}
 	}
 	_sceneManager->addSkyDomeSceneNode(_driver->getTexture("texture/dom.jpg"));
+	generateTrees(50);
+}
+
+void	Irrlicht::generateTrees(int nbTree)
+{
+	float	x;
+	float	y;
+
+	srand((unsigned int)time(nullptr));
+	for (auto count = 0; count < nbTree; count++) {
+		x = Tools::randPos(std::make_pair<float, float>(0.0f, _cubeSize * 15.0f));
+		y = Tools::randPos(std::make_pair<float, float>(0.0f, _cubeSize * 15.0f));
+		for (auto z = 0; z < 5; z++) {
+			_sceneCube.push_back(_sceneManager->addCubeSceneNode(_cubeSize));
+			_sceneCube.back()->setPosition(irr::core::vector3df(x, z * _cubeSize, y));
+			_sceneCube.back()->setMaterialTexture(0, _driver->getTexture("texture/wood.png"));
+		}
+		_sceneCube.push_back(_sceneManager->addCubeSceneNode(_cubeSize * 5));
+		_sceneCube.back()->setPosition(irr::core::vector3df(x, 6 * _cubeSize, y));
+		_sceneCube.back()->setMaterialTexture(0, _driver->getTexture("texture/leaf.png"));
+	}
 }

@@ -34,6 +34,7 @@ public:
 
 private:
 	void generateGround();
+	void generateTrees(int);
 
 private:
 	std::pair<irr::u32, irr::u32>	_resolution;

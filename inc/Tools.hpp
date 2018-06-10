@@ -15,6 +15,7 @@ namespace Tools {
 	bool	cmpPos(Position &, Position &);
 	irr::core::vector3df	posToVec(Position &);
 	void	displayVerbose(bool, std::string const &, bool endl = true);
+	float	randPos(std::pair<float, float>);
 }
 
 #endif //BOMBERMAN_TOOLS_HPP
