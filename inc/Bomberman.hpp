@@ -25,6 +25,8 @@ public:
 	void	checkEvents(std::pair<int, std::string> &pair) override;
 	void	checkBomb();
 	void	bombExplode(Position);
+	bool	checkPlayer();
+	void	checkGame();
 
 private:
 	bool	_verbose;

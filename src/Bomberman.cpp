@@ -76,6 +76,18 @@ IScene *Bomberman::newScene()
 	return nullptr;
 }
 
+bool	Bomberman::checkPlayer()
+{
+	for (int i = 0; i < 15; i++) {
+		for (int j = 0; j < 5; j++) {
+			if (_map.getMap()[i][j] == 'A') {
+				return true;
+			}
+		}
+	}
+	return false;
+}
+
 void	Bomberman::bombExplode(Position p)
 {
 	int	x = 1;
@@ -149,11 +161,20 @@ void Bomberman::checkBomb()
 	}
 }
 
+void	Bomberman::checkGame()
+{
+	if (checkPlayer() == false) {
+		std::cout<<"Player died"<<std::endl;
+		exit(0);
+	}
+}
+
 void Bomberman::checkEvents(std::pair<int, std::string> &events)
 {
 	PlayerMove	p('A', _map.getMap());
 	Position	place;
 
+	checkGame();
 	if (bombDir < 0 || bombDir > 3)
 		bombDir = 1;
 	p.setBombDir(bombDir);
