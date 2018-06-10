@@ -12,12 +12,15 @@
 #include "../inc/keyCodes.hpp"
 #include "../inc/Menu.hpp"
 #include "../inc/PlayerMove.hpp"
+#include "../inc/IrrKlang.hpp"
 
 Core::Core(std::unique_ptr<Params> &params) : _verbose(params->getVerbose())
 {
 	try {
 		_display = std::make_unique<Irrlicht>(params);
 		_scene = std::make_unique<Preroll>(params->getVerbose());
+		_sound = std::make_unique<IrrKlang>();
+		_sound->play("menu_sound.ogg");
 		_display->loadModels(_scene->getModels());
 		_display->loadGuis(_scene->getGuis());
 		_display->getMap(_scene->getMap());

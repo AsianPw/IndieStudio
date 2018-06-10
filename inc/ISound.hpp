@@ -10,10 +10,10 @@
 class ISound {
 public:
 	~ISound() = default;
-	virtual void	play() = 0;
+	virtual void	play(std::string const &) = 0;
 	virtual void	pause() = 0;
 	virtual void	resume() = 0;
-	virtual void	addSound() = 0;
+	virtual void	addSound(std::string const &) = 0;
 };
 
 #endif //BOMBERMAN_ISOUND_HPP

@@ -13,13 +13,13 @@ file(GLOB bomberman_src
 file(GLOB bomberman_inc
         "inc/*.hpp")
 
-include_directories(${IRRLICHT_PATH_INCLUDE})
+include_directories(${IRRLICHT_PATH_INCLUDE} libso/include)
 
-link_directories(${IRRLICHT_PATH_LIB})
+link_directories(${IRRLICHT_PATH_LIB} libso/)
 
 add_executable(bomberman ${bomberman_src} ${bomberman_inc} inc/Ia.hpp src/Ia.cpp inc/Ia.hpp src/Ia.cpp inc/Ia.hpp src/Ia.cpp inc/Ia.hpp inc/IPlayer.hpp inc/IPlayer.hpp)
 
-target_link_libraries(bomberman Irrlicht GL X11 Xxf86vm)
+target_link_libraries(bomberman Irrlicht GL X11 Xxf86vm IrrKlang)
 
 install (TARGETS bomberman DESTINATION .)
 
