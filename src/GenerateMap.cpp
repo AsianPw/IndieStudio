@@ -154,39 +154,3 @@ void	GenerateMap::setIaonMap(int nbrIa)
 	if (nbrIa == 3)
 		BombermanMap[height - 2][width - 2] = 'D';
 }
-
-/*int	main()
-{
-	int x = 10;
-	int y = x;
-	int z = 70;
-
-	GenerateMap	toto(2, 3);
-	toto.print_map();
-	video::E_DRIVER_TYPE	driverType;
-	MyEventReceiver		receiver;
-	IrrlichtDevice *device = createDevice(driverType,
-		core::dimension2d<u32>(1200, 720), 16, false, false, false, &receiver);
-	if (driverType==video::EDT_COUNT)
-		return 84;
-	if (device == 0)
-		return 84;
-	video::IVideoDriver *driver = device->getVideoDriver();
-	scene::ISceneManager *smgr = device->getSceneManager();
-	scene::ISceneNode *n = smgr->addCubeSceneNode();
-	if (n) {
-		n->setPosition(core::vector3df(x, y, z));
-		n->setMaterialTexture(0, driver->getTexture("../breakable_wall.jpg"));
-		n->setMaterialFlag(video::EMF_LIGHTING, false);
-	}
-	smgr->addCameraSceneNode();
-	device->getCursorControl()->setVisible(false);
-	// while the window is open
-	while(device->run()) {
-		driver->beginScene(true, true, video::SColor(255,113,113,133));
-		smgr->drawAll(); // draw the 3d scene
-		driver->endScene();
-	}
-	device->drop();
-	return 0;
-}*/
