@@ -14,7 +14,7 @@
 Bomberman::Bomberman(bool _verbose, size_t nbPlayer, size_t nbIa) : _verbose(_verbose), _cameraPos({500.0f, 300.0f, 225.0f}), _cameraRot({ 120.0f, 0.0f, 225.0f}), _map(nbPlayer, nbIa)
 {
 	currentTime = getCurrentTime();
-	player.x = 260;
+	player.x = 390;
 	player.y = 30;
 	_models.insert({"player", { {player.x, player.y}, {0, 70}, "texture/characters/ziggs.png", "texture/characters/ziggs.md3", irr::scene::EMAT_STAND, false }});
 }
@@ -149,7 +149,7 @@ void Bomberman::checkEvents(std::pair<int, std::string> &events)
 		p.moveLeft();
 		_models["player"].rot.y = 0;
 		if (p.getStatus() == false)
-			_models["player"].pos.y = _models["player"].pos.y - 15;
+			_models["player"].pos.y = _models["player"].pos.y - 30;
 		_map.print_map();
 	}
 	if (events.first == KeyCode::KEY_UP) {
@@ -157,7 +157,7 @@ void Bomberman::checkEvents(std::pair<int, std::string> &events)
 		p.moveUp();
 		_models["player"].rot.y = -90;
 		if (p.getStatus() == false)
-			_models["player"].pos.x = _models["player"].pos.x + 15;
+			_models["player"].pos.x = _models["player"].pos.x + 30;
 		_map.print_map();
 	}
 	if (events.first == KeyCode::KEY_RIGHT) {
@@ -165,7 +165,7 @@ void Bomberman::checkEvents(std::pair<int, std::string> &events)
 		p.moveRight();
 		_models["player"].rot.y = 180;
 		if (p.getStatus() == false)
-			_models["player"].pos.y = _models["player"].pos.y + 15;
+			_models["player"].pos.y = _models["player"].pos.y + 30;
 		_map.print_map();
 	}
 	if (events.first == KeyCode::KEY_DOWN) {
@@ -173,7 +173,7 @@ void Bomberman::checkEvents(std::pair<int, std::string> &events)
 		p.moveDown();
 		_models["player"].rot.y = 90;
 		if (p.getStatus() == false)
-		_models["player"].pos.x = _models["player"].pos.x - 15;
+		_models["player"].pos.x = _models["player"].pos.x - 30;
 		_map.print_map();
 	}
 }
