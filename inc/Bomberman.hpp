@@ -9,6 +9,7 @@
 
 #include "IScene.hpp"
 #include "GenerateMap.hpp"
+#include "Position.hpp"
 
 class Bomberman : public IScene {
 public:
@@ -29,6 +30,8 @@ private:
 	std::map<std::string, Data>	_models;
 	std::map<std::string, Data>	_guis;
 	GenerateMap	_map;
+	Position	player;
+	Position	ia;
 };
 
 #endif //BOMBERMAN_BOMBERMAN_HPP

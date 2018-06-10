@@ -12,8 +12,12 @@
 
 Bomberman::Bomberman(bool _verbose, size_t nbPlayer, size_t nbIa) : _verbose(_verbose), _cameraPos({195.0f, 150.0f, 75.8f}), _cameraRot({ 50.0f, 0.0f, 75.0f}), _map(nbPlayer, nbIa)
 {
-	_models.insert({"player", { {130, 10}, {0, 0}, "texture/characters/ziggs.png", "texture/characters/ziggs.md3", irr::scene::EMAT_STAND, false }});
-	_models.insert({"player2", { {130, 130}, {0, 0}, "texture/characters/ziggs_general.png", "texture/characters/ziggs_general.md3", irr::scene::EMAT_STAND, false }});
+	player.x = 130;
+	player.y = 10;
+	ia.x = 130;
+	ia.y = 130;
+	_models.insert({"player", { {player.x, player.y}, {0, 0}, "texture/characters/ziggs.png", "texture/characters/ziggs.md3", irr::scene::EMAT_STAND, false }});
+	_models.insert({"player2", { {ia.x, ia.y}, {0, 0}, "texture/characters/ziggs_general.png", "texture/characters/ziggs_general.md3", irr::scene::EMAT_STAND, false }});
 }
 
 std::map<std::string, Data> &Bomberman::getModels()
@@ -73,6 +77,7 @@ void Bomberman::checkEvents(std::pair<int, std::string> &events)
 	if (events.first == KeyCode::KEY_LEFT) {
 		std::cerr << "Left direction" << std::endl;
 		p.moveLeft();
+		_models["player"].pos.y = _models["player"].pos.y - 10;
 		_map.print_map();
 	}
 	if (events.first == KeyCode::KEY_UP) {
@@ -83,6 +88,7 @@ void Bomberman::checkEvents(std::pair<int, std::string> &events)
 	if (events.first == KeyCode::KEY_RIGHT) {
 		std::cerr << "Right direction" << std::endl;
 		p.moveRight();
+		_models["player"].pos.y = _models["player"].pos.y + 10;
 		_map.print_map();
 	}
 	if (events.first == KeyCode::KEY_DOWN) {
