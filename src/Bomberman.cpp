@@ -54,25 +54,25 @@ void Bomberman::checkEvents(std::pair<int, std::string> &events)
 		_cameraPos.z += 0.20f;
 		std::cerr << _cameraPos.z << std::endl;
 	}
-	if (events.first == 32) {
+	if (events.first == KeyCode::KEY_SPACE) {
 		std::cerr << "Space button to use a bomb" << std::endl;
 	}
-	if (events.first == 37) {
+	if (events.first == KeyCode::KEY_LEFT) {
 		std::cerr << "Left direction" << std::endl;
 		p.moveLeft();
 		_map.print_map();
 	}
-	if (events.first == 38) {
+	if (events.first == KeyCode::KEY_UP) {
 		std::cerr << "Up direction" << std::endl;
 		p.moveUp();
 		_map.print_map();
 	}
-	if (events.first == 39) {
+	if (events.first == KeyCode::KEY_RIGHT) {
 		std::cerr << "Right direction" << std::endl;
 		p.moveRight();
 		_map.print_map();
 	}
-	if (events.first == 40) {
+	if (events.first == KeyCode::KEY_DOWN) {
 		std::cerr << "Down direction" << std::endl;
 		p.moveDown();
 		_map.print_map();
