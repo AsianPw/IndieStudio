@@ -14,8 +14,9 @@
 #include "../inc/PlayerMove.hpp"
 #include "../inc/IrrKlang.hpp"
 #include "../inc/Settings.hpp"
+#include "../inc/Time.hpp"
 
-Core::Core(std::unique_ptr<Params> &params) : _verbose(params->getVerbose()), _prevScene(nullptr)
+Core::Core(std::unique_ptr<Params> &params) : _verbose(params->getVerbose()), _prevScene(nullptr), _prevTime(getCurrentTime())
 {
 	_params.fullScreen = params->getFullscreen();
 	_params.vSync = params->getVsync();
@@ -44,7 +45,8 @@ void	Core::compute()
 	while (_display->isOpen()) {
 		keyCode.first = -1;
 		keyCode.second = "";
-		if (_display->isEvent()) {
+		if (_display->isEvent() && getCurrentTime() - _prevTime > 200) {
+			_prevTime = getCurrentTime();
 			_display->getEvents(keyCode);
 			if (keyCode.first == KeyCode::KEY_M) {
 				keyCode.first = -1;
