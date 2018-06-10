@@ -21,7 +21,7 @@ public:
 	void	compute();
 
 private:
-	void	changeScene(IScene *, bool);
+	void	changeScene(IScene *);
 	void	goSetting();
 
 private:

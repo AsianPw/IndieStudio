@@ -11,7 +11,7 @@
 #include "../inc/Ia.hpp"
 #include "../inc/Time.hpp"
 
-Bomberman::Bomberman(bool _verbose, size_t nbPlayer, size_t nbIa) : _verbose(_verbose), _cameraPos({320.0f, 175.0f, 150.0f}), _cameraRot({ 120.0f, 0.0f, 150.0f}), _map(nbPlayer, nbIa)
+Bomberman::Bomberman(bool _verbose, size_t nbPlayer, size_t nbIa) : _verbose(_verbose), _cameraPos({500.0f, 300.0f, 225.0f}), _cameraRot({ 120.0f, 0.0f, 225.0f}), _map(nbPlayer, nbIa)
 {
 	currentTime = getCurrentTime();
 	player.x = 260;
@@ -83,28 +83,24 @@ void	Bomberman::bombExplode(Position p)
 			if (map[p.x + x][p.y] >= 49 && map[p.x + x][p.y] <= 51)
 				bombExplode({p.x + x, p.y});
 			map[p.x + x][p.y] = ' ';
-			top = true;
 		}
 		if ((p.x - x) > 0 && map[p.x - x][p.y] != '*' && !bot)
 		{
 			if (map[p.x - x][p.y] >= 49 && map[p.x - x][p.y] <= 51)
 				bombExplode({p.x - x, p.y});
 			map[p.x - x][p.y] = ' ';
-			bot = true;
 		}
 		if ((p.y + x) < 15 && map[p.x][p.y + x] != '*' && !right)
 		{
 			if (map[p.x][p.y + x] >= 49 && map[p.x][p.y + x] <= 51)
 				bombExplode({p.x, p.y + x});
 			map[p.x][p.y + x] = ' ';
-			right = true;
 		}
 		if ((p.y - x) > 0 && map[p.x][p.y - x] != '*' && !left)
 		{
 			if (map[p.x][p.y - x] >= 49 && map[p.x][p.y - x] <= 51)
 				bombExplode({p.x, p.y - x});
 			map[p.x][p.y - x] = ' ';
-			left = true;
 		}
 		x++;
 	}
