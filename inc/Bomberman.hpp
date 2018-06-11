@@ -11,6 +11,7 @@
 #include "GenerateMap.hpp"
 #include "Position.hpp"
 #include "PlayerMove.hpp"
+#include <sstream>
 
 class Bomberman : public IScene {
 public:
@@ -36,7 +37,8 @@ private:
 	std::map<std::string, Data>	_guis;
 	GenerateMap	_map;
 	Position	player, playerrotate;
-	Position	ia, ia1, ia2;
+	Position	ia, ia1, ia2, loose_text;
+	int		score = 0;
 	long		currentTime;
 	int		bombDir;
 };

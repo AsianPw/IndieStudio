@@ -24,10 +24,18 @@ Bomberman::Bomberman(bool _verbose, size_t nbPlayer, size_t nbIa) : _verbose(_ve
 	ia1.y = 380;
 	ia2.x = 380;
 	ia2.y = 30;
+	loose_text.x = 170;
+	loose_text.y = 400;
+	std::ostringstream	convert;
+	convert << score;
 	_models.insert({"player", { {player.x, player.y}, {0, 70}, "texture/characters/ziggs.png", "texture/characters/ziggs.md3", irr::scene::EMAT_STAND, false, true }});
 	_models.insert({"player2", { {ia.x, ia.y}, {0, 70}, "texture/characters/ziggs_general.png", "texture/characters/ziggs.md3", irr::scene::EMAT_STAND, false, true, 'B' }});
 	_models.insert({"player3", { {ia1.x, ia1.y}, {0, 70}, "texture/characters/ziggs_general.png", "texture/characters/ziggs.md3", irr::scene::EMAT_STAND, false, true, 'C' }});
 	_models.insert({"player4", { {ia2.x, ia2.y}, {0, 70}, "texture/characters/ziggs_general.png", "texture/characters/ziggs.md3", irr::scene::EMAT_STAND, false, true, 'D' }});
+	_guis.insert({"score", { {400, 100}, {0, 180}, "", "Score : ", irr::scene::EMAT_STAND, false, true }});
+	_guis.insert({"score_value", { {550, 100}, {0, 180}, "", convert.str(), irr::scene::EMAT_STAND, false, true }});
+	//_guis.insert({"dead", { {loose_text.x, loose_text.y}, {0, 0}, "", "You loose. Press [M] to back to menu.", irr::scene::EMAT_STAND, true, true }});
+
 }
 
 std::map<std::string, Data> &Bomberman::getModels()
@@ -108,6 +116,7 @@ void	Bomberman::bombExplode(Position p)
 			if (map[p.x + x][p.y] != ' ')
 				top = true;
 			map[p.x + x][p.y] = ' ';
+			score = score + 10;
 		}
 		if ((p.x - x) > 0 && map[p.x - x][p.y] != '*' && !bot)
 		{
@@ -116,6 +125,7 @@ void	Bomberman::bombExplode(Position p)
 			if (map[p.x - x][p.y] != ' ')
 				bot = true;
 			map[p.x - x][p.y] = ' ';
+			score = score + 10;
 		}
 		if ((p.y + x) < 15 && map[p.x][p.y + x] != '*' && !right)
 		{
@@ -124,6 +134,7 @@ void	Bomberman::bombExplode(Position p)
 			if (map[p.x][p.y + x] != ' ')
 				right = true;
 			map[p.x][p.y + x] = ' ';
+			score = score + 10;
 		}
 		if ((p.y - x) > 0 && map[p.x][p.y - x] != '*' && !left)
 		{
@@ -132,6 +143,7 @@ void	Bomberman::bombExplode(Position p)
 			if (map[p.x][p.y - x] != ' ')
 				left = true;
 			map[p.x][p.y - x] = ' ';
+			score = score + 10;
 		}
 		x++;
 	}
@@ -179,6 +191,7 @@ void Bomberman::checkEvents(std::pair<int, std::string> &events)
 		bombDir = 1;
 	p.setBombDir(bombDir);
 	if (events.first == KeyCode::KEY_SPACE) {
+
 		std::cerr << "Space button to use a bomb" << std::endl;
 		p.putBomb();
 	}
