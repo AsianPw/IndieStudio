@@ -33,9 +33,12 @@ public:
 	void getMap(std::vector<std::vector<char>> &vector) override;
 	void displayMap(std::vector<std::vector<char>> &vector) override;
 	void updateMap(std::vector<std::vector<char>> &vector) override;
-	bool checkPlayer(char, std::vector<std::vector<char>> &);
 
 private:
+	bool checkPlayer(char, std::vector<std::vector<char>> &);
+	bool checkPlayerDied(std::vector<std::vector<char>> &);
+	void	checkMove(std::vector<std::vector<char>> &);
+	void	updatePlayerMove(std::vector<std::vector<char>> &, int, int, char);
 	void generateGround();
 	void generateTrees(int);
 

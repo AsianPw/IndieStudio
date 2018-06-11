@@ -271,40 +271,47 @@ void Irrlicht::updateMap(std::vector<std::vector<char>> &map)
 			}
 		}
 	}
-	z = 0;
+	checkMove(map);
+	checkPlayerDied(map);
+}
+
+bool	Irrlicht::checkPlayer(char player, std::vector<std::vector<char>> &map)
+{
+	for (auto const &line : map) {
+		for (auto const &elem : line) {
+			if (elem == player) {
+				return true;
+			}
+		}
+	}
+	return false;
+}
+
+bool	Irrlicht::checkPlayerDied(std::vector<std::vector<char>> &map)
+{
+	if (!checkPlayer('C', map)) {
+		if (_sceneElement.find("player3") != _sceneElement.end())
+			_sceneElement["player3"]->setVisible(false);
+	}
+	if (!checkPlayer('D', map)) {
+		if (_sceneElement.find("player4") != _sceneElement.end())
+			_sceneElement["player4"]->setVisible(false);
+	}
+	if (!checkPlayer('B', map)) {
+		if (_sceneElement.find("player2") != _sceneElement.end())
+			_sceneElement["player2"]->setVisible(false);
+	}
+}
+
+void Irrlicht::checkMove(std::vector<std::vector<char>> &map)
+{
+	auto z = 0;
+	auto x = 0;
+
 	for (auto &line : map) {
 		x = 0;
 		for (auto &elem : line) {
-			if (!checkPlayer('C', map)) {
-				if (_sceneElement.find("player3") == _sceneElement.end())
-					continue;
-				_sceneElement["player3"]->setVisible(false);
-			}
-			if (!checkPlayer('D', map)) {
-				if (_sceneElement.find("player4") == _sceneElement.end())
-					continue;
-				_sceneElement["player4"]->setVisible(false);
-			}
-			if (!checkPlayer('B', map)) {
-				if (_sceneElement.find("player2") == _sceneElement.end())
-					continue;
-				_sceneElement["player2"]->setVisible(false);
-			}
-			if (elem == 'B') {
-				if (_sceneElement.find("player2") == _sceneElement.end())
-					continue;
-				_sceneElement["player2"]->setPosition(irr::core::vector3df(z * _cubeSize, 0, x * _cubeSize));
-			}
-			if (elem == 'C') {
-				if (_sceneElement.find("player3") == _sceneElement.end())
-					continue;
-				_sceneElement["player3"]->setPosition(irr::core::vector3df(z * _cubeSize, 0, x * _cubeSize));
-			}
-			if (elem == 'D') {
-				if (_sceneElement.find("player4") == _sceneElement.end())
-					continue;
-				_sceneElement["player4"]->setPosition(irr::core::vector3df(z * _cubeSize, 0, x * _cubeSize));
-			}
+			updatePlayerMove(map, x, z, elem);
 			if (elem == '1' || elem == '2') {
 				_sceneBomb.insert({std::string(z + x + ""), _sceneManager->addAnimatedMeshSceneNode(_sceneManager->getMesh("texture/miniBomb.md2"))});
 				_sceneBomb["" + z + x ]->setPosition(irr::core::vector3df(z * _cubeSize, 0, x * _cubeSize));
@@ -318,14 +325,18 @@ void Irrlicht::updateMap(std::vector<std::vector<char>> &map)
 	}
 }
 
-bool Irrlicht::checkPlayer(char player, std::vector<std::vector<char>> &map)
+void Irrlicht::updatePlayerMove(std::vector<std::vector<char>> &map, int x, int z, char elem)
 {
-	for (auto const &line : map) {
-		for (auto const &elem : line) {
-			if (elem == player) {
-				return true;
-			}
-		}
+	if (elem == 'B') {
+		if (_sceneElement.find("player2") != _sceneElement.end())
+			_sceneElement["player2"]->setPosition(irr::core::vector3df(z * _cubeSize, 0, x * _cubeSize));
 	}
-	return false;
+	if (elem == 'C') {
+		if (_sceneElement.find("player3") != _sceneElement.end())
+			_sceneElement["player3"]->setPosition(irr::core::vector3df(z * _cubeSize, 0, x * _cubeSize));
+	}
+	if (elem == 'D') {
+		if (_sceneElement.find("player4") != _sceneElement.end())
+			_sceneElement["player4"]->setPosition(irr::core::vector3df(z * _cubeSize, 0, x * _cubeSize));
+	}
 }
