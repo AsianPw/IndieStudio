@@ -272,12 +272,24 @@ void Irrlicht::updateMap(std::vector<std::vector<char>> &map)
 		}
 	}
 	z = 0;
-	if (map.empty()) {
-		return;
-	}
 	for (auto &line : map) {
 		x = 0;
 		for (auto &elem : line) {
+			if (!checkPlayer('C', map)) {
+				if (_sceneElement.find("player3") == _sceneElement.end())
+					continue;
+				_sceneElement["player3"]->setVisible(false);
+			}
+			if (!checkPlayer('D', map)) {
+				if (_sceneElement.find("player4") == _sceneElement.end())
+					continue;
+				_sceneElement["player4"]->setVisible(false);
+			}
+			if (!checkPlayer('B', map)) {
+				if (_sceneElement.find("player2") == _sceneElement.end())
+					continue;
+				_sceneElement["player2"]->setVisible(false);
+			}
 			if (elem == 'B') {
 				if (_sceneElement.find("player2") == _sceneElement.end())
 					continue;
@@ -293,7 +305,7 @@ void Irrlicht::updateMap(std::vector<std::vector<char>> &map)
 					continue;
 				_sceneElement["player4"]->setPosition(irr::core::vector3df(z * _cubeSize, 0, x * _cubeSize));
 			}
-			if (elem == '1') {
+			if (elem == '1' || elem == '2') {
 				_sceneBomb.insert({std::string(z + x + ""), _sceneManager->addAnimatedMeshSceneNode(_sceneManager->getMesh("texture/miniBomb.md2"))});
 				_sceneBomb["" + z + x ]->setPosition(irr::core::vector3df(z * _cubeSize, 0, x * _cubeSize));
 				_sceneBomb["" + z + x ]->setMaterialTexture(0, _driver->getTexture("texture/miniBomb.png"));
@@ -304,4 +316,16 @@ void Irrlicht::updateMap(std::vector<std::vector<char>> &map)
 		}
 		z++;
 	}
+}
+
+bool Irrlicht::checkPlayer(char player, std::vector<std::vector<char>> &map)
+{
+	for (auto const &line : map) {
+		for (auto const &elem : line) {
+			if (elem == player) {
+				return true;
+			}
+		}
+	}
+	return false;
 }

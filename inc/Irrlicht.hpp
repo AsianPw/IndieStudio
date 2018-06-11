@@ -33,6 +33,7 @@ public:
 	void getMap(std::vector<std::vector<char>> &vector) override;
 	void displayMap(std::vector<std::vector<char>> &vector) override;
 	void updateMap(std::vector<std::vector<char>> &vector) override;
+	bool checkPlayer(char, std::vector<std::vector<char>> &);
 
 private:
 	void generateGround();
