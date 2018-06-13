@@ -14,6 +14,7 @@ public:
 	virtual void	pause() = 0;
 	virtual void	resume() = 0;
 	virtual void	addSound(std::string const &) = 0;
+	virtual void	clearUnused() = 0;
 };
 
 #endif //BOMBERMAN_ISOUND_HPP

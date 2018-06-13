@@ -15,7 +15,7 @@ IrrKlang::IrrKlang()
 		throw std::runtime_error("Couldn't create audio device !");
 }
 
-void IrrKlang::play(std::string const &musicFile)
+void	IrrKlang::play(std::string const &musicFile)
 {
 	if (_source.find(musicFile) != _source.end()) {
 		return;
@@ -25,15 +25,32 @@ void IrrKlang::play(std::string const &musicFile)
 	_source.insert({musicFile, _engine->play2D(musicFile.c_str(), true)});
 }
 
-void IrrKlang::pause()
+void	IrrKlang::pause()
 {
 	_engine->setAllSoundsPaused(true);
 }
 
-void IrrKlang::resume()
+void	IrrKlang::resume()
 {
+	_engine->setAllSoundsPaused(false);
 }
 
-void IrrKlang::addSound(std::string const &musicFile)
+void	IrrKlang::addSound(std::string const &musicFile)
 {
+	if (_engine->isCurrentlyPlaying(musicFile.c_str())){
+		return;
+	}
+	_engine->play2D(musicFile.c_str(), false);
+}
+
+void	IrrKlang::clearUnused()
+{
+	auto i = std::begin(_source);
+
+	while (i != std::end(_source)) {
+		if (i->second && i->second->isFinished())
+			i = _source.erase(i);
+		else
+			++i;
+	}
 }

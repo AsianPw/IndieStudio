@@ -17,6 +17,7 @@ public:
 	void play(std::string const &) override;
 	void pause() override;
 	void resume() override;
+	void clearUnused() override;
 	void addSound(std::string const &) override;
 
 private:

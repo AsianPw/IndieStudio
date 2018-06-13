@@ -16,6 +16,7 @@
 #include "Position.hpp"
 #include "Params.hpp"
 #include "DeviceReceiver.hpp"
+#include "ISound.hpp"
 
 class Irrlicht : public IDisplay {
 public:
@@ -33,14 +34,14 @@ public:
 	void changeCameraPosition(Tools::vector3d &, Tools::vector3d &) override;
 	void getMap(std::vector<std::vector<char>> &vector) override;
 	void displayMap(std::vector<std::vector<char>> &vector) override;
-	void updateMap(std::vector<std::vector<char>> &vector) override;
+	void updateMap(std::vector<std::vector<char>> &, std::unique_ptr<ISound> &) override;
 
 private:
 	void	removeBombAt(int x, int y, int z);
 	void	addBombAt(int x, int y, int z);
-	bool checkPlayer(char, std::vector<std::vector<char>> &);
-	bool checkPlayerDied(std::vector<std::vector<char>> &);
-	void	checkMove(std::vector<std::vector<char>> &);
+	bool	checkPlayer(char, std::vector<std::vector<char>> &);
+	bool	checkPlayerDied(std::vector<std::vector<char>> &);
+	void	checkMove(std::vector<std::vector<char>> &, std::unique_ptr<ISound> &);
 	void	updatePlayerMove(std::vector<std::vector<char>> &, int, int, char);
 	void generateGround();
 	void generateTrees(int);

@@ -13,6 +13,7 @@
 #include "../inc/Data.hpp"
 #include "../inc/Tools.hpp"
 #include "../inc/PlayerMove.hpp"
+#include "../inc/ISound.hpp"
 
 Irrlicht::Irrlicht(GraphParams &params) :
 	_resolution({(irr::u32)params.resolution.first, (irr::u32)params.resolution.second}),
@@ -277,7 +278,7 @@ void	Irrlicht::displayMap(std::vector<std::vector<char>> &map)
 	std::cerr << std::endl;
 }
 
-void Irrlicht::updateMap(std::vector<std::vector<char>> &map)
+void Irrlicht::updateMap(std::vector<std::vector<char>> &map, std::unique_ptr<ISound> &sound)
 {
 	irr::core::vector3df	tmpVec;
 	int	x;
@@ -296,7 +297,7 @@ void Irrlicht::updateMap(std::vector<std::vector<char>> &map)
 			}
 		}
 	}
-	checkMove(map);
+	checkMove(map, sound);
 	checkPlayerDied(map);
 }
 
@@ -347,7 +348,7 @@ void Irrlicht::addBombAt(int x, int y, int z)
 	}
 }
 
-void Irrlicht::checkMove(std::vector<std::vector<char>> &map)
+void	Irrlicht::checkMove(std::vector<std::vector<char>> &map, std::unique_ptr<ISound> &sound)
 {
 	auto z = 0;
 	auto x = 0;
@@ -358,6 +359,7 @@ void Irrlicht::checkMove(std::vector<std::vector<char>> &map)
 			updatePlayerMove(map, x, z, elem);
 			if (elem == '1' || elem == '2') {
 				addBombAt(z * _cubeSize, 0, x * _cubeSize);
+				sound->addSound("media/explosion.ogg");
 			} else if (elem == '3') {
 				removeBombAt(z * _cubeSize, 0, x * _cubeSize);
 			}

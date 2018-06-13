@@ -211,15 +211,15 @@ void	Bomberman::checkGame()
 		_isEnd = true;
 		_isWin = true;
 	}
-	if (checkPlayer('B') == false && check_b == true) {
+	if (!checkPlayer('B') && check_b) {
 		score = score + 100;
 		check_b = false;
 	}
-	if (checkPlayer('C') == false && check_c == true) {
+	if (!checkPlayer('C') && check_c) {
 		score = score + 100;
 		check_c = false;
 	}
-	if (checkPlayer('D') == false && check_d == true) {
+	if (!checkPlayer('D') && check_d) {
 		score = score + 100;
 		check_d = false;
 	}
@@ -228,7 +228,6 @@ void	Bomberman::checkGame()
 void Bomberman::checkEvents(std::pair<int, std::string> &events)
 {
 	PlayerMove	p('A', _map.getMap());
-	Position	place;
 
 	checkGame();
 	if (!checkPlayer('A'))

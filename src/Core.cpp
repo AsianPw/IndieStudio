@@ -63,9 +63,10 @@ void	Core::compute()
 			_sound->play(_scene->getSound());
 		_display->updateModels(_scene->getModels());
 		_display->displayMap(_scene->getMap());
-		_display->updateMap(_scene->getMap());
+		_display->updateMap(_scene->getMap(), _sound);
 		_display->updateGuis(_scene->getGuis());
 		_display->display();
+		_sound->clearUnused();
 		scene = _scene->newScene();
 		if (scene != nullptr) {
 			changeScene(scene);
