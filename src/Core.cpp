@@ -59,9 +59,8 @@ void	Core::compute()
 		}
 		_display->changeCameraPosition(_scene->getCameraPos(), _scene->getCameraRot());
 		_scene->compute(keyCode);
-		if (!_scene->getSound().empty()) {
+		if (!_scene->getSound().empty())
 			_sound->play(_scene->getSound());
-		}
 		_display->updateModels(_scene->getModels());
 		_display->displayMap(_scene->getMap());
 		_display->updateMap(_scene->getMap());

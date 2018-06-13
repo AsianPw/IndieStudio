@@ -46,6 +46,7 @@ private:
 	bool		_change;
 	bool		_deathCamera;
 	bool		check_b, check_c, check_d;
+	bool		_isWin;
 };
 
 #endif //BOMBERMAN_BOMBERMAN_HPP

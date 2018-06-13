@@ -36,6 +36,8 @@ public:
 	void updateMap(std::vector<std::vector<char>> &vector) override;
 
 private:
+	void	removeBombAt(int x, int y, int z);
+	void	addBombAt(int x, int y, int z);
 	bool checkPlayer(char, std::vector<std::vector<char>> &);
 	bool checkPlayerDied(std::vector<std::vector<char>> &);
 	void	checkMove(std::vector<std::vector<char>> &);

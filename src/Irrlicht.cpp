@@ -328,6 +328,25 @@ bool	Irrlicht::checkPlayerDied(std::vector<std::vector<char>> &map)
 	}
 }
 
+void Irrlicht::removeBombAt(int x, int y, int z)
+{
+	for (auto &cube : _sceneCube) {
+		if (cube->getPosition().X == x && cube->getPosition().Y == y && cube->getPosition().Z == z) {
+			cube->setVisible(false);
+		}
+	}
+}
+
+void Irrlicht::addBombAt(int x, int y, int z)
+{
+	for (auto &cube : _sceneCube) {
+		if (cube->getPosition().X == x && cube->getPosition().Y == y && cube->getPosition().Z == z) {
+			cube->setVisible(true);
+			cube->setMaterialTexture(0, _driver->getTexture("texture/tnt.jpg"));
+		}
+	}
+}
+
 void Irrlicht::checkMove(std::vector<std::vector<char>> &map)
 {
 	auto z = 0;
@@ -338,11 +357,9 @@ void Irrlicht::checkMove(std::vector<std::vector<char>> &map)
 		for (auto &elem : line) {
 			updatePlayerMove(map, x, z, elem);
 			if (elem == '1' || elem == '2') {
-				_sceneBomb.insert({std::string(z + x + ""), _sceneManager->addAnimatedMeshSceneNode(_sceneManager->getMesh("texture/miniBomb.md2"))});
-				_sceneBomb["" + z + x ]->setPosition(irr::core::vector3df(z * _cubeSize, 0, x * _cubeSize));
-				_sceneBomb["" + z + x ]->setMaterialTexture(0, _driver->getTexture("texture/miniBomb.png"));
+				addBombAt(z * _cubeSize, 0, x * _cubeSize);
 			} else if (elem == '3') {
-				_sceneBomb["" + z+ x]->setVisible(false);
+				removeBombAt(z * _cubeSize, 0, x * _cubeSize);
 			}
 			x++;
 		}

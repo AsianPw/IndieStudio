@@ -133,10 +133,8 @@ void	GenerateMap::set_place_for_players(void)
 				index++;
 				}
 			}
-			std::cout << BombermanMap[x][y];
 			y++;
 		}
-		std::cout << std::endl;
 		x++;
 	}
 }

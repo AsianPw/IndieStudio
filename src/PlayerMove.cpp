@@ -48,7 +48,6 @@ Position	PlayerMove::getPlayerPlace()
 void	PlayerMove::putBomb()
 {
 	pos = getPlayerPlace();
-	std::cout<<bomb_dir<<std::endl;
 	if (bomb_dir == 1 && _map[pos.x][pos.y + 1]  && _map[pos.x][pos.y + 1] == ' ') {
 		_map[pos.x][pos.y + 1] = '1';
 	}

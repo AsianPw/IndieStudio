@@ -13,7 +13,8 @@
 #include "../inc/Menu.hpp"
 #include "../inc/Tools.hpp"
 
-Bomberman::Bomberman(bool _verbose, size_t nbPlayer, size_t nbIa) : _verbose(_verbose), _cameraPos({500.0f, 400.0f, 225.0f}), _cameraRot({ 120.0f, 0.0f, 225.0f}), _map(nbPlayer, nbIa), _change(false), _isEnd(false), _deathCamera(false)
+Bomberman::Bomberman(bool _verbose, size_t nbPlayer, size_t nbIa)
+	: _verbose(_verbose), _cameraPos({500.0f, 400.0f, 225.0f}), _cameraRot({ 120.0f, 0.0f, 225.0f}), _map(nbPlayer, nbIa), _change(false), _isEnd(false), _deathCamera(false)
 {
 	check_b = true;
 	check_c = true;
@@ -37,6 +38,7 @@ Bomberman::Bomberman(bool _verbose, size_t nbPlayer, size_t nbIa) : _verbose(_ve
 	_models.insert({"player4", { {ia2.x, ia2.y}, {0, 70}, "texture/characters/ziggs_general.png", "texture/characters/ziggs.md3", irr::scene::EMAT_STAND, false, true, 'D' }});
 	_guis.insert({"score", { {400, 100}, {0, 180}, "", "Score : " + std::to_string(score), irr::scene::EMAT_STAND, false, true }});
 	_guis.insert({"dead", { {loose_text.x, loose_text.y}, {0, 0}, "", "You loose. Press [M] to back to menu.", irr::scene::EMAT_STAND, false, false }});
+	_guis.insert({"win", { {loose_text.x, loose_text.y}, {0, 0}, "", "You win. Press [M] to back to menu.", irr::scene::EMAT_STAND, false, false }});
 }
 
 std::map<std::string, Data> &Bomberman::getModels()
@@ -190,8 +192,10 @@ void Bomberman::checkBomb()
 
 std::string	Bomberman::getSound()
 {
-	if (_isEnd) {
+	if (_isEnd && !_isWin) {
 		return "media/hero_rise.ogg";
+	} else if (_isEnd && _isWin) {
+		return "media/hero_win.ogg";
 	}
 	return "";
 }
@@ -201,6 +205,11 @@ void	Bomberman::checkGame()
 	if (!checkPlayer('A')) {
 		_guis["dead"].isVisible = true;
 		_isEnd = true;
+		_isWin = false;
+	} else if (!check_b && !check_c && !check_d) {
+		_guis["win"].isVisible = true;
+		_isEnd = true;
+		_isWin = true;
 	}
 	if (checkPlayer('B') == false && check_b == true) {
 		score = score + 100;
