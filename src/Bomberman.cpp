@@ -13,7 +13,7 @@
 #include "../inc/Menu.hpp"
 #include "../inc/Tools.hpp"
 
-Bomberman::Bomberman(bool _verbose, size_t nbPlayer, size_t nbIa) : _verbose(_verbose), _cameraPos({500.0f, 400.0f, 225.0f}), _cameraRot({ 120.0f, 0.0f, 225.0f}), _map(nbPlayer, nbIa), _change(false)
+Bomberman::Bomberman(bool _verbose, size_t nbPlayer, size_t nbIa) : _verbose(_verbose), _cameraPos({500.0f, 400.0f, 225.0f}), _cameraRot({ 120.0f, 0.0f, 225.0f}), _map(nbPlayer, nbIa), _change(false), _isEnd(false), _deathCamera(false)
 {
 	currentTime = getCurrentTime();
 	player.x = 30;
@@ -33,8 +33,7 @@ Bomberman::Bomberman(bool _verbose, size_t nbPlayer, size_t nbIa) : _verbose(_ve
 	_models.insert({"player3", { {ia1.x, ia1.y}, {0, 70}, "texture/characters/ziggs_general.png", "texture/characters/ziggs.md3", irr::scene::EMAT_STAND, false, true, 'C' }});
 	_models.insert({"player4", { {ia2.x, ia2.y}, {0, 70}, "texture/characters/ziggs_general.png", "texture/characters/ziggs.md3", irr::scene::EMAT_STAND, false, true, 'D' }});
 	_guis.insert({"score", { {400, 100}, {0, 180}, "", "Score : " + std::to_string(score), irr::scene::EMAT_STAND, false, true }});
-	//_guis.insert({"dead", { {loose_text.x, loose_text.y}, {0, 0}, "", "You loose. Press [M] to back to menu.", irr::scene::EMAT_STAND, true, true }});
-
+	_guis.insert({"dead", { {loose_text.x, loose_text.y}, {0, 0}, "", "You loose. Press [M] to back to menu.", irr::scene::EMAT_STAND, false, false }});
 }
 
 std::map<std::string, Data> &Bomberman::getModels()
@@ -67,6 +66,15 @@ void Bomberman::compute(std::pair<int, std::string> &events)
 	long	now = getCurrentTime();
 
 	checkGame();
+	if (_isEnd) {
+		if (_deathCamera)
+			_cameraPos.y -= 1;
+		else
+			_cameraPos.y += 1;
+		if (_cameraPos.y > 500 || _cameraPos.y < 350)
+			_deathCamera = !_deathCamera;
+		return;
+	}
 	if (now - currentTime > 1000) {
 		Ia B('B', _map.getMap());
 		Ia C('C', _map.getMap());
@@ -82,7 +90,7 @@ void Bomberman::compute(std::pair<int, std::string> &events)
 
 IScene *Bomberman::newScene()
 {
-	if (_change) {
+	if (_change && _isEnd) {
 		return new Menu(_verbose);
 	}
 	return nullptr;
@@ -179,9 +187,18 @@ void Bomberman::checkBomb()
 
 void	Bomberman::checkGame()
 {
-	if (checkPlayer() == false) {
-		_change = true;
+	if (!checkPlayer()) {
+		_guis["dead"].isVisible = true;
+		_isEnd = true;
 	}
+}
+
+std::string	Bomberman::getSound()
+{
+	if (_isEnd) {
+		return "media/hero_rise.ogg";
+	}
+	return "";
 }
 
 void Bomberman::checkEvents(std::pair<int, std::string> &events)

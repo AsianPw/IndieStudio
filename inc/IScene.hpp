@@ -20,6 +20,7 @@ public:
 	virtual std::vector<std::vector<char>>	&getMap() = 0;
 	virtual Tools::vector3d	&getCameraPos() = 0;
 	virtual Tools::vector3d	&getCameraRot() = 0;
+	virtual std::string	getSound() = 0;
 	virtual void	compute(std::pair<int, std::string> &) = 0;
 	virtual IScene	*newScene() = 0;
 	virtual void	checkEvents(std::pair<int, std::string> &) = 0;

@@ -69,3 +69,8 @@ void Settings::checkEvents(std::pair<int, std::string> &keyCode)
 		_params.change = true;
 	}
 }
+
+std::string Settings::getSound()
+{
+	return "";
+}

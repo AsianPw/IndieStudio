@@ -25,6 +25,7 @@ public:
 	std::vector<std::vector<char>> &getMap() override;
 	Tools::vector3d &getCameraPos() override;
 	Tools::vector3d &getCameraRot() override;
+	std::string getSound() override;
 
 private:
 	std::map<std::string, Data>	_models;

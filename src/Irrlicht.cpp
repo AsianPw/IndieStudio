@@ -155,6 +155,7 @@ void Irrlicht::loadGuis(std::map<std::string, Data> &guis)
 		} else {
 			_textElement.insert({ gui.first, _gui->addStaticText(tmpString.c_str(), rect, _verbose, true, nullptr, -1, false) });
 			tmpText = (irr::gui::IGUIStaticText *)_textElement[gui.first];
+			tmpText->setVisible(gui.second.isVisible);
 			tmpText->setOverrideColor(irr::video::SColor(255, 255, 255, 255));
 		}
 	}
@@ -175,6 +176,7 @@ void Irrlicht::updateGuis(std::map<std::string, Data> &guis)
 			rect = irr::core::rect<irr::s32>(gui.second.pos.x, gui.second.pos.y, gui.second.pos.x + textSize.Width + 5, gui.second.pos.y + textSize.Height + 5);
 			_textElement[gui.first] = _gui->addStaticText(tmpString.c_str(), rect, _verbose, true, nullptr, -1, false);
 			tmpText = (irr::gui::IGUIStaticText *)_textElement[gui.first];
+			tmpText->setVisible(gui.second.isVisible);
 			tmpText->setOverrideColor(irr::video::SColor(255, 255, 255, 255));
 		}
 	}
@@ -248,6 +250,7 @@ void	Irrlicht::generateTrees(int nbTree)
 	srand((unsigned int)time(nullptr));
 	for (auto count = 0; count < nbTree; count++) {
 		x = Tools::randPos(std::make_pair<float, float>(0.0f, _cubeSize * 15.0f));
+		y = Tools::randPos(std::make_pair<float, float>(0.0f, _cubeSize * 15.0f));
 		y = Tools::randPos(std::make_pair<float, float>(0.0f, _cubeSize * 15.0f));
 		for (auto z = 0; z < 5; z++) {
 			_sceneCube.push_back(_sceneManager->addCubeSceneNode(_cubeSize));

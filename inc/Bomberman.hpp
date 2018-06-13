@@ -28,6 +28,7 @@ public:
 	void	bombExplode(Position);
 	bool	checkPlayer();
 	void	checkGame();
+	std::string	getSound() override;
 
 private:
 	bool	_verbose;
@@ -41,7 +42,9 @@ private:
 	int		score = 0;
 	long		currentTime;
 	int		bombDir;
+	bool		_isEnd;
 	bool		_change;
+	bool		_deathCamera;
 };
 
 #endif //BOMBERMAN_BOMBERMAN_HPP

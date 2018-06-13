@@ -4,19 +4,15 @@
 ** File description:
 ** Created by asianpw,
 */
-#ifndef BOMBERMAN_SETTINGS_HPP
-#define BOMBERMAN_SETTINGS_HPP
+#ifndef BOMBERMAN_DIEDSCENE_HPP
+#define BOMBERMAN_DIEDSCENE_HPP
 
-#include <memory>
 #include "IScene.hpp"
 #include "GenerateMap.hpp"
-#include "Params.hpp"
-#include "GraphParams.hpp"
 
-class Settings : public IScene {
+class DiedScene : public IScene {
 public:
-	explicit Settings(IScene *, GraphParams &);
-	std::string getSound() override;
+	DiedScene(bool);
 	std::map<std::string, Data> &getModels() override;
 	std::map<std::string, Data> &getGuis() override;
 	std::vector<std::vector<char>> &getMap() override;
@@ -27,15 +23,12 @@ public:
 	void checkEvents(std::pair<int, std::string> &pair) override;
 
 private:
-	IScene	*_prevScene;
-	std::map<std::string, Data>	_models;
-	std::map<std::string, Data>	_guis;
-	std::vector<std::vector<char>>	_map;
-	GraphParams	&_params;
+	bool		_verbose;
+	GenerateMap	_map;
 	Tools::vector3d	_cameraPos;
 	Tools::vector3d	_cameraRot;
-	bool	_verbose;
-	bool	_backToPrev;
+	std::map<std::string, Data>	_models;
+	std::map<std::string, Data>	_guis;
 };
 
-#endif //BOMBERMAN_SETTINGS_HPP
+#endif //BOMBERMAN_DIEDSCENE_HPP

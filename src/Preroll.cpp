@@ -59,3 +59,8 @@ Tools::vector3d &Preroll::getCameraRot()
 {
 	return _cameraRot;
 }
+
+std::string Preroll::getSound()
+{
+	return "media/preroll.ogg";
+}

@@ -17,11 +17,17 @@ IrrKlang::IrrKlang()
 
 void IrrKlang::play(std::string const &musicFile)
 {
+	if (_source.find(musicFile) != _source.end()) {
+		return;
+	}
+	_source.clear();
+	pause();
 	_source.insert({musicFile, _engine->play2D(musicFile.c_str(), true)});
 }
 
 void IrrKlang::pause()
 {
+	_engine->setAllSoundsPaused(true);
 }
 
 void IrrKlang::resume()

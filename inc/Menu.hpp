@@ -33,6 +33,10 @@ private:
 	bool	_sens;
 	Tools::vector3d	_cameraPos;
 	Tools::vector3d	_cameraRot;
+public:
+	std::string getSound() override;
+
+private:
 	IScene	*_scene;
 };
 

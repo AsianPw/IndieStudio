@@ -27,7 +27,6 @@ Core::Core(std::unique_ptr<Params> &params) : _verbose(params->getVerbose()), _p
 		_display = std::make_unique<Irrlicht>(_params);
 		changeScene(new Preroll(params->getVerbose()));
 		_sound = std::make_unique<IrrKlang>();
-		_sound->play("media/menu_sound.ogg");
 	} catch (const std::runtime_error &e) {
 		throw;
 	}
@@ -58,11 +57,14 @@ void	Core::compute()
 			}
 			_scene->checkEvents(keyCode);
 		}
-		_display->displayMap(_scene->getMap());
-		_display->updateMap(_scene->getMap());
 		_display->changeCameraPosition(_scene->getCameraPos(), _scene->getCameraRot());
 		_scene->compute(keyCode);
+		if (!_scene->getSound().empty()) {
+			_sound->play(_scene->getSound());
+		}
 		_display->updateModels(_scene->getModels());
+		_display->displayMap(_scene->getMap());
+		_display->updateMap(_scene->getMap());
 		_display->updateGuis(_scene->getGuis());
 		_display->display();
 		scene = _scene->newScene();

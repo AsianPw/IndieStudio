@@ -75,3 +75,8 @@ Tools::vector3d	&Menu::getCameraRot()
 {
 	return _cameraRot;
 }
+
+std::string Menu::getSound()
+{
+	return "media/menu_sound.ogg";
+}
