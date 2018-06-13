@@ -18,7 +18,7 @@ public:
 	void pause() override;
 	void resume() override;
 	void clearUnused() override;
-	void addSound(std::string const &) override;
+	void addSound(std::string const &, int) override;
 
 private:
 	irrklang::ISoundEngine*	_engine;

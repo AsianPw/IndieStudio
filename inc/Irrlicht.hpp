@@ -40,9 +40,9 @@ private:
 	void	removeBombAt(int x, int y, int z);
 	void	addBombAt(int x, int y, int z);
 	bool	checkPlayer(char, std::vector<std::vector<char>> &);
-	bool	checkPlayerDied(std::vector<std::vector<char>> &);
+	bool	checkPlayerDied(std::vector<std::vector<char>> &, std::unique_ptr<ISound> &);
 	void	checkMove(std::vector<std::vector<char>> &, std::unique_ptr<ISound> &);
-	void	updatePlayerMove(std::vector<std::vector<char>> &, int, int, char);
+	void	updatePlayerMove(std::vector<std::vector<char>> &, int, int, char, std::unique_ptr<ISound> &);
 	void generateGround();
 	void generateTrees(int);
 

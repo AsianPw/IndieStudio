@@ -13,7 +13,7 @@ public:
 	virtual void	play(std::string const &) = 0;
 	virtual void	pause() = 0;
 	virtual void	resume() = 0;
-	virtual void	addSound(std::string const &) = 0;
+	virtual void	addSound(std::string const &, int ) = 0;
 	virtual void	clearUnused() = 0;
 };
 

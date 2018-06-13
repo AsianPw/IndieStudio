@@ -298,7 +298,7 @@ void Irrlicht::updateMap(std::vector<std::vector<char>> &map, std::unique_ptr<IS
 		}
 	}
 	checkMove(map, sound);
-	checkPlayerDied(map);
+	checkPlayerDied(map, sound);
 }
 
 bool	Irrlicht::checkPlayer(char player, std::vector<std::vector<char>> &map)
@@ -313,19 +313,25 @@ bool	Irrlicht::checkPlayer(char player, std::vector<std::vector<char>> &map)
 	return false;
 }
 
-bool	Irrlicht::checkPlayerDied(std::vector<std::vector<char>> &map)
+bool	Irrlicht::checkPlayerDied(std::vector<std::vector<char>> &map, std::unique_ptr<ISound> &sound)
 {
 	if (!checkPlayer('C', map)) {
-		if (_sceneElement.find("player3") != _sceneElement.end())
+		if (_sceneElement.find("player3") != _sceneElement.end() && _sceneElement["player3"]->isVisible()) {
 			_sceneElement["player3"]->setVisible(false);
+			sound->addSound("media/death.ogg", 50);
+		}
 	}
 	if (!checkPlayer('D', map)) {
-		if (_sceneElement.find("player4") != _sceneElement.end())
+		if (_sceneElement.find("player4") != _sceneElement.end() && _sceneElement["player4"]->isVisible()) {
 			_sceneElement["player4"]->setVisible(false);
+			sound->addSound("media/death.ogg", 50);
+		}
 	}
 	if (!checkPlayer('B', map)) {
-		if (_sceneElement.find("player2") != _sceneElement.end())
+		if (_sceneElement.find("player2") != _sceneElement.end() && _sceneElement["player2"]->isVisible()) {
 			_sceneElement["player2"]->setVisible(false);
+			sound->addSound("media/death.ogg", 50);
+		}
 	}
 }
 
@@ -356,10 +362,10 @@ void	Irrlicht::checkMove(std::vector<std::vector<char>> &map, std::unique_ptr<IS
 	for (auto &line : map) {
 		x = 0;
 		for (auto &elem : line) {
-			updatePlayerMove(map, x, z, elem);
+			updatePlayerMove(map, x, z, elem, sound);
 			if (elem == '1' || elem == '2') {
 				addBombAt(z * _cubeSize, 0, x * _cubeSize);
-				sound->addSound("media/explosion.ogg");
+				sound->addSound("media/explosion.ogg", 50);
 			} else if (elem == '3') {
 				removeBombAt(z * _cubeSize, 0, x * _cubeSize);
 			}
@@ -369,18 +375,29 @@ void	Irrlicht::checkMove(std::vector<std::vector<char>> &map, std::unique_ptr<IS
 	}
 }
 
-void Irrlicht::updatePlayerMove(std::vector<std::vector<char>> &map, int x, int z, char elem)
+void Irrlicht::updatePlayerMove(std::vector<std::vector<char>> &map, int x, int z, char elem, std::unique_ptr<ISound> &sound)
 {
-	if (elem == 'B') {
-		if (_sceneElement.find("player2") != _sceneElement.end())
+	irr::core::vector3df	tmp;
+
+	if (elem == 'B' && _sceneElement.find("player2") != _sceneElement.end()) {
+		tmp = _sceneElement["player2"]->getPosition();
+		if (tmp.X != z * _cubeSize || tmp.Z != x * _cubeSize) {
 			_sceneElement["player2"]->setPosition(irr::core::vector3df(z * _cubeSize, 0, x * _cubeSize));
+			sound->addSound("media/walk2.ogg", 5);
+		}
 	}
-	if (elem == 'C') {
-		if (_sceneElement.find("player3") != _sceneElement.end())
+	if (elem == 'C' && _sceneElement.find("player3") != _sceneElement.end()) {
+		tmp = _sceneElement["player2"]->getPosition();
+		if (tmp.X != z * _cubeSize || tmp.Z != x * _cubeSize) {
 			_sceneElement["player3"]->setPosition(irr::core::vector3df(z * _cubeSize, 0, x * _cubeSize));
+			sound->addSound("media/walk3.ogg", 5);
+		}
 	}
-	if (elem == 'D') {
-		if (_sceneElement.find("player4") != _sceneElement.end())
+	if (elem == 'D' && _sceneElement.find("player4") != _sceneElement.end()) {
+		tmp = _sceneElement["player2"]->getPosition();
+		if (tmp.X != z * _cubeSize || tmp.Z != x * _cubeSize) {
 			_sceneElement["player4"]->setPosition(irr::core::vector3df(z * _cubeSize, 0, x * _cubeSize));
+			sound->addSound("media/walk4.ogg", 5);
+		}
 	}
 }

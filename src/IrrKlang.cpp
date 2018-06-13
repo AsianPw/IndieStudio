@@ -35,12 +35,15 @@ void	IrrKlang::resume()
 	_engine->setAllSoundsPaused(false);
 }
 
-void	IrrKlang::addSound(std::string const &musicFile)
+void	IrrKlang::addSound(std::string const &musicFile, int volume)
 {
+	irrklang::ISound	*tmp;
+
 	if (_engine->isCurrentlyPlaying(musicFile.c_str())){
 		return;
 	}
-	_engine->play2D(musicFile.c_str(), false);
+	tmp = _engine->play2D(musicFile.c_str(), false, false, true);
+	tmp->setVolume(volume / 100.0f);
 }
 
 void	IrrKlang::clearUnused()
