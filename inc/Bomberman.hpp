@@ -26,7 +26,7 @@ public:
 	void	checkEvents(std::pair<int, std::string> &pair) override;
 	void	checkBomb();
 	void	bombExplode(Position);
-	bool	checkPlayer();
+	bool	checkPlayer(char c);
 	void	checkGame();
 	std::string	getSound() override;
 
@@ -45,6 +45,7 @@ private:
 	bool		_isEnd;
 	bool		_change;
 	bool		_deathCamera;
+	bool		check_b, check_c, check_d;
 };
 
 #endif //BOMBERMAN_BOMBERMAN_HPP
