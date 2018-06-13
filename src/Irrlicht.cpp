@@ -222,11 +222,9 @@ void	Irrlicht::changeCameraPosition(Tools::vector3d &pos, Tools::vector3d &rot)
 
 	if (cameraPos.X != pos.x || cameraPos.Y != pos.y || cameraPos.Z != pos.z) {
 		_camera->setPosition(irr::core::vector3df(pos.x, pos.y, pos.z));
-		//Tools::displayVerbose(_verbose, "Update Position of camera.");
 	}
 	if (cameraRot.X != rot.x || cameraRot.Y != rot.y || cameraRot.Z != rot.z) {
 		_camera->setTarget(irr::core::vector3df(rot.x, rot.y, rot.z));
-		//Tools::displayVerbose(_verbose, "Update Rotation of camera.");
 	}
 }
 
@@ -315,23 +313,17 @@ bool	Irrlicht::checkPlayer(char player, std::vector<std::vector<char>> &map)
 
 bool	Irrlicht::checkPlayerDied(std::vector<std::vector<char>> &map, std::unique_ptr<ISound> &sound)
 {
-	if (!checkPlayer('C', map)) {
-		if (_sceneElement.find("player3") != _sceneElement.end() && _sceneElement["player3"]->isVisible()) {
-			_sceneElement["player3"]->setVisible(false);
-			sound->addSound("media/death.ogg", 50);
-		}
+	if (!checkPlayer('C', map) && _sceneElement.find("player3") != _sceneElement.end() && _sceneElement["player3"]->isVisible()) {
+		_sceneElement["player3"]->setVisible(false);
+		sound->addSound("media/death.ogg", 50);
 	}
-	if (!checkPlayer('D', map)) {
-		if (_sceneElement.find("player4") != _sceneElement.end() && _sceneElement["player4"]->isVisible()) {
-			_sceneElement["player4"]->setVisible(false);
-			sound->addSound("media/death.ogg", 50);
-		}
+	if (!checkPlayer('D', map) && _sceneElement.find("player4") != _sceneElement.end() && _sceneElement["player4"]->isVisible()) {
+		_sceneElement["player4"]->setVisible(false);
+		sound->addSound("media/death.ogg", 50);
 	}
-	if (!checkPlayer('B', map)) {
-		if (_sceneElement.find("player2") != _sceneElement.end() && _sceneElement["player2"]->isVisible()) {
-			_sceneElement["player2"]->setVisible(false);
-			sound->addSound("media/death.ogg", 50);
-		}
+	if (!checkPlayer('B', map) && _sceneElement.find("player2") != _sceneElement.end() && _sceneElement["player2"]->isVisible()) {
+		_sceneElement["player2"]->setVisible(false);
+		sound->addSound("media/death.ogg", 50);
 	}
 }
 
