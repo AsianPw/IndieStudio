@@ -28,14 +28,11 @@ Bomberman::Bomberman(bool _verbose, size_t nbPlayer, size_t nbIa) : _verbose(_ve
 	ia2.y = 30;
 	loose_text.x = 170;
 	loose_text.y = 400;
-	std::ostringstream	convert;
-	convert << score;
 	_models.insert({"player", { {player.x, player.y}, {0, 70}, "texture/characters/ziggs.png", "texture/characters/ziggs.md3", irr::scene::EMAT_STAND, false, true }});
 	_models.insert({"player2", { {ia.x, ia.y}, {0, 70}, "texture/characters/ziggs_general.png", "texture/characters/ziggs.md3", irr::scene::EMAT_STAND, false, true, 'B' }});
 	_models.insert({"player3", { {ia1.x, ia1.y}, {0, 70}, "texture/characters/ziggs_general.png", "texture/characters/ziggs.md3", irr::scene::EMAT_STAND, false, true, 'C' }});
 	_models.insert({"player4", { {ia2.x, ia2.y}, {0, 70}, "texture/characters/ziggs_general.png", "texture/characters/ziggs.md3", irr::scene::EMAT_STAND, false, true, 'D' }});
-	_guis.insert({"score", { {400, 100}, {0, 180}, "", "Score : ", irr::scene::EMAT_STAND, false, true }});
-	_guis.insert({"score_value", { {550, 100}, {0, 180}, "", convert.str(), irr::scene::EMAT_STAND, false, true }});
+	_guis.insert({"score", { {400, 100}, {0, 180}, "", "Score : " + std::to_string(score), irr::scene::EMAT_STAND, false, true }});
 	//_guis.insert({"dead", { {loose_text.x, loose_text.y}, {0, 0}, "", "You loose. Press [M] to back to menu.", irr::scene::EMAT_STAND, true, true }});
 
 }
@@ -80,6 +77,7 @@ void Bomberman::compute(std::pair<int, std::string> &events)
 		checkBomb();
 		currentTime = now;
 	}
+	_guis["score"].modelPath = "Score : " + std::to_string(score);
 }
 
 IScene *Bomberman::newScene()
@@ -182,7 +180,6 @@ void Bomberman::checkBomb()
 void	Bomberman::checkGame()
 {
 	if (checkPlayer() == false) {
-		std::cout<<"Player died"<<std::endl;
 		_change = true;
 	}
 }
@@ -197,11 +194,9 @@ void Bomberman::checkEvents(std::pair<int, std::string> &events)
 		bombDir = 1;
 	p.setBombDir(bombDir);
 	if (events.first == KeyCode::KEY_SPACE) {
-		std::cerr << "Space button to use a bomb" << std::endl;
 		p.putBomb();
 	}
 	if (events.first == KeyCode::KEY_LEFT) {
-		std::cerr << "Left direction" << std::endl;
 		bombDir = 3;
 		p.moveLeft();
 		_models["player"].rot.y = 0;
@@ -209,7 +204,6 @@ void Bomberman::checkEvents(std::pair<int, std::string> &events)
 			_models["player"].pos.y = _models["player"].pos.y - 30;
 	}
 	if (events.first == KeyCode::KEY_UP) {
-		std::cerr << "Up direction" << std::endl;
 		bombDir = 0;
 		p.moveUp();
 		_models["player"].rot.y = 90;
@@ -217,7 +211,6 @@ void Bomberman::checkEvents(std::pair<int, std::string> &events)
 			_models["player"].pos.x = _models["player"].pos.x - 30;
 	}
 	if (events.first == KeyCode::KEY_RIGHT) {
-		std::cerr << "Right direction" << std::endl;
 		bombDir = 1;
 		p.moveRight();
 		_models["player"].rot.y = 180;
@@ -225,7 +218,6 @@ void Bomberman::checkEvents(std::pair<int, std::string> &events)
 			_models["player"].pos.y = _models["player"].pos.y + 30;
 	}
 	if (events.first == KeyCode::KEY_DOWN) {
-		std::cerr << "Down direction" << std::endl;
 		bombDir = 2;
 		p.moveDown();
 		_models["player"].rot.y = -90;

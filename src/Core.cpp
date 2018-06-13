@@ -63,6 +63,7 @@ void	Core::compute()
 		_display->changeCameraPosition(_scene->getCameraPos(), _scene->getCameraRot());
 		_scene->compute(keyCode);
 		_display->updateModels(_scene->getModels());
+		_display->updateGuis(_scene->getGuis());
 		_display->display();
 		scene = _scene->newScene();
 		if (scene != nullptr) {

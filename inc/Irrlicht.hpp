@@ -29,6 +29,7 @@ public:
 	void loadModels(std::map<std::string, Data> &) override;
 	void updateModels(std::map<std::string, Data> &) override;
 	void loadGuis(std::map<std::string, Data> &map) override;
+	void updateGuis(std::map<std::string, Data> &map) override;
 	void changeCameraPosition(Tools::vector3d &, Tools::vector3d &) override;
 	void getMap(std::vector<std::vector<char>> &vector) override;
 	void displayMap(std::vector<std::vector<char>> &vector) override;
@@ -56,6 +57,7 @@ private:
 	std::map<std::string, irr::scene::IAnimatedMeshSceneNode *>	_sceneBomb;
 	std::vector<irr::scene::IMeshSceneNode *>	_sceneCube;
 	std::map<std::string, Data>	_sceneData;
+	std::map<std::string, Data>	_guiData;
 	irr::scene::ISceneManager	*_sceneManager;
 	DeviceReceiver	_deviceReceiver;
 	bool	_verbose;

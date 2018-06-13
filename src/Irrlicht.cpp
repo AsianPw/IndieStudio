@@ -143,6 +143,7 @@ void Irrlicht::loadGuis(std::map<std::string, Data> &guis)
 	irr::core::dimension2d<irr::u32>	textSize;
 	irr::core::rect<irr::s32>	rect;
 
+	_guiData = guis;
 	for (auto const &gui : guis) {
 		Tools::displayVerbose(_verbose, "Add GUI element: " + gui.first);
 		tmpString = std::wstring(gui.second.modelPath.begin(), gui.second.modelPath.end());
@@ -157,6 +158,27 @@ void Irrlicht::loadGuis(std::map<std::string, Data> &guis)
 			tmpText->setOverrideColor(irr::video::SColor(255, 255, 255, 255));
 		}
 	}
+}
+
+void Irrlicht::updateGuis(std::map<std::string, Data> &guis)
+{
+	std::wstring	tmpString;
+	irr::gui::IGUIStaticText	*tmpText;
+	irr::core::dimension2d<irr::u32>	textSize;
+	irr::core::rect<irr::s32>	rect;
+
+	for (auto const &gui : _guiData) {
+		if (!gui.second.isBnt) {
+			_textElement[gui.first]->setVisible(false);
+			tmpString = std::wstring(gui.second.modelPath.begin(), gui.second.modelPath.end());
+			textSize = _font->getDimension(tmpString.c_str());
+			rect = irr::core::rect<irr::s32>(gui.second.pos.x, gui.second.pos.y, gui.second.pos.x + textSize.Width + 5, gui.second.pos.y + textSize.Height + 5);
+			_textElement[gui.first] = _gui->addStaticText(tmpString.c_str(), rect, _verbose, true, nullptr, -1, false);
+			tmpText = (irr::gui::IGUIStaticText *)_textElement[gui.first];
+			tmpText->setOverrideColor(irr::video::SColor(255, 255, 255, 255));
+		}
+	}
+	_guiData = guis;
 }
 
 void Irrlicht::getMap(std::vector<std::vector<char>> &map)

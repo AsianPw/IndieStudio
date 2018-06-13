@@ -22,6 +22,7 @@ public:
 	virtual void	loadModels(std::map<std::string, Data> &) = 0;
 	virtual void	updateModels(std::map<std::string, Data> &) = 0;
 	virtual void	loadGuis(std::map<std::string, Data> &) = 0;
+	virtual void updateGuis(std::map<std::string, Data> &map) = 0;
 	virtual void	getEvents(std::pair<int, std::string> &) = 0;
 	virtual void	getMap(std::vector<std::vector<char>> &) = 0;
 	virtual void	updateMap(std::vector<std::vector<char>> &) = 0;
