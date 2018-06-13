@@ -231,7 +231,8 @@ void Bomberman::checkEvents(std::pair<int, std::string> &events)
 	Position	place;
 
 	checkGame();
-
+	if (!checkPlayer('A'))
+		return;
 	if (bombDir < 0 || bombDir > 3)
 		bombDir = 1;
 	p.setBombDir(bombDir);
