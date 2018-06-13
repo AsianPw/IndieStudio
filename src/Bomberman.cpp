@@ -10,8 +10,10 @@
 #include "../inc/PlayerMove.hpp"
 #include "../inc/Ia.hpp"
 #include "../inc/Time.hpp"
+#include "../inc/Menu.hpp"
+#include "../inc/Tools.hpp"
 
-Bomberman::Bomberman(bool _verbose, size_t nbPlayer, size_t nbIa) : _verbose(_verbose), _cameraPos({500.0f, 400.0f, 225.0f}), _cameraRot({ 120.0f, 0.0f, 225.0f}), _map(nbPlayer, nbIa)
+Bomberman::Bomberman(bool _verbose, size_t nbPlayer, size_t nbIa) : _verbose(_verbose), _cameraPos({500.0f, 400.0f, 225.0f}), _cameraRot({ 120.0f, 0.0f, 225.0f}), _map(nbPlayer, nbIa), _change(false)
 {
 	currentTime = getCurrentTime();
 	player.x = 30;
@@ -67,6 +69,7 @@ void Bomberman::compute(std::pair<int, std::string> &events)
 {
 	long	now = getCurrentTime();
 
+	checkGame();
 	if (now - currentTime > 1000) {
 		Ia B('B', _map.getMap());
 		Ia C('C', _map.getMap());
@@ -81,6 +84,9 @@ void Bomberman::compute(std::pair<int, std::string> &events)
 
 IScene *Bomberman::newScene()
 {
+	if (_change) {
+		return new Menu(_verbose);
+	}
 	return nullptr;
 }
 
@@ -177,7 +183,7 @@ void	Bomberman::checkGame()
 {
 	if (checkPlayer() == false) {
 		std::cout<<"Player died"<<std::endl;
-		exit(0);
+		_change = true;
 	}
 }
 
@@ -191,7 +197,6 @@ void Bomberman::checkEvents(std::pair<int, std::string> &events)
 		bombDir = 1;
 	p.setBombDir(bombDir);
 	if (events.first == KeyCode::KEY_SPACE) {
-
 		std::cerr << "Space button to use a bomb" << std::endl;
 		p.putBomb();
 	}

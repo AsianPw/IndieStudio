@@ -41,6 +41,7 @@ private:
 	int		score = 0;
 	long		currentTime;
 	int		bombDir;
+	bool		_change;
 };
 
 #endif //BOMBERMAN_BOMBERMAN_HPP
