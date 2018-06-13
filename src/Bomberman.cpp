@@ -15,6 +15,9 @@
 
 Bomberman::Bomberman(bool _verbose, size_t nbPlayer, size_t nbIa) : _verbose(_verbose), _cameraPos({500.0f, 400.0f, 225.0f}), _cameraRot({ 120.0f, 0.0f, 225.0f}), _map(nbPlayer, nbIa), _change(false)
 {
+	check_b = true;
+	check_c = true;
+	check_d = true;
 	currentTime = getCurrentTime();
 	player.x = 30;
 	player.y = 30;
@@ -88,11 +91,11 @@ IScene *Bomberman::newScene()
 	return nullptr;
 }
 
-bool	Bomberman::checkPlayer()
+bool	Bomberman::checkPlayer(char c)
 {
 	for (int i = 0; i < 15; i++) {
 		for (int j = 0; j < 15; j++) {
-			if (_map.getMap()[i][j] == 'A') {
+			if (_map.getMap()[i][j] == c) {
 				return true;
 			}
 		}
@@ -179,8 +182,20 @@ void Bomberman::checkBomb()
 
 void	Bomberman::checkGame()
 {
-	if (checkPlayer() == false) {
+	if (checkPlayer('A') == false) {
 		_change = true;
+	}
+	if (checkPlayer('B') == false && check_b == true) {
+		score = score + 100;
+		check_b = false;
+	}
+	if (checkPlayer('C') == false && check_c == true) {
+		score = score + 100;
+		check_c = false;
+	}
+	if (checkPlayer('D') == false && check_d == true) {
+		score = score + 100;
+		check_d = false;
 	}
 }
 
@@ -190,6 +205,7 @@ void Bomberman::checkEvents(std::pair<int, std::string> &events)
 	Position	place;
 
 	checkGame();
+
 	if (bombDir < 0 || bombDir > 3)
 		bombDir = 1;
 	p.setBombDir(bombDir);

@@ -26,7 +26,7 @@ public:
 	void	checkEvents(std::pair<int, std::string> &pair) override;
 	void	checkBomb();
 	void	bombExplode(Position);
-	bool	checkPlayer();
+	bool	checkPlayer(char c);
 	void	checkGame();
 
 private:
@@ -42,6 +42,7 @@ private:
 	long		currentTime;
 	int		bombDir;
 	bool		_change;
+	bool		check_b, check_c, check_d;
 };
 
 #endif //BOMBERMAN_BOMBERMAN_HPP
