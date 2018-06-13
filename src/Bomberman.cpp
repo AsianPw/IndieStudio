@@ -193,6 +193,7 @@ void Bomberman::checkBomb()
 std::string	Bomberman::getSound()
 {
 	if (_isEnd && !_isWin) {
+		_models["player"].rot.x = 90;
 		return "media/hero_rise.ogg";
 	} else if (_isEnd && _isWin) {
 		return "media/hero_win.ogg";
@@ -243,27 +244,27 @@ void Bomberman::checkEvents(std::pair<int, std::string> &events)
 		p.moveLeft();
 		_models["player"].rot.y = 0;
 		if (p.getStatus() == false)
-			_models["player"].pos.y = _models["player"].pos.y - 30;
+			_models["player"].pos.y = _models["player"].pos.y - 25;
 	}
 	if (events.first == KeyCode::KEY_UP) {
 		bombDir = 0;
 		p.moveUp();
 		_models["player"].rot.y = 90;
 		if (p.getStatus() == false)
-			_models["player"].pos.x = _models["player"].pos.x - 30;
+			_models["player"].pos.x = _models["player"].pos.x - 25;
 	}
 	if (events.first == KeyCode::KEY_RIGHT) {
 		bombDir = 1;
 		p.moveRight();
 		_models["player"].rot.y = 180;
 		if (p.getStatus() == false)
-			_models["player"].pos.y = _models["player"].pos.y + 30;
+			_models["player"].pos.y = _models["player"].pos.y + 25;
 	}
 	if (events.first == KeyCode::KEY_DOWN) {
 		bombDir = 2;
 		p.moveDown();
 		_models["player"].rot.y = -90;
 		if (p.getStatus() == false)
-			_models["player"].pos.x = _models["player"].pos.x + 30;
+			_models["player"].pos.x = _models["player"].pos.x + 25;
 	}
 }
