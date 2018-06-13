@@ -22,7 +22,7 @@ void	IrrKlang::play(std::string const &musicFile)
 	}
 	_source.clear();
 	pause();
-	_source.insert({musicFile, _engine->play2D(musicFile.c_str(), true)});
+	_source.insert({musicFile, _engine->play2D(musicFile.c_str(), true, false, true)});
 }
 
 void	IrrKlang::pause()
