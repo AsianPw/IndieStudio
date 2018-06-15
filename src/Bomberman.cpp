@@ -7,7 +7,7 @@
 
 #include "../inc/Bomberman.hpp"
 #include "../inc/keyCodes.hpp"
-#include "../inc/PlayerMove.hpp"
+#include "../inc/Player.hpp"
 #include "../inc/Ia.hpp"
 #include "../inc/Time.hpp"
 #include "../inc/Menu.hpp"
@@ -37,8 +37,8 @@ Bomberman::Bomberman(bool _verbose, size_t nbPlayer, size_t nbIa)
 	_models.insert({"player3", { {ia1.x, ia1.y}, {0, 70}, "texture/characters/ziggs_general.png", "texture/characters/ziggs.md3", irr::scene::EMAT_STAND, false, true, 'C' }});
 	_models.insert({"player4", { {ia2.x, ia2.y}, {0, 70}, "texture/characters/ziggs_general.png", "texture/characters/ziggs.md3", irr::scene::EMAT_STAND, false, true, 'D' }});
 	_guis.insert({"score", { {400, 100}, {0, 180}, "", "Score : " + std::to_string(score), irr::scene::EMAT_STAND, false, true }});
-	_guis.insert({"dead", { {loose_text.x, loose_text.y}, {0, 0}, "", "You loose. Press [M] to back to menu.", irr::scene::EMAT_STAND, false, false }});
-	_guis.insert({"win", { {loose_text.x, loose_text.y}, {0, 0}, "", "You win. Press [M] to back to menu.", irr::scene::EMAT_STAND, false, false }});
+	_guis.insert({"dead", { {loose_text.x, loose_text.y}, {0, 0}, "", "You loose. Press [M] to go back to menu.", irr::scene::EMAT_STAND, false, false }});
+	_guis.insert({"win", { {loose_text.x, loose_text.y}, {0, 0}, "", "You win. Press [M] to go back to menu.", irr::scene::EMAT_STAND, false, false }});
 }
 
 std::map<std::string, Data> &Bomberman::getModels()
@@ -133,7 +133,7 @@ void	Bomberman::bombExplode(Position p)
 			if (map[p.x + x][p.y] != ' ')
 				top = true;
 			map[p.x + x][p.y] = ' ';
-			score = score + 10;
+
 		}
 		if ((p.x - x) > 0 && map[p.x - x][p.y] != '*' && !bot)
 		{
@@ -142,7 +142,6 @@ void	Bomberman::bombExplode(Position p)
 			if (map[p.x - x][p.y] != ' ')
 				bot = true;
 			map[p.x - x][p.y] = ' ';
-			score = score + 10;
 		}
 		if ((p.y + x) < 15 && map[p.x][p.y + x] != '*' && !right)
 		{
@@ -151,7 +150,6 @@ void	Bomberman::bombExplode(Position p)
 			if (map[p.x][p.y + x] != ' ')
 				right = true;
 			map[p.x][p.y + x] = ' ';
-			score = score + 10;
 		}
 		if ((p.y - x) > 0 && map[p.x][p.y - x] != '*' && !left)
 		{
@@ -160,9 +158,9 @@ void	Bomberman::bombExplode(Position p)
 			if (map[p.x][p.y - x] != ' ')
 				left = true;
 			map[p.x][p.y - x] = ' ';
-			score = score + 10;
 		}
 		x++;
+		score = score + 10;
 	}
 }
 
@@ -213,15 +211,15 @@ void	Bomberman::checkGame()
 		_isWin = true;
 	}
 	if (!checkPlayer('B') && check_b) {
-		score = score + 100;
+		score = score + 80;
 		check_b = false;
 	}
 	if (!checkPlayer('C') && check_c) {
-		score = score + 100;
+		score = score + 80;
 		check_c = false;
 	}
 	if (!checkPlayer('D') && check_d) {
-		score = score + 100;
+		score = score + 80;
 		check_d = false;
 	}
 }

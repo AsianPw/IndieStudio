@@ -12,7 +12,7 @@
 #include "../inc/Irrlicht.hpp"
 #include "../inc/Data.hpp"
 #include "../inc/Tools.hpp"
-#include "../inc/PlayerMove.hpp"
+#include "../inc/Player.hpp"
 #include "../inc/ISound.hpp"
 
 Irrlicht::Irrlicht(GraphParams &params) :

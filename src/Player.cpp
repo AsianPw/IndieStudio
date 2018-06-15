@@ -5,7 +5,7 @@
 ** Created by j-f,
 */
 
-#include "../inc/PlayerMove.hpp"
+#include "../inc/Player.hpp"
 
 PlayerMove::PlayerMove(char name, std::vector<std::vector<char>> &map)
 	: _name(name), _map(map)

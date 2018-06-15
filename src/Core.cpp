@@ -11,7 +11,7 @@
 #include "../inc/Tools.hpp"
 #include "../inc/keyCodes.hpp"
 #include "../inc/Menu.hpp"
-#include "../inc/PlayerMove.hpp"
+#include "../inc/Player.hpp"
 #include "../inc/IrrKlang.hpp"
 #include "../inc/Settings.hpp"
 #include "../inc/Time.hpp"

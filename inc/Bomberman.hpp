@@ -10,7 +10,7 @@
 #include "IScene.hpp"
 #include "GenerateMap.hpp"
 #include "Position.hpp"
-#include "PlayerMove.hpp"
+#include "Player.hpp"
 #include <sstream>
 
 class Bomberman : public IScene {
@@ -45,7 +45,7 @@ private:
 	bool		_isEnd;
 	bool		_change;
 	bool		_deathCamera;
-	bool		check_b, check_c, check_d;
+	bool		check_b, check_c, check_d, setb, setc, setd;
 	bool		_isWin;
 };
 

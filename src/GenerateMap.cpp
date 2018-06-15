@@ -6,7 +6,6 @@
 */
 
 #include "../inc/GenerateMap.hpp"
-#include "../inc/PlayerMove.hpp"
 
 GenerateMap::GenerateMap(size_t nbrplayer, size_t nbria)
 {

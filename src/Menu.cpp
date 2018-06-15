@@ -9,7 +9,7 @@
 #include "../inc/Tools.hpp"
 #include "../inc/keyCodes.hpp"
 #include "../inc/vector3d.hpp"
-#include "../inc/PlayerMove.hpp"
+#include "../inc/Player.hpp"
 #include "../inc/Bomberman.hpp"
 
 Menu::Menu(bool verbose)
