@@ -17,7 +17,7 @@
 
 typedef enum {NONE, LEFT, RIGHT, UP, DOWN} dir_use_bomb;
 
-class PlayerMove : public IPlayer {
+class Player : public IPlayer {
 	private:
 		char				_name;
 		int				life;
@@ -29,8 +29,8 @@ class PlayerMove : public IPlayer {
 		std::vector<std::vector<char>>	&_map;
 
 	public:
-		~PlayerMove();
-		PlayerMove(char name, std::vector<std::vector<char>> &map);
+		~Player();
+		Player(char name, std::vector<std::vector<char>> &map);
 		void		moveLeft();
 		void		moveRight();
 		void		moveUp();

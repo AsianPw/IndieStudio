@@ -226,7 +226,7 @@ void	Bomberman::checkGame()
 
 void Bomberman::checkEvents(std::pair<int, std::string> &events)
 {
-	PlayerMove	p('A', _map.getMap());
+	Player	p('A', _map.getMap());
 
 	checkGame();
 	if (!checkPlayer('A'))

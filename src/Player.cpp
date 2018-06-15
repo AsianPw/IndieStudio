@@ -7,26 +7,26 @@
 
 #include "../inc/Player.hpp"
 
-PlayerMove::PlayerMove(char name, std::vector<std::vector<char>> &map)
+Player::Player(char name, std::vector<std::vector<char>> &map)
 	: _name(name), _map(map)
 {
 }
 
-PlayerMove::~PlayerMove()
+Player::~Player()
 {
 }
 
-void	PlayerMove::setBombDir(int x)
+void	Player::setBombDir(int x)
 {
 	bomb_dir = x;
 }
 
-int	PlayerMove::getBombDir()
+int	Player::getBombDir()
 {
 	return (bomb_dir);
 }
 
-Position	PlayerMove::getPlayerPlace()
+Position	Player::getPlayerPlace()
 {
 	int	i = 0;
 	int	j;
@@ -45,7 +45,7 @@ Position	PlayerMove::getPlayerPlace()
 	}
 }
 
-void	PlayerMove::putBomb()
+void	Player::putBomb()
 {
 	pos = getPlayerPlace();
 	if (bomb_dir == 1 && _map[pos.x][pos.y + 1]  && _map[pos.x][pos.y + 1] == ' ') {
@@ -62,7 +62,7 @@ void	PlayerMove::putBomb()
 	}
 }
 
-void	PlayerMove::moveRight(void)
+void	Player::moveRight(void)
 {
 	bomb_dir = 1;
 	pos = getPlayerPlace();
@@ -78,7 +78,7 @@ void	PlayerMove::moveRight(void)
 	}
 }
 
-void	PlayerMove::moveLeft(void)
+void	Player::moveLeft(void)
 {
 	bomb_dir = 3;
 	pos = getPlayerPlace();
@@ -94,7 +94,7 @@ void	PlayerMove::moveLeft(void)
 	}
 }
 
-void	PlayerMove::moveUp(void)
+void	Player::moveUp(void)
 {
 	bomb_dir = 0;
 	pos = getPlayerPlace();
@@ -110,7 +110,7 @@ void	PlayerMove::moveUp(void)
 	}
 }
 
-void	PlayerMove::moveDown(void)
+void	Player::moveDown(void)
 {
 	bomb_dir = 2;
 	pos = getPlayerPlace();
@@ -126,7 +126,7 @@ void	PlayerMove::moveDown(void)
 	}
 }
 
-bool PlayerMove::getStatus()
+bool Player::getStatus()
 {
 	return locked;
 }

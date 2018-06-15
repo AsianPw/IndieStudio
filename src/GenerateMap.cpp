@@ -86,15 +86,18 @@ void	GenerateMap::place_unbreakable_wall_width(void)
 
 void	GenerateMap::place_target_wall(void)
 {
-	int	i, j;
+	std::mt19937	rng;
+	std::uniform_int_distribution<std::mt19937::result_type>	randWidth(0, width - 1);
+	std::uniform_int_distribution<std::mt19937::result_type>	randHeight(0, (int)(height - 1));
+	unsigned long	i, j;
 
-	srand(time(NULL));
+	rng.seed(std::random_device()());
 	for (int z = 0; z <= nbr_wall; z++) {
-		i = rand() % (height - 1);
-		j = rand() % (width - 1);
+		i = randHeight(rng);
+		j = randWidth(rng);
 		while (BombermanMap[i][j] && BombermanMap[i][j] != ' ') {
-			i = rand() % (height - 1);
-			j = rand() % (width - 1);
+			i = randHeight(rng);
+			j = randWidth(rng);
 		}
 		BombermanMap[i][j] = '#';
 	}

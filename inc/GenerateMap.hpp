@@ -8,13 +8,9 @@
 #define BOMBERMAN_GENERATEMAP_HPP
 
 #include <iostream>
-#include <string.h>
 #include <vector>
 #include <random>
-#include <stdlib.h>
-#include <irr/irrlicht.h>
 #include <irr/driverChoice.h>
-#include "../inc/EventReceiver.hpp"
 #include "../inc/IPlayer.hpp"
 
 using namespace irr;
